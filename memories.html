@@ -180,9 +180,11 @@
     $('c-security').checked = me.consent_security; $('c-matching').checked = me.consent_matching;
     if (!me.consent_security && !me.consent_matching) return show('v-consent', 2);
     if (!me.selfie_enrolled) { show('v-selfie', 3); return startCamera(); }
-    $('done-text').textContent = me.consent_matching
-      ? "We'll email you when your photos from the next Lux event are ready."
-      : "Your selfie is set for entry checks. Turn on photo matching any time to get your event photos.";
+    $('done-text').textContent = !me.consent_matching
+      ? "Your selfie is set for entry checks. Turn on photo matching any time to get your event photos."
+      : me.photos_found > 0
+        ? `We've found you in ${me.photos_found} photo${me.photos_found === 1 ? '' : 's'} so far. Your bundles will be ready after the event.`
+        : "We'll email you when your photos from the next Lux event are ready.";
     show('v-done', 3);
   }
 
@@ -197,11 +199,13 @@
   };
   $('email').onkeydown = e => { if (e.key === 'Enter') $('b-send').click(); };
   $('b-back').onclick = () => show('v-email', 1);
+  let verifying = false;
   $('b-verify').onclick = async () => {
+    if (verifying) return; verifying = true;
     $('b-verify').disabled = true; msg('m-code', 'Checking…');
     try { await post('/auth/verify-code', { email: $('email').value.trim(), code: $('code').value.trim() }); msg('m-code'); await route(); }
     catch (e) { msg('m-code', e.message, 'err'); }
-    $('b-verify').disabled = false;
+    $('b-verify').disabled = false; verifying = false;
   };
   $('code').oninput = () => { $('code').value = $('code').value.replace(/\D/g,''); if ($('code').value.length === 6) $('b-verify').click(); };
 
