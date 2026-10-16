@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Photo Upload — Lux Memories</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:#030014; --slate:#12091F; --gold:#FFC857; --gold-bright:#FFD87A;
+    --white:#fff; --muted:rgba(255,255,255,.6); --muted-strong:rgba(255,255,255,.82);
+    --border:rgba(255,255,255,.08); --border-gold:rgba(255,200,87,.35);
+    --ok:#7CF29A; --err:#FF6B8B; --radius:18px; --radius-lg:28px;
+    --font-display:'Unbounded',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; color:var(--white); font-family:var(--font-body); line-height:1.5;
+         background: radial-gradient(1000px 600px at 50% -10%, rgba(123,44,191,.35), transparent 60%), var(--ink); }
+  a { color:var(--gold); }
+  .wrap { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; gap:12px; }
+  .brand { font-family:var(--font-display); font-weight:800; letter-spacing:.04em; font-size:15px; text-decoration:none; color:var(--white); }
+  .brand span { color:var(--gold); }
+  h1 { font-family:var(--font-display); font-weight:800; font-size:clamp(24px,6vw,32px); margin:0 0 6px; }
+  h1 em { font-style:normal; color:var(--gold); }
+  .lede { color:var(--muted-strong); margin:0 0 20px; }
+  .card { background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border:1px solid var(--border);
+          border-radius:var(--radius-lg); padding:22px; margin-bottom:16px; }
+  label.field { display:block; font-size:13px; font-weight:600; color:var(--muted-strong); margin:0 0 6px; }
+  input, select { width:100%; padding:13px 14px; border-radius:var(--radius); border:1px solid var(--border);
+                  background:var(--slate); color:var(--white); font:inherit; font-size:16px; outline:none; }
+  input:focus, select:focus { border-color:var(--gold); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:520px){ .grid { grid-template-columns:1fr; } }
+  .btn { display:inline-flex; align-items:center; justify-content:center; width:100%; margin-top:14px; padding:13px 18px;
+         border:0; border-radius:999px; font:600 15px var(--font-body); cursor:pointer; color:var(--ink);
+         background:linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+  .btn.ghost { background:transparent; color:var(--muted-strong); border:1px solid var(--border); }
+  .btn[disabled] { opacity:.5; cursor:not-allowed; }
+  .msg { min-height:20px; margin-top:10px; font-size:14px; } .msg.err { color:var(--err); } .msg.ok { color:var(--ok); }
+  .drop { margin-top:14px; border:2px dashed var(--border-gold); border-radius:var(--radius-lg); padding:34px 16px; text-align:center;
+          cursor:pointer; transition:background .15s, border-color .15s; }
+  .drop.over { background:rgba(255,200,87,.06); border-color:var(--gold); }
+  .drop b { display:block; font-size:16px; } .drop span { color:var(--muted); font-size:13px; }
+  .bar { height:8px; border-radius:8px; background:var(--border); overflow:hidden; margin-top:14px; }
+  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); transition:width .2s; }
+  .progress-text { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-top:6px; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  @media (max-width:520px){ .stats { grid-template-columns:repeat(2,1fr); } }
+  .stat { background:var(--slate); border:1px solid var(--border); border-radius:var(--radius); padding:12px; }
+  .stat b { display:block; font-family:var(--font-display); font-size:22px; }
+  .stat span { color:var(--muted); font-size:12px; }
+  ul.log { list-style:none; padding:0; margin:12px 0 0; max-height:220px; overflow:auto; font-size:13px; }
+  ul.log li { padding:6px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; gap:10px; }
+  ul.log li span:first-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .err-t { color:var(--err); } .ok-t { color:var(--ok); }
+  .who { font-size:13px; color:var(--muted); }
+  .who button { background:none; border:0; color:var(--muted); text-decoration:underline; cursor:pointer; font:inherit; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/">LUX <span>J'OUVERT</span></a>
+    <span class="who" id="who" hidden></span>
+  </header>
+
+  <h1>Photo <em>Upload</em></h1>
+  <p class="lede">For Lux photographers and staff. Pick the event and station, then drop your photos in.</p>
+
+  <!-- Login -->
+  <div class="card" id="v-login" hidden>
+    <div id="l-email">
+      <label class="field" for="email">Staff email</label>
+      <input id="email" type="email" autocomplete="email" placeholder="you@example.com" />
+      <button class="btn" id="b-send">Send login code</button>
+    </div>
+    <div id="l-code" hidden>
+      <label class="field" for="code">6-digit code from your email</label>
+      <input id="code" inputmode="numeric" maxlength="6" autocomplete="one-time-code" style="letter-spacing:.5em;text-align:center;font-weight:700" />
+      <button class="btn" id="b-verify">Log in</button>
+    </div>
+    <div class="msg" id="m-login"></div>
+  </div>
+
+  <div class="card" id="v-denied" hidden>
+    <p style="margin:0">This account isn't set up as a Lux photographer. Ask an admin to give you access, then reload this page.</p>
+  </div>
+
+  <!-- Uploader -->
+  <div id="v-upload" hidden>
+    <div class="card">
+      <div class="grid">
+        <div><label class="field" for="event">Event</label><select id="event"></select></div>
+        <div><label class="field" for="station">Station</label><select id="station"></select></div>
+      </div>
+      <input type="file" id="files" accept="image/jpeg,image/png,image/webp" multiple hidden />
+      <div class="drop" id="drop">
+        <b>Drop photos here</b>
+        <span>or tap to choose · JPEG, PNG or WebP · up to 30 MB each</span>
+      </div>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="progress-text"><span id="p-left">Ready</span><span id="p-right"></span></div>
+      <div class="msg" id="m-upload"></div>
+      <ul class="log" id="log"></ul>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <b>This event so far</b>
+        <button class="btn ghost" id="b-refresh" style="width:auto;margin:0;padding:6px 14px;font-size:13px">Refresh</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="st-photos">–</b><span>photos processed</span></div>
+        <div class="stat"><b id="st-queue">–</b><span>in the queue</span></div>
+        <div class="stat"><b id="st-faces">–</b><span>faces found</span></div>
+        <div class="stat"><b id="st-people">–</b><span>people matched</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const API = '/api/memories';
+  const $ = id => document.getElementById(id);
+  const CONCURRENCY = 3;
+  let setup = null, busy = false, statsTimer = null;
+
+  const store = { get(k){ try { return localStorage.getItem(k); } catch(_) { return null; } },
+                  set(k,v){ try { localStorage.setItem(k,v); } catch(_) {} } };
+
+  async function api(path, opts = {}) {
+    const res = await fetch(API + path, { credentials:'same-origin', ...opts });
+    let body = {}; try { body = await res.json(); } catch (_) {}
+    if (!res.ok) { const e = new Error(body.detail || `Request failed (${res.status})`); e.status = res.status; throw e; }
+    return body;
+  }
+  const post = (p, d) => api(p, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d) });
+  const msg = (id, t, k) => { $(id).textContent = t || ''; $(id).className = 'msg ' + (k || ''); };
+  const show = v => ['v-login','v-denied','v-upload'].forEach(x => $(x).hidden = x !== v);
+
+  async function route() {
+    let me;
+    try { me = await api('/me'); } catch (_) { return show('v-login'); }
+    $('who').innerHTML = ''; $('who').append(me.email + ' · ');
+    const lo = document.createElement('button'); lo.textContent = 'Log out';
+    lo.onclick = async () => { await post('/auth/logout', {}); location.reload(); };
+    $('who').append(lo); $('who').hidden = false;
+    try { setup = await api('/staff/setup'); }
+    catch (e) { return show(e.status === 403 ? 'v-denied' : 'v-login'); }
+    fill('event', setup.events, e => e.name, store.get('lux_up_event'));
+    fill('station', setup.stations, s => `${s.code} — ${s.name || s.kind}`, store.get('lux_up_station'));
+    show('v-upload'); refreshStats();
+  }
+  function fill(id, items, label, saved) {
+    const sel = $(id); sel.innerHTML = '';
+    if (!items.length) { const o = document.createElement('option'); o.textContent = 'None set up yet'; o.disabled = true; sel.append(o); return; }
+    for (const it of items) { const o = document.createElement('option'); o.value = it.id; o.textContent = label(it); sel.append(o); }
+    if (saved && items.some(i => String(i.id) === saved)) sel.value = saved;
+  }
+  $('event').onchange = () => { store.set('lux_up_event', $('event').value); refreshStats(); };
+  $('station').onchange = () => store.set('lux_up_station', $('station').value);
+
+  // Login
+  $('b-send').onclick = async () => {
+    try { await post('/auth/request-code', { email: $('email').value.trim() }); $('l-email').hidden = true; $('l-code').hidden = false; msg('m-login','Check your email for the code.','ok'); $('code').focus(); }
+    catch (e) { msg('m-login', e.message, 'err'); }
+  };
+  $('b-verify').onclick = async () => {
+    try { await post('/auth/verify-code', { email: $('email').value.trim(), code: $('code').value.trim() }); msg('m-login'); route(); }
+    catch (e) { msg('m-login', e.message, 'err'); }
+  };
+  $('code').oninput = () => { $('code').value = $('code').value.replace(/\D/g,''); if ($('code').value.length === 6) $('b-verify').click(); };
+
+  // Picking files
+  $('drop').onclick = () => !busy && $('files').click();
+  $('files').onchange = () => { upload([...$('files').files]); $('files').value = ''; };
+  ['dragenter','dragover'].forEach(ev => $('drop').addEventListener(ev, e => { e.preventDefault(); $('drop').classList.add('over'); }));
+  ['dragleave','drop'].forEach(ev => $('drop').addEventListener(ev, e => { e.preventDefault(); $('drop').classList.remove('over'); }));
+  $('drop').addEventListener('drop', e => { if (!busy) upload([...e.dataTransfer.files]); });
+
+  function logLine(name, text, kind) {
+    const li = document.createElement('li');
+    const a = document.createElement('span'); a.textContent = name;
+    const b = document.createElement('span'); b.textContent = text; b.className = kind === 'err' ? 'err-t' : 'ok-t';
+    li.append(a, b); $('log').prepend(li);
+  }
+  function progress(done, total, failed) {
+    $('bar').style.width = total ? (100 * done / total) + '%' : '0';
+    $('p-left').textContent = total ? `${done} of ${total} done` : 'Ready';
+    $('p-right').textContent = failed ? `${failed} failed` : '';
+  }
+
+  async function upload(files) {
+    if (!files.length || busy) return;
+    const event_id = +$('event').value, station_id = +$('station').value;
+    if (!event_id || !station_id) return msg('m-upload', 'Pick an event and station first.', 'err');
+    busy = true; $('drop').style.opacity = .5; msg('m-upload', 'Uploading — keep this page open.');
+    window.onbeforeunload = () => 'Uploads are still running.';
+    let done = 0, failed = 0; const total = files.length; progress(0, total, 0);
+
+    for (let i = 0; i < files.length; i += setup.max_batch) {
+      const batch = files.slice(i, i + setup.max_batch);
+      let plan;
+      try { plan = await post('/photos/presign', { event_id, station_id, files: batch.map(f => ({ name:f.name, type:f.type, size:f.size })) }); }
+      catch (e) { failed += batch.length; done += batch.length; batch.forEach(f => logLine(f.name, e.message, 'err')); progress(done,total,failed); continue; }
+      for (const s of plan.skipped) { failed++; done++; logLine(s.name, s.reason, 'err'); }
+      progress(done, total, failed);
+
+      const byName = new Map(batch.map(f => [f.name, f]));
+      const queue = [...plan.uploads], finished = [];
+      async function lane() {
+        while (queue.length) {
+          const u = queue.shift(), file = byName.get(u.name);
+          let ok = false;
+          for (let attempt = 0; attempt < 3 && !ok; attempt++) {
+            try { const r = await fetch(u.url, { method:'PUT', headers:{'Content-Type':u.content_type}, body:file }); ok = r.ok; }
+            catch (_) { await new Promise(r => setTimeout(r, 1000 * (attempt + 1))); }
+          }
+          done++; if (ok) { finished.push(u.photo_id); logLine(u.name, 'Uploaded', 'ok'); } else { failed++; logLine(u.name, 'Upload failed — try again', 'err'); }
+          progress(done, total, failed);
+        }
+      }
+      await Promise.all(Array.from({ length: CONCURRENCY }, lane));
+      if (finished.length) {
+        try { const c = await post('/photos/complete', { photo_ids: finished }); if (c.missing.length) msg('m-upload', `${c.missing.length} photo(s) didn't arrive. Try them again.`, 'err'); }
+        catch (e) { msg('m-upload', e.message, 'err'); }
+      }
+    }
+    busy = false; $('drop').style.opacity = 1; window.onbeforeunload = null;
+    msg('m-upload', failed ? `Done, with ${failed} problem(s) — see the list below.` : `All ${total} photo(s) uploaded. Processing runs automatically.`, failed ? 'err' : 'ok');
+    refreshStats(); clearInterval(statsTimer); let n = 0;
+    statsTimer = setInterval(() => { refreshStats(); if (++n >= 12) clearInterval(statsTimer); }, 5000);
+  }
+
+  async function refreshStats() {
+    const ev = +$('event').value; if (!ev) return;
+    try {
+      const s = await api(`/photos/stats?event_id=${ev}`), b = s.by_status;
+      $('st-photos').textContent = b.processed || 0;
+      $('st-queue').textContent = (b.pending || 0) + (b.processing || 0);
+      $('st-faces').textContent = s.faces; $('st-people').textContent = s.people_matched;
+    } catch (_) {}
+  }
+  $('b-refresh').onclick = refreshStats;
+
+  route();
+})();
+</script>
+</body>
+</html>

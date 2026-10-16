@@ -1,0 +1,11 @@
+fastapi==0.115.*
+uvicorn[standard]==0.32.*
+psycopg[binary]==3.2.*
+psycopg-pool==3.2.*
+pydantic==2.*
+PyJWT==2.*
+httpx==0.27.*
+python-multipart==0.0.*
+numpy==2.*
+opencv-python-headless==5.0.*
+boto3==1.*
