@@ -2,7 +2,7 @@
 // lux-memories service on Railway, so the browser only ever talks to luxjouvert.xyz.
 
 // ↓ Replace with your lux-memories Railway domain (no trailing slash)
-const MEMORIES_ORIGIN = 'https://REPLACE-ME.up.railway.app';
+   const MEMORIES_ORIGIN = 'https://lux-memories-production-0065.up.railway.app';
 
 export default {
   async fetch(request, env) {
