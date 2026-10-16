@@ -1,5 +1,10 @@
-   {
-     "name": "luxjouvert-site",
-     "compatibility_date": "2026-10-12",
-     "assets": { "directory": "." }
-   }
+{
+  "name": "luxjouvert-site",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-12",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/memories"]
+  }
+}

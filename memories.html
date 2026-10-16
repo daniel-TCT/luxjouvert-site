@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lux Memories — LUX J'Ouvert</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:#030014; --cosmic:#0B0216; --slate:#12091F;
+    --gold:#FFC857; --gold-bright:#FFD87A; --purple:#7B2CBF; --magenta:#E11D74;
+    --white:#fff; --muted:rgba(255,255,255,.6); --muted-strong:rgba(255,255,255,.82);
+    --border:rgba(255,255,255,.08); --border-gold:rgba(255,200,87,.25);
+    --ok:#7CF29A; --err:#FF6B8B;
+    --radius:18px; --radius-lg:28px;
+    --font-display:'Unbounded',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; color:var(--white); font-family:var(--font-body); line-height:1.5;
+    background: radial-gradient(1000px 600px at 50% -10%, rgba(123,44,191,.35), transparent 60%), var(--ink);
+  }
+  a { color:var(--gold); }
+  .wrap { max-width:520px; margin:0 auto; padding:32px 16px 64px; }
+  header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+  .brand { font-family:var(--font-display); font-weight:800; letter-spacing:.04em; font-size:15px; text-decoration:none; color:var(--white); }
+  .brand span { color:var(--gold); }
+  h1 { font-family:var(--font-display); font-weight:800; font-size:clamp(26px,7vw,34px); line-height:1.1; margin:0 0 8px; }
+  h1 em { font-style:normal; color:var(--gold); }
+  .lede { color:var(--muted-strong); margin:0 0 24px; }
+  .card { background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015)); border:1px solid var(--border);
+          border-radius:var(--radius-lg); padding:24px; }
+  .steps { display:flex; gap:6px; margin-bottom:20px; }
+  .steps i { flex:1; height:4px; border-radius:4px; background:var(--border); }
+  .steps i.on { background:var(--gold); }
+  label.field { display:block; font-size:13px; font-weight:600; color:var(--muted-strong); margin:0 0 6px; }
+  input[type=email], input[type=text], input[inputmode=numeric] {
+    width:100%; padding:14px 16px; border-radius:var(--radius); border:1px solid var(--border);
+    background:var(--slate); color:var(--white); font:inherit; font-size:16px; outline:none;
+  }
+  input:focus { border-color:var(--gold); }
+  input.code { letter-spacing:.5em; text-align:center; font-size:22px; font-weight:700; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:16px; padding:14px 18px;
+         border:0; border-radius:999px; font:600 15px var(--font-body); cursor:pointer; color:var(--ink);
+         background:linear-gradient(90deg, var(--gold), var(--gold-bright)); }
+  .btn.ghost { background:transparent; color:var(--muted-strong); border:1px solid var(--border); }
+  .btn[disabled] { opacity:.5; cursor:not-allowed; }
+  .msg { min-height:20px; margin-top:12px; font-size:14px; }
+  .msg.err { color:var(--err); } .msg.ok { color:var(--ok); }
+  .consent { display:flex; gap:12px; align-items:flex-start; padding:14px; border:1px solid var(--border); border-radius:var(--radius); margin-top:12px; cursor:pointer; }
+  .consent input { margin-top:3px; width:18px; height:18px; accent-color:var(--gold); flex:none; }
+  .consent b { display:block; font-size:14px; }
+  .consent span { color:var(--muted); font-size:13px; }
+  .fine { color:var(--muted); font-size:12px; margin-top:14px; }
+  .cam { position:relative; aspect-ratio:3/4; border-radius:var(--radius-lg); overflow:hidden; background:#000; border:1px solid var(--border-gold); }
+  .cam video, .cam img { width:100%; height:100%; object-fit:cover; display:block; transform:scaleX(-1); }
+  .cam img { transform:none; }
+  .oval { position:absolute; inset:12% 18% 16%; border:2px dashed rgba(255,200,87,.7); border-radius:50%; pointer-events:none; }
+  .row { display:flex; gap:10px; } .row .btn { margin-top:12px; }
+  .done { text-align:center; }
+  .done .tick { width:64px; height:64px; margin:0 auto 12px; border-radius:50%; display:grid; place-items:center;
+                background:rgba(124,242,154,.12); color:var(--ok); font-size:30px; }
+  .meta { display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; font-size:13px; color:var(--muted);
+          margin-top:20px; padding-top:16px; border-top:1px solid var(--border); }
+  .meta button { background:none; border:0; color:var(--muted); text-decoration:underline; cursor:pointer; font:inherit; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="/">LUX <span>J'OUVERT</span></a>
+    <a href="/" style="font-size:13px">← Back to site</a>
+  </header>
+
+  <h1>Lux <em>Memories</em></h1>
+  <p class="lede">Set up once. After every Lux event, we'll find the photos you're in and put them together for you.</p>
+
+  <div class="card">
+    <div class="steps"><i id="s1"></i><i id="s2"></i><i id="s3"></i></div>
+
+    <!-- Step 1a: email -->
+    <section id="v-email" hidden>
+      <label class="field" for="email">Your email</label>
+      <input id="email" type="email" autocomplete="email" placeholder="you@example.com" />
+      <button class="btn" id="b-send">Send me a login code</button>
+      <div class="msg" id="m-email"></div>
+    </section>
+
+    <!-- Step 1b: code -->
+    <section id="v-code" hidden>
+      <label class="field" for="code">Enter the 6-digit code we emailed to <span id="sent-to"></span></label>
+      <input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••" />
+      <button class="btn" id="b-verify">Log in</button>
+      <button class="btn ghost" id="b-back">Use a different email</button>
+      <div class="msg" id="m-code"></div>
+    </section>
+
+    <!-- Step 2: name + consent -->
+    <section id="v-consent" hidden>
+      <label class="field" for="name">Your name</label>
+      <input id="name" type="text" autocomplete="name" placeholder="As it appears on your ticket" />
+      <label class="consent">
+        <input type="checkbox" id="c-security" />
+        <div><b>Use my selfie to confirm it's me at entry</b>
+        <span>Security staff can check that the person holding the reservation is you.</span></div>
+      </label>
+      <label class="consent">
+        <input type="checkbox" id="c-matching" />
+        <div><b>Use my selfie to find me in event photos</b>
+        <span>Lux Memories matches your face against photos from Lux events and builds your photo bundles.</span></div>
+      </label>
+      <p class="fine">We store a numeric face fingerprint, not your selfie photo. You can delete your face data at any time from this page. Face data from each event is deleted after the event's retention period.</p>
+      <button class="btn" id="b-consent">Continue</button>
+      <div class="msg" id="m-consent"></div>
+    </section>
+
+    <!-- Step 3: selfie -->
+    <section id="v-selfie" hidden>
+      <div class="cam">
+        <video id="video" playsinline autoplay muted></video>
+        <img id="preview" alt="Your selfie" hidden />
+        <div class="oval" id="oval"></div>
+      </div>
+      <p class="fine">Face the camera in good light, on your own, with nothing covering your face.</p>
+      <div class="row" id="r-shoot"><button class="btn" id="b-shoot" disabled>Take selfie</button></div>
+      <div class="row" id="r-confirm" hidden>
+        <button class="btn ghost" id="b-retake">Retake</button>
+        <button class="btn" id="b-use">Use this photo</button>
+      </div>
+      <div class="msg" id="m-selfie"></div>
+    </section>
+
+    <!-- Done -->
+    <section id="v-done" class="done" hidden>
+      <div class="tick">✓</div>
+      <h2 style="font-family:var(--font-display);font-size:20px;margin:0 0 6px">You're set up</h2>
+      <p class="lede" id="done-text" style="margin:0">We'll email you when your photos from the next Lux event are ready.</p>
+      <button class="btn ghost" id="b-reselfie">Retake my selfie</button>
+    </section>
+
+    <div class="meta" id="meta" hidden>
+      <span id="who"></span>
+      <span><button id="b-delete">Delete my face data</button> · <button id="b-logout">Log out</button></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const API = '/api/memories';
+  const $ = id => document.getElementById(id);
+  const views = ['v-email','v-code','v-consent','v-selfie','v-done'];
+  let stream = null, shotBlob = null, me = null;
+
+  function show(view, step) {
+    views.forEach(v => $(v).hidden = v !== view);
+    ['s1','s2','s3'].forEach((s,i) => $(s).classList.toggle('on', i < step));
+    $('meta').hidden = !me;
+    if (view !== 'v-selfie') stopCamera();
+  }
+  function msg(id, text, kind) { const el = $(id); el.textContent = text || ''; el.className = 'msg ' + (kind || ''); }
+
+  async function api(path, opts = {}) {
+    const res = await fetch(API + path, { credentials: 'same-origin', ...opts });
+    let body = {}; try { body = await res.json(); } catch (_) {}
+    if (!res.ok) throw new Error(body.detail || 'Something went wrong. Please try again.');
+    return body;
+  }
+  const post = (path, data) => api(path, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) });
+
+  async function route() {
+    try { me = await api('/me'); } catch (_) { me = null; }
+    if (!me) return show('v-email', 1);
+    $('who').textContent = me.email;
+    if (me.name) $('name').value = me.name;
+    $('c-security').checked = me.consent_security; $('c-matching').checked = me.consent_matching;
+    if (!me.consent_security && !me.consent_matching) return show('v-consent', 2);
+    if (!me.selfie_enrolled) { show('v-selfie', 3); return startCamera(); }
+    $('done-text').textContent = me.consent_matching
+      ? "We'll email you when your photos from the next Lux event are ready."
+      : "Your selfie is set for entry checks. Turn on photo matching any time to get your event photos.";
+    show('v-done', 3);
+  }
+
+  // Step 1
+  $('b-send').onclick = async () => {
+    const email = $('email').value.trim();
+    if (!email) return msg('m-email', 'Enter your email.', 'err');
+    $('b-send').disabled = true; msg('m-email', 'Sending…');
+    try { await post('/auth/request-code', { email }); $('sent-to').textContent = email; msg('m-email'); show('v-code', 1); $('code').focus(); }
+    catch (e) { msg('m-email', e.message, 'err'); }
+    $('b-send').disabled = false;
+  };
+  $('email').onkeydown = e => { if (e.key === 'Enter') $('b-send').click(); };
+  $('b-back').onclick = () => show('v-email', 1);
+  $('b-verify').onclick = async () => {
+    $('b-verify').disabled = true; msg('m-code', 'Checking…');
+    try { await post('/auth/verify-code', { email: $('email').value.trim(), code: $('code').value.trim() }); msg('m-code'); await route(); }
+    catch (e) { msg('m-code', e.message, 'err'); }
+    $('b-verify').disabled = false;
+  };
+  $('code').oninput = () => { $('code').value = $('code').value.replace(/\D/g,''); if ($('code').value.length === 6) $('b-verify').click(); };
+
+  // Step 2
+  $('b-consent').onclick = async () => {
+    const security = $('c-security').checked, matching = $('c-matching').checked;
+    if (!security && !matching) return msg('m-consent', 'Tick at least one option to continue, or come back later.', 'err');
+    $('b-consent').disabled = true;
+    try { await post('/consent', { name: $('name').value.trim(), security, matching }); msg('m-consent'); await route(); }
+    catch (e) { msg('m-consent', e.message, 'err'); }
+    $('b-consent').disabled = false;
+  };
+
+  // Step 3 — live camera only, no gallery upload
+  async function startCamera() {
+    resetShot();
+    if (!navigator.mediaDevices?.getUserMedia) return msg('m-selfie', "Your browser can't open the camera. Try Chrome or Safari on your phone.", 'err');
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+      $('video').srcObject = stream; $('b-shoot').disabled = false; msg('m-selfie');
+    } catch (e) {
+      msg('m-selfie', 'Allow camera access to take your selfie, then reload this page.', 'err');
+    }
+  }
+  function stopCamera() { if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; } }
+  function resetShot() {
+    shotBlob = null; $('preview').hidden = true; $('video').hidden = false; $('oval').hidden = false;
+    $('r-shoot').hidden = false; $('r-confirm').hidden = true;
+  }
+  $('b-shoot').onclick = () => {
+    const v = $('video'), c = document.createElement('canvas');
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    const ctx = c.getContext('2d'); ctx.translate(c.width, 0); ctx.scale(-1, 1); ctx.drawImage(v, 0, 0);
+    c.toBlob(b => {
+      shotBlob = b; $('preview').src = URL.createObjectURL(b);
+      $('preview').hidden = false; $('video').hidden = true; $('oval').hidden = true;
+      $('r-shoot').hidden = true; $('r-confirm').hidden = false;
+    }, 'image/jpeg', 0.92);
+  };
+  $('b-retake').onclick = () => { resetShot(); msg('m-selfie'); };
+  $('b-use').onclick = async () => {
+    if (!shotBlob) return;
+    $('b-use').disabled = true; msg('m-selfie', 'Checking your photo…');
+    const fd = new FormData(); fd.append('selfie', shotBlob, 'selfie.jpg');
+    try { await api('/enroll', { method:'POST', body: fd }); msg('m-selfie'); await route(); }
+    catch (e) { msg('m-selfie', e.message, 'err'); resetShot(); }
+    $('b-use').disabled = false;
+  };
+  $('b-reselfie').onclick = () => { show('v-selfie', 3); startCamera(); };
+
+  // Account actions
+  $('b-delete').onclick = async () => {
+    if (!confirm('Delete your face data? This removes your face fingerprint, any photo matches, and both consents. You can set it up again later.')) return;
+    try { await api('/face', { method:'DELETE' }); await route(); } catch (e) { alert(e.message); }
+  };
+  $('b-logout').onclick = async () => { await post('/auth/logout', {}); me = null; show('v-email', 1); };
+
+  route();
+})();
+</script>
+</body>
+</html>
