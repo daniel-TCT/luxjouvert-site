@@ -171,9 +171,12 @@
     try { await post('/auth/request-code', { email: $('email').value.trim() }); $('l-email').hidden = true; $('l-code').hidden = false; msg('m-login','Check your email for the code.','ok'); $('code').focus(); }
     catch (e) { msg('m-login', e.message, 'err'); }
   };
+  let verifying = false;
   $('b-verify').onclick = async () => {
-    try { await post('/auth/verify-code', { email: $('email').value.trim(), code: $('code').value.trim() }); msg('m-login'); route(); }
+    if (verifying) return; verifying = true; $('b-verify').disabled = true;
+    try { await post('/auth/verify-code', { email: $('email').value.trim(), code: $('code').value.trim() }); msg('m-login'); await route(); }
     catch (e) { msg('m-login', e.message, 'err'); }
+    $('b-verify').disabled = false; verifying = false;
   };
   $('code').oninput = () => { $('code').value = $('code').value.replace(/\D/g,''); if ($('code').value.length === 6) $('b-verify').click(); };
 
@@ -251,6 +254,9 @@
 
   route();
 })();
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
