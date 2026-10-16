@@ -13,10 +13,7 @@ export default {
       return fetch(new Request(target, request));
     }
 
-    // Pretty URL: luxjouvert.xyz/memories → memories.html
-    if (url.pathname === '/memories') {
-      return env.ASSETS.fetch(new Request(new URL('/memories.html', url), request));
-    }
+    
 
     return env.ASSETS.fetch(request);
   },
