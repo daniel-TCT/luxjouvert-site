@@ -1,0 +1,2379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#030014" />
+<title>LUX J'Ouvert × Blackout — Trinidad Carnival 2027</title>
+<meta name="description" content="Two experiences. One standard. All Lux. LUX J'Ouvert and Lux Blackout — Trinidad Carnival 2027. Reserve your premium experience." />
+<meta name="keywords" content="LUX J'Ouvert, Blackout, Trinidad Carnival 2027, J'Ouvert band 2027, Trinidad J'Ouvert, San Fernando J'Ouvert, LED Monday Night Mas" />
+<meta name="author" content="LUX J'Ouvert" />
+
+<!-- Canonical -->
+<link rel="canonical" href="https://luxjouvert.com/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://luxjouvert.com/" />
+<meta property="og:title" content="LUX J'Ouvert × Blackout — Trinidad Carnival 2027" />
+<meta property="og:description" content="Two experiences. One standard. All Lux." />
+<meta property="og:image" content="https://luxjouvert.com/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Inter:wght@400;500;600;700&family=Syne:ital,wght@1,600;1,800&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   LUX J'OUVERT × BLACKOUT — 2027
+   v1 visual direction (gold/purple cosmic) with v2 functionality
+   ============================================================ */
+
+:root {
+  /* Substrate */
+  --ink: #030014;
+  --cosmic: #0B0216;
+  --royal-shadow: #1A0B2E;
+  --slate: #12091F;
+
+  /* LUX J'Ouvert palette (dawn) */
+  --gold: #FFC857;
+  --gold-bright: #FFD87A;
+  --purple: #7B2CBF;
+  --purple-deep: #4B1A80;
+  --magenta: #E11D74;
+
+  /* Blackout palette (night) */
+  --cyan: #00F0FF;
+  --lime: #C7FF3C;
+  --fuchsia: #FF3CAC;
+  --neon-purple: #9D4EDD;
+  --neon-pink: #FF2BB1;
+  --neon-orange: #FF9626;
+
+  --white: #FFFFFF;
+  --muted: rgba(255,255,255,0.6);
+  --muted-strong: rgba(255,255,255,0.82);
+  --border: rgba(255,255,255,0.08);
+  --border-gold: rgba(255,200,87,0.25);
+
+  --radius: 18px;
+  --radius-lg: 28px;
+  --maxw: 1280px;
+
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-accent: 'Syne', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--white);
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+/* Persistent cosmic backdrop */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(123,44,191,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(255,200,87,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(225,29,116,0.18) 0%, transparent 55%),
+    linear-gradient(180deg, #0B0216 0%, #030014 50%, #000000 100%);
+}
+
+/* Twinkling starfield */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255,216,122,0.9), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(0,240,255,0.8), transparent),
+    radial-gradient(1px 1px at 90px 50px, rgba(255,216,122,0.6), transparent),
+    radial-gradient(1px 1px at 130px 120px, rgba(255,60,172,0.7), transparent),
+    radial-gradient(2px 2px at 180px 30px, rgba(199,255,60,0.5), transparent),
+    radial-gradient(1px 1px at 230px 180px, rgba(255,216,122,0.8), transparent),
+    radial-gradient(1px 1px at 300px 90px, rgba(157,78,221,0.7), transparent);
+  background-size: 350px 350px;
+  opacity: 0.55;
+  animation: drift 60s linear infinite;
+}
+@keyframes drift { to { background-position: 350px 350px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+/* ------------ Preloader ------------ */
+#preloader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--ink);
+  display: grid; place-items: center;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; }
+.pl-logo {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 10vw, 120px);
+  font-weight: 900; letter-spacing: -.02em;
+  background: linear-gradient(120deg, var(--gold) 0%, var(--magenta) 35%, var(--cyan) 70%, var(--gold) 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2.4s ease-in-out infinite;
+}
+.pl-sub {
+  font-family: var(--font-accent); font-style: italic;
+  color: var(--muted); letter-spacing: .3em; text-transform: uppercase;
+  font-size: 11px; margin-top: 12px;
+}
+@keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+/* ------------ Nav ------------ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: rgba(3,0,20,0.55);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s ease, border-color .3s ease;
+}
+.nav-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+}
+.logo {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 22px; letter-spacing: -.01em;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.logo .lux {
+  background: linear-gradient(135deg, var(--gold), var(--magenta), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.logo .jouv { color: var(--white); opacity: .85; font-weight: 600; font-size: 12px; letter-spacing: .25em; }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: var(--muted-strong);
+  position: relative; padding: 6px 0;
+  transition: color .2s;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 1px; background: var(--gold); transition: width .3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+
+/* Admin link — subtle on desktop, gold accent on mobile */
+.nav-links a.nav-admin { color: var(--gold); }
+.nav-links a.nav-admin::after { background: var(--gold); }
+
+.nav-cta {
+  font-family: var(--font-display); font-weight: 600;
+  padding: 10px 18px; border-radius: 999px;
+  background: var(--gold); color: var(--ink);
+  font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  transition: transform .2s, box-shadow .2s;
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,200,87,0.35); }
+
+.nav-toggle { display: none; font-size: 22px; color: var(--white); }
+
+@media (max-width: 820px) {
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; padding: 20px; background: rgba(3,0,20,0.95);
+    border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: inline-block; }
+  .nav-cta { padding: 8px 14px; font-size: 11px; }
+
+  /* Admin link — highlighted in mobile menu */
+  .nav-links a.nav-admin {
+    margin-top: 8px;
+    padding: 12px 16px;
+    border: 1px solid var(--border-gold);
+    border-radius: 999px;
+    background: rgba(255,200,87,0.08);
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 12px;
+  }
+  .nav-links a.nav-admin::after { display: none; }
+}
+
+/* ------------ Hero ------------ */
+.hero {
+  min-height: 100vh; min-height: 100svh;
+  position: relative;
+  display: grid; place-items: center;
+  padding: 100px 24px 140px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Animated paint-splatter halo */
+.hero-halo {
+  position: absolute; inset: -10%; z-index: -1;
+  filter: blur(60px); opacity: 0.75;
+  animation: halo 18s ease-in-out infinite alternate;
+}
+@keyframes halo {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.15) rotate(6deg); }
+}
+
+.hero-inner { max-width: 1100px; text-align: center; position: relative; }
+
+/* Phoenix image at top of hero.
+   Drop in `phoenix.png` (the band's logo with phoenix) next to index.html.
+   If the file is missing, alt text shows and the layout still works. */
+.hero-phoenix {
+  width: 100%; max-width: 620px;
+  height: auto; margin: 0 auto 24px;
+  filter: drop-shadow(0 8px 48px rgba(255,60,172,0.35)) drop-shadow(0 0 80px rgba(255,200,87,0.18));
+  animation: phoenixFloat 8s ease-in-out infinite;
+}
+@keyframes phoenixFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-8px) scale(1.015); }
+}
+
+.eyebrow {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: 14px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; width: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.hero h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(40px, 8vw, 96px);
+  line-height: 0.95; letter-spacing: -.03em;
+  margin-bottom: 18px;
+}
+.hero h1 .l1 {
+  display: block;
+  font-size: 0.45em; font-weight: 600;
+  letter-spacing: .35em; text-transform: uppercase;
+  color: var(--white); opacity: 0.55;
+  margin-bottom: 10px;
+}
+.hero h1 .l2 {
+  display: block;
+  background: linear-gradient(120deg, var(--gold) 0%, var(--gold-bright) 40%, var(--magenta) 65%, var(--purple) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+.hero h1 .amp { color: var(--gold); opacity: .6; margin: 0 8px; font-weight: 600; font-style: italic; font-family: var(--font-accent); }
+.hero h1 .l3 {
+  display: inline-block;
+  background: linear-gradient(120deg, var(--cyan) 0%, var(--lime) 50%, var(--fuchsia) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-tag {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: clamp(16px, 2.4vw, 22px);
+  color: var(--muted-strong); margin: 32px 0 40px;
+  letter-spacing: .02em; line-height: 1.7;
+}
+.hero-tag b { color: var(--gold); font-weight: 800; font-style: normal; letter-spacing: .08em; }
+.hero-tag .neon { color: var(--cyan); font-weight: 800; font-style: normal; letter-spacing: .08em; }
+
+.hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+
+.btn {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display); font-weight: 600;
+  padding: 16px 28px; border-radius: 999px;
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  transition: transform .25s, box-shadow .25s;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: var(--ink);
+  box-shadow: 0 12px 32px rgba(255,200,87,.25), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.btn-gold:hover { box-shadow: 0 18px 48px rgba(255,200,87,.45); }
+
+.btn-neon {
+  background: linear-gradient(135deg, var(--cyan), var(--fuchsia));
+  color: var(--ink);
+  box-shadow: 0 12px 32px rgba(0,240,255,.25), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.btn-neon:hover { box-shadow: 0 18px 48px rgba(255,60,172,.45); }
+
+.btn-ghost {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+  color: var(--white);
+}
+.btn-ghost:hover { border-color: var(--gold); }
+
+.hero-meta {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+  font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--muted); padding: 0 16px;
+}
+.hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.hero-meta .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+/* ------------ Marquee ------------ */
+.marquee {
+  overflow: hidden; white-space: nowrap;
+  padding: 22px 0;
+  border-block: 1px solid var(--border-gold);
+  background: linear-gradient(90deg, rgba(255,200,87,0.05), rgba(123,44,191,0.05), rgba(0,240,255,0.05));
+}
+.marquee-track {
+  display: inline-flex; gap: 48px;
+  animation: marquee 40s linear infinite;
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(24px, 4vw, 48px);
+  letter-spacing: -.01em;
+}
+.marquee-track span {
+  background: linear-gradient(135deg, var(--gold), var(--magenta), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.marquee-track .sep {
+  background: none; -webkit-text-fill-color: var(--gold); color: var(--gold);
+  opacity: 0.5;
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ------------ Sections ------------ */
+.section { padding: 120px 24px; position: relative; }
+@media (max-width: 640px) { .section { padding: 80px 20px; } }
+
+.section-label {
+  font-family: var(--font-accent); font-style: italic;
+  color: var(--gold); letter-spacing: .3em; text-transform: uppercase;
+  font-size: 11px; margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 1; letter-spacing: -.025em;
+  margin-bottom: 24px;
+}
+.section-title .accent {
+  background: linear-gradient(120deg, var(--gold), var(--magenta));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-title .neon {
+  background: linear-gradient(120deg, var(--cyan), var(--fuchsia));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-lede {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--muted-strong); max-width: 720px;
+  line-height: 1.55;
+}
+
+/* ------------ Two Worlds ------------ */
+.worlds { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 60px; }
+@media (max-width: 900px) { .worlds { grid-template-columns: 1fr; } }
+
+.world {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-lg);
+  padding: 48px 36px; min-height: 560px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border: 1px solid var(--border);
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), border-color .5s;
+}
+.world:hover { transform: translateY(-6px); }
+
+.world-jouvert {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,200,87,0.28), transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(123,44,191,0.35), transparent 60%),
+    linear-gradient(160deg, #1A0B2E 0%, #0B0216 100%);
+}
+.world-jouvert:hover { border-color: var(--gold); box-shadow: 0 20px 60px rgba(255,200,87,0.15); }
+
+.world-blackout {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(0,240,255,0.22), transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(255,60,172,0.25), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(199,255,60,0.1), transparent 70%),
+    #000;
+}
+.world-blackout:hover { border-color: var(--cyan); box-shadow: 0 20px 60px rgba(0,240,255,0.15); }
+
+.world-tag {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--muted-strong); margin-bottom: 16px;
+}
+.world-jouvert .world-tag { color: var(--gold); }
+.world-blackout .world-tag { color: var(--cyan); }
+
+.world h3 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 0.95; letter-spacing: -.025em;
+  margin-bottom: 20px;
+}
+.world-jouvert h3 {
+  background: linear-gradient(120deg, var(--gold), var(--gold-bright), var(--magenta));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.world-blackout h3 {
+  background: linear-gradient(120deg, var(--cyan), var(--lime), var(--fuchsia));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 24px rgba(0,240,255,0.15));
+}
+
+.world p { color: var(--muted-strong); max-width: 440px; margin-bottom: 28px; font-size: 15px; line-height: 1.6; }
+
+.world-price {
+  display: flex; align-items: baseline; gap: 10px;
+  margin: 28px 0;
+  font-family: var(--font-display);
+}
+.world-price .amt { font-size: 48px; font-weight: 900; letter-spacing: -.02em; }
+.world-jouvert .world-price .amt { color: var(--gold); }
+.world-blackout .world-price .amt { color: var(--cyan); }
+.world-price .cur { font-size: 14px; color: var(--muted); letter-spacing: .1em; }
+
+/* ------------ Package detail cards ------------ */
+.packages { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 60px; }
+@media (max-width: 900px) { .packages { grid-template-columns: 1fr; } }
+
+.pkg {
+  border-radius: var(--radius-lg);
+  padding: 44px 36px;
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.pkg-jouvert {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,200,87,0.2), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(123,44,191,0.3), transparent 60%),
+    #0B0216;
+  border-color: var(--border-gold);
+}
+.pkg-blackout {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(0,240,255,0.18), transparent 55%),
+    radial-gradient(circle at 0% 100%, rgba(255,60,172,0.2), transparent 55%),
+    #000;
+  border-color: rgba(0,240,255,0.2);
+}
+
+.pkg h4 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1; margin-bottom: 8px;
+}
+.pkg-jouvert h4 { color: var(--gold); }
+.pkg-blackout h4 { color: var(--cyan); }
+.pkg .pkg-sub {
+  font-family: var(--font-accent); font-style: italic;
+  color: var(--muted); letter-spacing: .08em; font-size: 13px;
+  margin-bottom: 28px;
+}
+.inclusions {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px;
+  margin: 24px 0 28px;
+  list-style: none;
+}
+@media (max-width: 520px) { .inclusions { grid-template-columns: 1fr; } }
+.inclusions li {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--muted-strong);
+  padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.05);
+}
+.inclusions li::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.pkg-jouvert .inclusions li::before { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+.pkg-blackout .inclusions li::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+
+.pkg-price-row { display: flex; align-items: baseline; gap: 10px; margin: 8px 0 24px; }
+.pkg-price-row .amt {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(40px, 5vw, 56px);
+  letter-spacing: -.025em;
+}
+.pkg-jouvert .pkg-price-row .amt { color: var(--gold); }
+.pkg-blackout .pkg-price-row .amt { color: var(--cyan); }
+.pkg-price-row .cur { font-size: 13px; color: var(--muted); letter-spacing: .15em; font-weight: 600; }
+
+/* ------------ Reserve / Auth flow ------------ */
+.reserve-wrap {
+  margin-top: 60px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,200,87,0.12), transparent 60%),
+    linear-gradient(180deg, rgba(11,2,22,0.8), rgba(3,0,20,0.95));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 48px 36px;
+  position: relative; overflow: hidden;
+}
+@media (max-width: 640px) { .reserve-wrap { padding: 32px 22px; } }
+
+.reserve-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 900px) { .reserve-grid { grid-template-columns: 1fr; } }
+
+.reserve-steps { list-style: none; counter-reset: stp; }
+.reserve-steps li {
+  padding: 16px 0 16px 48px; position: relative;
+  counter-increment: stp;
+  color: var(--muted-strong); font-size: 14px; line-height: 1.6;
+  border-bottom: 1px dashed rgba(255,255,255,0.06);
+}
+.reserve-steps li::before {
+  content: counter(stp, decimal-leading-zero);
+  position: absolute; left: 0; top: 16px;
+  font-family: var(--font-display); font-weight: 900;
+  color: var(--gold); font-size: 14px;
+  width: 32px; height: 32px;
+  border: 1px solid var(--border-gold); border-radius: 50%;
+  display: grid; place-items: center;
+}
+.reserve-steps li b { color: var(--white); font-weight: 600; display: block; margin-bottom: 4px; font-family: var(--font-display); letter-spacing: .04em; font-size: 13px; text-transform: uppercase; }
+
+/* Form */
+.form-card {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  backdrop-filter: blur(10px);
+}
+.form-tabs { display: flex; gap: 8px; margin-bottom: 24px; padding: 4px; background: rgba(255,255,255,0.04); border-radius: 999px; }
+.form-tab {
+  flex: 1; padding: 10px 16px; border-radius: 999px;
+  font-family: var(--font-display); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+  transition: all .25s;
+}
+.form-tab.active { background: var(--gold); color: var(--ink); }
+
+.form-step { display: none; }
+.form-step.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+label {
+  display: block; font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 6px; margin-top: 14px; font-weight: 600;
+}
+.field {
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--white); font-size: 15px; font-family: var(--font-body);
+  transition: border-color .2s, background .2s;
+}
+.field:focus { outline: none; border-color: var(--gold); background: rgba(255,200,87,0.04); }
+.field::placeholder { color: rgba(255,255,255,0.35); }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+/* Radio chip groups */
+.chip-group {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+}
+.chip-input { position: absolute; opacity: 0; pointer-events: none; }
+.chip-label {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 16px; border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .2s;
+  user-select: none;
+  font-family: var(--font-display); letter-spacing: .06em; text-transform: uppercase;
+}
+.chip-label:hover { border-color: var(--gold); background: rgba(255,200,87,0.06); }
+.chip-input:checked + .chip-label {
+  background: var(--gold); color: var(--ink); border-color: transparent;
+  box-shadow: 0 4px 16px rgba(255,200,87,0.25);
+}
+.chip-input:focus-visible + .chip-label { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* Color chip */
+.color-chip-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px 8px 8px; border-radius: 999px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all .2s;
+  font-family: var(--font-display); letter-spacing: .06em; text-transform: uppercase;
+}
+.color-chip-label .swatch {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.color-chip-label[data-color="black"] .swatch { background: #000; }
+.color-chip-label[data-color="white"] .swatch { background: #fff; border-color: #ccc; }
+.color-chip-label[data-color="neon-pink"] .swatch { background: var(--neon-pink); box-shadow: 0 0 12px var(--neon-pink); }
+.color-chip-label[data-color="neon-orange"] .swatch { background: var(--neon-orange); box-shadow: 0 0 12px var(--neon-orange); }
+.color-chip-label:hover { border-color: var(--gold); }
+.chip-input:checked + .color-chip-label {
+  background: rgba(255,200,87,0.12); border-color: var(--gold);
+}
+.chip-input:focus-visible + .color-chip-label { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* Conditional reveal blocks */
+.reveal-block { display: none; padding-top: 14px; margin-top: 14px; border-top: 1px dashed rgba(255,255,255,0.08); }
+.reveal-block.show { display: block; animation: fadeIn .3s ease; }
+.reveal-block legend {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 11px; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 22px; padding: 16px;
+  background: rgba(225,29,116,0.06);
+  border: 1px solid rgba(225,29,116,0.25);
+  border-radius: 12px;
+}
+.disclaimer ul { list-style: none; font-size: 13px; color: var(--muted-strong); margin-bottom: 12px; }
+.disclaimer li { padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+.disclaimer li::before { content: "•"; position: absolute; left: 4px; color: var(--magenta); font-weight: 800; }
+.disclaimer li b { color: var(--magenta); text-transform: uppercase; letter-spacing: .04em; font-weight: 800; }
+.disclaimer .check {
+  display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
+  color: var(--white); cursor: pointer; user-select: none;
+  padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.08);
+}
+.disclaimer .check input { margin-top: 3px; accent-color: var(--gold); width: 16px; height: 16px; }
+
+.form-actions { margin-top: 24px; display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+.auth-hint { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; }
+
+.msg { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-top: 14px; display: none; }
+.msg.show { display: block; }
+.msg.error { background: rgba(225,29,116,0.12); border: 1px solid rgba(225,29,116,0.4); color: #FF8DB5; }
+.msg.success { background: rgba(199,255,60,0.1); border: 1px solid rgba(199,255,60,0.35); color: var(--lime); }
+
+.reservation-receipt {
+  background: linear-gradient(135deg, rgba(255,200,87,0.08), rgba(123,44,191,0.08));
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius);
+  padding: 28px 24px; margin-top: 18px;
+  display: none;
+}
+.reservation-receipt.show { display: block; animation: fadeIn .4s ease; }
+.receipt-id {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 28px; letter-spacing: .05em;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 8px 0 14px;
+}
+.receipt-row { display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px dashed rgba(255,255,255,0.08); font-size: 14px; gap: 10px; }
+.receipt-row span:first-child { color: var(--muted); letter-spacing: .05em; text-transform: uppercase; font-size: 11px; }
+.receipt-row span:last-child { color: var(--white); font-weight: 500; text-align: right; }
+.receipt-status {
+  margin-top: 16px;
+  padding: 10px 14px; border-radius: 8px;
+  background: rgba(255,200,87,0.08);
+  border: 1px solid var(--border-gold);
+  font-size: 12px; color: var(--gold);
+  text-align: center; letter-spacing: .12em; text-transform: uppercase; font-weight: 700;
+}
+
+/* Account strip */
+.account-strip {
+  padding: 12px 16px;
+  background: rgba(255,200,87,0.06);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+.account-strip .who { color: var(--gold); font-weight: 600; }
+.account-strip button { color: var(--muted); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.account-strip button:hover { color: var(--white); }
+
+/* Schedule timeline */
+.timeline { margin-top: 60px; position: relative; padding-left: 32px; }
+.timeline::before {
+  content: ""; position: absolute; left: 11px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), var(--purple), var(--cyan));
+}
+.t-item { position: relative; padding: 18px 0 30px; }
+.t-item::before {
+  content: ""; position: absolute; left: -28px; top: 24px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 0 4px rgba(255,200,87,0.2);
+}
+.t-item:nth-child(2)::before { background: var(--purple); box-shadow: 0 0 0 4px rgba(123,44,191,0.3); }
+.t-item:nth-child(3)::before { background: var(--magenta); box-shadow: 0 0 0 4px rgba(225,29,116,0.3); }
+.t-item:nth-child(4)::before { background: var(--cyan); box-shadow: 0 0 0 4px rgba(0,240,255,0.3); }
+.t-time { font-family: var(--font-display); font-weight: 900; font-size: 18px; color: var(--gold); letter-spacing: .05em; }
+.t-title { font-family: var(--font-display); font-weight: 600; font-size: 20px; margin: 6px 0; }
+.t-desc { color: var(--muted-strong); font-size: 14px; max-width: 520px; line-height: 1.6; }
+
+/* Carousel (rotating gallery) */
+.carousel { position: relative; max-width: 1125px; margin: 0 auto; }
+.carousel-track {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 80vh;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  background: rgba(255,255,255,0.03);
+}
+.carousel-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity .9s ease;
+  pointer-events: none;
+}
+.carousel-slide.is-active { opacity: 1; pointer-events: auto; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+.carousel-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(3,0,20,0.55); border: 1px solid var(--border-gold);
+  color: var(--gold); font-size: 22px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(6px); transition: background .2s, border-color .2s;
+  z-index: 2;
+}
+.carousel-arrow:hover { background: rgba(3,0,20,0.85); border-color: var(--gold); }
+.carousel-arrow.prev { left: 14px; }
+.carousel-arrow.next { right: 14px; }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.carousel-dots button {
+  width: 8px; height: 8px; border-radius: 50%; padding: 0;
+  border: 1px solid var(--border-gold); background: transparent; cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.carousel-dots button.is-active { background: var(--gold); transform: scale(1.2); }
+@media (max-width: 600px) {
+  .carousel-arrow { width: 36px; height: 36px; font-size: 18px; }
+  .carousel-track { aspect-ratio: 3 / 4; max-height: 70vh; }
+}
+
+/* Gallery */
+.gallery {
+  margin-top: 48px;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 150px; gap: 12px;
+  grid-auto-flow: dense;
+}
+@media (max-width: 900px) { .gallery { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 130px; } }
+@media (max-width: 600px) { .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; gap: 10px; } }
+
+.g-tile {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: #0B0216;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s, box-shadow .4s;
+}
+.g-tile img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.g-tile::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(3,0,20,0.55) 100%);
+  opacity: 0; transition: opacity .4s; pointer-events: none;
+}
+.g-tile:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 18px 48px rgba(255,200,87,0.18); }
+.g-tile:hover img { transform: scale(1.06); }
+.g-tile:hover::after { opacity: 1; }
+
+/* Mosaic spans — feature tiles span larger, portraits stay tall */
+.g-tile.span-tall { grid-row: span 2; }
+.g-tile.span-wide { grid-column: span 2; }
+.g-tile.span-big  { grid-column: span 2; grid-row: span 2; }
+@media (max-width: 600px) {
+  .g-tile.span-wide, .g-tile.span-big { grid-column: span 2; }
+  .g-tile.span-big, .g-tile.span-tall { grid-row: span 2; }
+}
+
+/* FAQ */
+.faq { margin-top: 48px; max-width: 860px; }
+.faq-item { border-bottom: 1px solid var(--border); padding: 4px 0; }
+.faq-q {
+  width: 100%; text-align: left;
+  padding: 22px 0; font-family: var(--font-display);
+  font-weight: 600; font-size: clamp(16px, 2vw, 22px);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.faq-q .ico {
+  flex-shrink: 0; width: 32px; height: 32px;
+  border: 1px solid var(--border); border-radius: 50%;
+  display: grid; place-items: center;
+  transition: transform .3s, background .3s, border-color .3s;
+  font-size: 16px; color: var(--gold);
+}
+.faq-item.open .faq-q .ico { transform: rotate(45deg); background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; color: var(--muted-strong); font-size: 15px; line-height: 1.7; }
+.faq-item.open .faq-a { max-height: 500px; padding: 0 0 22px; }
+
+/* Footer */
+.footer { padding: 80px 24px 40px; border-top: 1px solid var(--border); background: #000; }
+.footer-grid { max-width: var(--maxw); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+@media (max-width: 820px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer h5 { font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.footer ul { list-style: none; }
+.footer li { padding: 6px 0; }
+.footer a { color: var(--muted-strong); font-size: 14px; transition: color .2s; }
+.footer a:hover { color: var(--gold); }
+.footer-brand p { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 360px; margin-top: 12px; }
+.footer-bottom { max-width: var(--maxw); margin: 48px auto 0; padding-top: 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--muted); letter-spacing: .05em; }
+
+/* Alex chat widget */
+.alex-fab {
+  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  display: grid; place-items: center;
+  box-shadow: 0 12px 32px rgba(225,29,116,.35), 0 0 0 6px rgba(255,200,87,.12);
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  animation: alexPulse 3s ease-in-out infinite;
+}
+.alex-fab:hover { transform: scale(1.08); box-shadow: 0 16px 48px rgba(225,29,116,.55); }
+@keyframes alexPulse {
+  0%,100% { box-shadow: 0 12px 32px rgba(225,29,116,.35), 0 0 0 6px rgba(255,200,87,.12); }
+  50% { box-shadow: 0 12px 32px rgba(225,29,116,.55), 0 0 0 12px rgba(255,200,87,0); }
+}
+.alex-fab svg { width: 30px; height: 30px; color: var(--ink); }
+.alex-fab .badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--cyan); color: var(--ink);
+  font-size: 10px; font-weight: 800; font-family: var(--font-display);
+  padding: 3px 7px; border-radius: 999px; letter-spacing: .05em;
+}
+
+.alex-panel {
+  position: fixed; bottom: 100px; right: 24px; z-index: 200;
+  width: min(400px, calc(100vw - 32px));
+  height: min(600px, calc(100vh - 140px));
+  background: rgba(11,2,22,0.95);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  display: none; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 72px rgba(0,0,0,0.7);
+}
+.alex-panel.open { display: flex; animation: panelIn .3s cubic-bezier(.2,.8,.2,1); }
+@keyframes panelIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.alex-header {
+  padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(255,200,87,0.12), rgba(225,29,116,0.12));
+  border-bottom: 1px solid var(--border-gold);
+  display: flex; align-items: center; gap: 12px;
+}
+.alex-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  display: grid; place-items: center;
+  color: var(--ink); font-family: var(--font-display); font-weight: 900;
+  flex-shrink: 0;
+}
+.alex-name { font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.alex-status { font-size: 11px; color: var(--lime); display: flex; align-items: center; gap: 6px; }
+.alex-status::before { content: ""; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 8px var(--lime); }
+.alex-close { margin-left: auto; font-size: 20px; color: var(--muted); padding: 4px 10px; border-radius: 8px; }
+.alex-close:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+
+.alex-messages {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+}
+.alex-messages::-webkit-scrollbar { width: 6px; }
+.alex-messages::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+.alex-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+.alex-msg.bot { background: rgba(255,200,87,0.08); border: 1px solid rgba(255,200,87,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
+.alex-msg.user { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: var(--ink); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+.alex-msg.typing { background: rgba(255,255,255,0.04); align-self: flex-start; color: var(--muted); font-style: italic; }
+
+.alex-suggestions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 12px; }
+.alex-suggestion {
+  padding: 8px 12px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: 999px;
+  font-size: 12px; color: var(--muted-strong);
+  transition: all .2s;
+}
+.alex-suggestion:hover { background: rgba(255,200,87,0.1); border-color: var(--gold); color: var(--white); }
+
+.alex-input-row { padding: 14px 16px; border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
+.alex-input {
+  flex: 1; min-height: 40px; max-height: 120px; resize: none;
+  padding: 10px 12px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 14px;
+}
+.alex-input:focus { outline: none; border-color: var(--gold); }
+.alex-send {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  color: var(--ink); display: grid; place-items: center;
+  transition: transform .2s; flex-shrink: 0;
+}
+.alex-send:hover { transform: scale(1.08); }
+.alex-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* Scroll-reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.mt-0 { margin-top: 0 !important; }
+.required-mark { color: var(--magenta); }
+
+/* My Reservations cards */
+.res-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  transition: border-color .2s;
+}
+.res-card:hover { border-color: var(--gold); }
+.res-card.status-PAID { border-color: rgba(199,255,60,0.3); background: rgba(199,255,60,0.04); }
+.res-card.status-CANCELLED { border-color: rgba(225,29,116,0.3); background: rgba(225,29,116,0.04); opacity: 0.7; }
+
+.res-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.res-card-id { font-family: var(--font-display); font-weight: 800; font-size: 13px; letter-spacing: .05em; color: var(--gold); }
+.res-card-event { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin-top: 2px; }
+.res-status-pill {
+  font-family: var(--font-display); font-size: 10px; font-weight: 800;
+  letter-spacing: .15em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+}
+.res-status-pill.PENDING_PAYMENT { background: rgba(255,200,87,0.12); color: var(--gold); border: 1px solid rgba(255,200,87,0.3); }
+.res-status-pill.PAID { background: rgba(199,255,60,0.14); color: var(--lime); border: 1px solid rgba(199,255,60,0.3); }
+.res-status-pill.CANCELLED { background: rgba(225,29,116,0.12); color: #FF8DB5; border: 1px solid rgba(225,29,116,0.3); }
+
+.res-card-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 14px; margin-top: 12px; font-size: 12px; }
+@media (max-width: 480px) { .res-card-meta { grid-template-columns: 1fr; } }
+.res-card-meta div { color: var(--muted-strong); }
+.res-card-meta .k { color: var(--muted); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; font-weight: 600; }
+
+.res-empty {
+  padding: 22px 18px; text-align: center; color: var(--muted);
+  background: rgba(255,255,255,0.02); border: 1px dashed var(--border); border-radius: 14px;
+  font-size: 13px;
+}
+
+/* ============================================================
+   MOBILE POLISH — phones (≤640px) and small phones (≤400px)
+   ============================================================ */
+@media (max-width: 640px) {
+  /* Hero — let the meta strip flow in normally instead of overlapping */
+  .hero { padding: 96px 20px 40px; min-height: auto; }
+  .hero-phoenix { max-width: 88vw; margin-bottom: 18px; }
+  .eyebrow { font-size: 11px; letter-spacing: .2em; }
+  .eyebrow::before, .eyebrow::after { width: 22px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { justify-content: center; width: 100%; }
+  .hero-meta {
+    position: static; transform: none;
+    margin-top: 32px; gap: 14px 24px;
+    font-size: 10px;
+  }
+
+  /* Section rhythm */
+  .section-title { font-size: clamp(32px, 9vw, 52px); }
+
+  /* Worlds / packages already stack — tighten padding */
+  .world { padding: 36px 24px; min-height: 0; }
+  .pkg { padding: 32px 22px; }
+
+  /* Reserve steps + form */
+  .reserve-steps li { padding-left: 42px; }
+  .form-card { padding: 24px 18px; }
+  .form-tabs { flex-wrap: wrap; }
+  .form-tab { flex: 1 0 auto; font-size: 11px; padding: 9px 10px; }
+
+  /* Chip pickers stay tappable */
+  .chip-label, .color-chip-label { padding: 11px 16px; font-size: 13px; }
+
+  /* Alex chat fills the screen comfortably */
+  .alex-panel {
+    width: calc(100vw - 20px); right: 10px;
+    height: min(70vh, calc(100vh - 120px));
+    bottom: 88px;
+  }
+  .alex-fab { bottom: 18px; right: 18px; width: 58px; height: 58px; }
+}
+
+@media (max-width: 400px) {
+  .hero h1 .l1 { letter-spacing: .2em; }
+  .world h3, .pkg h4 { font-size: clamp(34px, 11vw, 48px); }
+  .receipt-id { font-size: 23px; }
+  .reserve-wrap { padding: 26px 16px; }
+  .field-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== PRELOADER ============== -->
+<div id="preloader">
+  <div style="text-align:center">
+    <div class="pl-logo">LUX</div>
+    <div class="pl-sub">Glow Hard · Party Harder</div>
+  </div>
+</div>
+
+<!-- ============== NAV ============== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo" aria-label="LUX J'Ouvert Home">
+      <span class="lux">LUX</span>
+      <span class="jouv">J'OUVERT</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#experience">Experience</a>
+      <a href="#packages">Packages</a>
+      <a href="#reserve">Reserve</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://luxjouvert.com/admin.html" class="nav-admin">Admin</a>
+    </div>
+    <a href="#reserve" class="nav-cta">Reserve</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero" id="top">
+  <!-- Paint splatter halo behind everything -->
+  <svg class="hero-halo" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="200" cy="200" r="160" fill="#FFC857" opacity="0.55" />
+    <circle cx="600" cy="250" r="140" fill="#7B2CBF" opacity="0.6" />
+    <circle cx="400" cy="550" r="180" fill="#E11D74" opacity="0.45" />
+    <circle cx="650" cy="620" r="120" fill="#00F0FF" opacity="0.4" />
+    <circle cx="150" cy="600" r="100" fill="#FF3CAC" opacity="0.35" />
+  </svg>
+
+  <div class="hero-inner reveal">
+    <!-- ============================================================
+         PHOENIX IMAGE — drop `phoenix.png` into your repo root
+         (the LUX Jouvert phoenix logo from your sample images).
+         The drop-shadow CSS gives it the glowing halo effect.
+         ============================================================ -->
+    <img class="hero-phoenix" src="phoenix.png" alt="LUX J'Ouvert Phoenix" />
+
+    <div class="eyebrow">Trinidad Carnival · Monday 08 February 2027</div>
+
+    <h1>
+      <span class="l1"></span>
+      <span class="l2">LUX J'Ouvert</span>
+      <span class="amp">×</span>
+      <span class="l3">BLACKOUT</span>
+    </h1>
+
+    <!-- ============== GALLERY (rotating) ============== -->
+    <div class="section" id="gallery" style="padding: 20px 0 40px;">
+      <div class="reveal">
+        <div class="section-label">Gallery</div>
+        <h2 class="section-title">This year's <span class="accent">glow-up.</span></h2>
+        <p class="section-lede" style="margin-left:auto;margin-right:auto;">The crew, the costumes, the LED night. This is the standard — and 2027 goes bigger.</p>
+      </div>
+      <div class="carousel reveal" id="luxCarousel">
+        <div class="carousel-track">
+          <div class="carousel-slide is-active"><img src="images/gallery-01.jpg" alt="LUX J'Ouvert masquerader in a white costume at the festival" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-02.jpg" alt="LUX J'Ouvert masquerader in a white cut-out costume" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-03.jpg" alt="LUX J'Ouvert masquerader posing in a black costume" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-04.jpg" alt="Back view of masquerader in white costume and fishnets" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-05.jpg" alt="Masquerader in white two-piece, back view at the venue" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-06.jpg" alt="Reveller in a white LUX J'Ouvert tee with branded cup" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-07.jpg" alt="Couple in LUX J'Ouvert gear at the event" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-08.jpg" alt="Back view of masquerader in black costume with lace tights" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-09.jpg" alt="Band rep holding the LUX J'Ouvert phoenix flag" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-10.jpg" alt="Reveller in a black LUX J'Ouvert tee and ruffle skirt" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-11.jpg" alt="Masquerader in a white monokini with gold chains and fishnets" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-12.jpg" alt="Reveller in a pink Blackout tee with LED glasses" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-13.jpg" alt="Crew in neon Blackout tees with glow accessories" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-14.jpg" alt="Reveller in a neon green Blackout crop top with LED glasses" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-15.jpg" alt="Reveller in a pink Blackout tee with light-up lei" loading="lazy" /></div>
+        </div>
+        <button class="carousel-arrow prev" type="button" aria-label="Previous photo">&#8249;</button>
+        <button class="carousel-arrow next" type="button" aria-label="Next photo">&#8250;</button>
+        <div class="carousel-dots" role="tablist" aria-label="Gallery slides"></div>
+      </div>
+    </div>
+
+    <p class="hero-tag">
+      Before the sun wake — <b>paint and powder</b>. After dark — <span class="neon">LED lights</span>.
+      <br/>Two experiences. One standard. <b>All Lux.</b>
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#reserve" class="btn btn-gold">Reserve Your Spot →</a>
+      <a href="#experience" class="btn btn-ghost">Explore the Experience</a>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="hero-meta">
+    <span><i class="dot"></i> Limited Packages</span>
+    <span>Payment at the Band Camp</span>
+    <span>Music Trucks · Premium Drinks · Glow</span>
+  </div>
+</header>
+
+<!-- ============== MARQUEE ============== -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>PAINT · POWDER · PURE ENERGY</span><span class="sep">·</span>
+    <span>LUX J'OUVERT 2027</span><span class="sep">·</span>
+    <span>BLACKOUT</span><span class="sep">·</span>
+    <span>LED MONDAY NIGHT MAS</span><span class="sep">·</span>
+    <span>ALL LUX</span><span class="sep">·</span>
+    <span>PAINT · POWDER · PURE ENERGY</span><span class="sep">·</span>
+    <span>LUX J'OUVERT 2027</span><span class="sep">·</span>
+    <span>BLACKOUT</span><span class="sep">·</span>
+    <span>LED MONDAY NIGHT MAS</span><span class="sep">·</span>
+    <span>ALL LUX</span><span class="sep">·</span>
+  </div>
+</section>
+
+<!-- ============== TWO WORLDS ============== -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">The Experience</div>
+      <h2 class="section-title">Two worlds. <span class="accent">One band.</span></h2>
+      <p class="section-lede">
+        Carnival Monday doesn't pause when the sun rises. Lux carries you from
+        pre-dawn paint and powder J'Ouvert straight into LED Night Mas.
+        Pick your vibe — or run the full ting.
+      </p>
+    </div>
+
+    <div class="worlds">
+      <!-- LUX J'Ouvert -->
+      <article class="world world-jouvert reveal">
+        <div>
+          <div class="world-tag">Monday · 4:00 AM · San Fernando</div>
+          <h3>LUX<br/>J'OUVERT</h3>
+          <p>
+            Paint and powder. Music trucks rolling through pre-dawn San Fernando.
+            A premium J'Ouvert built for people who want the energy without the chaos —
+            inclusive premium drinks, secure route, your crew moving as one before sunrise.
+          </p>
+        </div>
+        <div>
+          <div class="world-price">
+            <span class="amt">$650</span>
+            <span class="cur">TTD</span>
+          </div>
+          <a href="#reserve" class="btn btn-gold" data-preselect-event="jouvert">See What's Included →</a>
+        </div>
+      </article>
+
+      <!-- Blackout -->
+      <article class="world world-blackout reveal">
+        <div>
+          <div class="world-tag">Monday · 7:00 PM</div>
+          <h3>LUX<br/>BLACKOUT</h3>
+          <p>
+            The brightest night on the road. LED glasses, fiber-optic wands, glow sticks, neon
+            bunny ears — every masquerader lit up. Monday Night Mas, finally done right.
+            Show up and glow.
+          </p>
+        </div>
+        <div>
+          <div class="world-price">
+            <span class="amt">$400</span>
+            <span class="cur">TTD</span>
+          </div>
+          <a href="#reserve" class="btn btn-neon" data-preselect-event="blackout">See What's Included →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PACKAGES / INCLUSIONS ============== -->
+<section class="section" id="packages" style="padding-top: 20px;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">What's Included</div>
+      <h2 class="section-title">Everything in the bag.</h2>
+      <p class="section-lede">
+        Two packages, each loaded from tip to toe. Nothing extra to buy on the road —
+        just show up, collect your kit, and glow.
+      </p>
+    </div>
+
+    <div class="packages">
+      <article class="pkg pkg-jouvert reveal" id="pkg-jouvert">
+        <h4>LUX J'OUVERT</h4>
+        <div class="pkg-sub">Paint · Powder · Music Trucks</div>
+        <ul class="inclusions">
+          <li>T-Shirt or Monokini</li>
+          <li>Pull String Bag</li>
+          <li>Entry Wristband</li>
+          <li>After Sun Care</li>
+          <li>Glow Sticks</li>
+          <li>Waterproof Phone Case</li>
+          <li>Face Towel</li>
+          <li>Mardi Gras Beads</li>
+          <li>Unlimited Premium Drinks</li>
+          <li>Security · Medics · Route</li>
+          <li>Paint &amp; Powder</li>
+          <li>Music Trucks</li>
+        </ul>
+        <div class="pkg-price-row">
+          <span class="amt">$650</span><span class="cur">TTD</span>
+        </div>
+        <a href="#reserve" class="btn btn-gold" data-preselect-event="jouvert">Reserve J'Ouvert →</a>
+      </article>
+
+      <article class="pkg pkg-blackout reveal" id="pkg-blackout">
+        <h4>LUX BLACKOUT</h4>
+        <div class="pkg-sub">LED Monday Night Mas · Glow Experience</div>
+        <ul class="inclusions">
+          <li>Neon T-Shirt (Pink/Orange)</li>
+          <li>Drawstring Bag</li>
+          <li>Branded Cup</li>
+          <li>Glow Sticks</li>
+          <li>LED Foam Sticks</li>
+          <li>Fiber Optic Wands</li>
+          <li>LED Glasses</li>
+          <li>LED Bunny Ears</li>
+          <li>LED Necklace</li>
+          <li>Unlimited Drinks</li>
+          <li>Security · Medics</li>
+          <li>Music Trucks</li>
+        </ul>
+        <div class="pkg-price-row">
+          <span class="amt">$400</span><span class="cur">TTD</span>
+        </div>
+        <a href="#reserve" class="btn btn-neon" data-preselect-event="blackout">Reserve Blackout →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== RESERVE FLOW ============== -->
+<section class="section" id="reserve">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Reserve · Pay at Band Camp</div>
+      <h2 class="section-title">Reserve now. <span class="accent">Pay at the Band Camp.</span></h2>
+      <p class="section-lede">
+        Create an account, pick your event, fill the registration, get your Reservation ID.
+        Bring it to the Band Camp to settle payment —
+        once it's confirmed, proof of purchase lands in your inbox.
+      </p>
+    </div>
+
+    <div class="reserve-wrap reveal">
+      <div class="reserve-grid">
+        <!-- LEFT: How it works -->
+        <div>
+          <ol class="reserve-steps">
+            <li><b>Create Your Lux Account</b>Email, phone, full name. 30 seconds.</li>
+            <li><b>Pick Your Event</b>LUX J'Ouvert, Blackout, or both — separate registrations for each.</li>
+            <li><b>Fill the Registration Form</b>Apparel size, color, contact info. Same fields as the band's official paper form.</li>
+            <li><b>Get Your Reservation ID</b>A unique code. Screenshot it, save it.</li>
+            <li><b>Pay at the Band Camp</b>Head to the Band Camp with your Reservation ID and settle payment there.</li>
+            <li><b>Proof of Purchase by Email</b>Once payment is confirmed at the Band Camp, your official receipt and costume pickup details land in your inbox.</li>
+          </ol>
+
+          <div style="margin-top: 28px; padding: 18px 20px; background: rgba(0,240,255,0.06); border: 1px solid rgba(0,240,255,0.2); border-radius: var(--radius); font-size: 13px; color: var(--muted-strong); line-height: 1.6;">
+            <div style="color: var(--cyan); font-family: var(--font-display); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 11px; margin-bottom: 6px;">In-Person · Secure</div>
+            No card details are ever entered online — payment is settled in person at the Band Camp. Reservations hold for <b style="color:var(--white)">7 days</b> pending payment — after that, spot opens back up to the waitlist.
+          </div>
+        </div>
+
+        <!-- RIGHT: Auth + reservation forms -->
+        <div>
+          <div id="accountStrip" class="account-strip" style="display:none"></div>
+          <div class="form-card">
+
+            <!-- AUTH PANEL -->
+            <div id="authPanel">
+              <div class="form-tabs" role="tablist">
+                <button class="form-tab active" data-tab="login" role="tab">Log In</button>
+                <button class="form-tab" data-tab="signup" role="tab">Create Account</button>
+              </div>
+
+              <form class="form-step active" id="loginForm">
+                <label for="loginEmail">Email</label>
+                <input class="field" id="loginEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+                <label for="loginPass">Password</label>
+                <input class="field" id="loginPass" type="password" required placeholder="••••••••" autocomplete="current-password" minlength="6" />
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Log In</button>
+                </div>
+                <div class="msg error" id="loginMsg"></div>
+              </form>
+
+              <form class="form-step" id="signupForm">
+                <div class="field-row">
+                  <div>
+                    <label for="suFirst">First Name</label>
+                    <input class="field" id="suFirst" type="text" required autocomplete="given-name" />
+                  </div>
+                  <div>
+                    <label for="suLast">Last Name</label>
+                    <input class="field" id="suLast" type="text" required autocomplete="family-name" />
+                  </div>
+                </div>
+                <label for="suEmail">Email</label>
+                <input class="field" id="suEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+                <label for="suPhone">Phone (TT)</label>
+                <input class="field" id="suPhone" type="tel" required placeholder="1-868-XXX-XXXX" autocomplete="tel" />
+                <label for="suPass">Password (min 6)</label>
+                <input class="field" id="suPass" type="password" required minlength="6" placeholder="••••••••" autocomplete="new-password" />
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Create Account</button>
+                </div>
+                <div class="msg error" id="signupMsg"></div>
+              </form>
+            </div>
+
+            <!-- RESERVATION PANEL (post-login) -->
+            <div id="reservePanel" style="display:none">
+
+              <!-- Event selector -->
+              <div class="form-tabs" role="tablist" style="margin-bottom: 20px;">
+                <button class="form-tab active" data-event="jouvert" role="tab">LUX J'Ouvert · $650</button>
+                <button class="form-tab" data-event="blackout" role="tab">Blackout · $400</button>
+              </div>
+
+              <!-- =========== J'OUVERT FORM =========== -->
+              <form id="jouvertForm" class="event-form active">
+                <label>Gender Package <span class="required-mark">*</span></label>
+                <div class="chip-group">
+                  <input type="radio" id="jGenderM" name="jGender" value="male" class="chip-input" required>
+                  <label for="jGenderM" class="chip-label">Male</label>
+                  <input type="radio" id="jGenderF" name="jGender" value="female" class="chip-input">
+                  <label for="jGenderF" class="chip-label">Female</label>
+                </div>
+
+                <label for="jAddress">Address (General Area) <span class="required-mark">*</span></label>
+                <input class="field" id="jAddress" type="text" required placeholder="e.g. San Fernando, Marabella, Princes Town…" autocomplete="address-level2" />
+
+                <div class="field-row">
+                  <div>
+                    <label for="jContact">Main Contact Info <span class="required-mark">*</span></label>
+                    <input class="field" id="jContact" type="tel" required placeholder="Phone number" />
+                  </div>
+                  <div>
+                    <label for="jDrink">Drink Preference <span class="required-mark">*</span></label>
+                    <input class="field" id="jDrink" type="text" required placeholder="e.g. Vodka & Cranberry" />
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div>
+                    <label for="jECName">Emergency Contact Name <span class="required-mark">*</span></label>
+                    <input class="field" id="jECName" type="text" required />
+                  </div>
+                  <div>
+                    <label for="jECPhone">Emergency Contact Phone <span class="required-mark">*</span></label>
+                    <input class="field" id="jECPhone" type="tel" required placeholder="1-868-XXX-XXXX" />
+                  </div>
+                </div>
+
+                <!-- MALE PACKAGE -->
+                <fieldset class="reveal-block" id="jMalePkg" style="border:0; padding:0;">
+                  <legend>Male Package · T-Shirt</legend>
+                  <label>T-Shirt Color <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jMTeeBlk" name="jMTeeColor" value="Black" class="chip-input">
+                    <label for="jMTeeBlk" class="color-chip-label" data-color="black"><span class="swatch"></span>Black</label>
+                    <input type="radio" id="jMTeeWht" name="jMTeeColor" value="White" class="chip-input">
+                    <label for="jMTeeWht" class="color-chip-label" data-color="white"><span class="swatch"></span>White</label>
+                  </div>
+                  <label>T-Shirt Size <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jMTS_S"  name="jMTeeSize" value="S"  class="chip-input"><label for="jMTS_S"  class="chip-label">S</label>
+                    <input type="radio" id="jMTS_M"  name="jMTeeSize" value="M"  class="chip-input"><label for="jMTS_M"  class="chip-label">M</label>
+                    <input type="radio" id="jMTS_L"  name="jMTeeSize" value="L"  class="chip-input"><label for="jMTS_L"  class="chip-label">L</label>
+                    <input type="radio" id="jMTS_XL" name="jMTeeSize" value="XL" class="chip-input"><label for="jMTS_XL" class="chip-label">XL</label>
+                  </div>
+                </fieldset>
+
+                <!-- FEMALE PACKAGE -->
+                <fieldset class="reveal-block" id="jFemalePkg" style="border:0; padding:0;">
+                  <legend>Female Package · T-Shirt</legend>
+                  <label>T-Shirt Color <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jFTeeBlk" name="jFTeeColor" value="Black" class="chip-input">
+                    <label for="jFTeeBlk" class="color-chip-label" data-color="black"><span class="swatch"></span>Black</label>
+                    <input type="radio" id="jFTeeWht" name="jFTeeColor" value="White" class="chip-input">
+                    <label for="jFTeeWht" class="color-chip-label" data-color="white"><span class="swatch"></span>White</label>
+                  </div>
+                  <label>T-Shirt Size <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jFTS_S"  name="jFTeeSize" value="S"  class="chip-input"><label for="jFTS_S"  class="chip-label">S</label>
+                    <input type="radio" id="jFTS_M"  name="jFTeeSize" value="M"  class="chip-input"><label for="jFTS_M"  class="chip-label">M</label>
+                    <input type="radio" id="jFTS_L"  name="jFTeeSize" value="L"  class="chip-input"><label for="jFTS_L"  class="chip-label">L</label>
+                    <input type="radio" id="jFTS_XL" name="jFTeeSize" value="XL" class="chip-input"><label for="jFTS_XL" class="chip-label">XL</label>
+                  </div>
+
+                  <legend style="margin-top: 18px;">Style I · Monokini</legend>
+                  <label>Color <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jM1Blk" name="jM1Color" value="Black" class="chip-input">
+                    <label for="jM1Blk" class="color-chip-label" data-color="black"><span class="swatch"></span>Black</label>
+                    <input type="radio" id="jM1Wht" name="jM1Color" value="White" class="chip-input">
+                    <label for="jM1Wht" class="color-chip-label" data-color="white"><span class="swatch"></span>White</label>
+                  </div>
+                  <label>Size <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jM1S"  name="jM1Size" value="S"  class="chip-input"><label for="jM1S"  class="chip-label">S</label>
+                    <input type="radio" id="jM1M"  name="jM1Size" value="M"  class="chip-input"><label for="jM1M"  class="chip-label">M</label>
+                    <input type="radio" id="jM1L"  name="jM1Size" value="L"  class="chip-input"><label for="jM1L"  class="chip-label">L</label>
+                    <input type="radio" id="jM1XL" name="jM1Size" value="XL" class="chip-input"><label for="jM1XL" class="chip-label">XL</label>
+                  </div>
+
+                  <legend style="margin-top: 18px;">Style II · Monokini</legend>
+                  <label>Color <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jM2Blk" name="jM2Color" value="Black" class="chip-input">
+                    <label for="jM2Blk" class="color-chip-label" data-color="black"><span class="swatch"></span>Black</label>
+                    <input type="radio" id="jM2Wht" name="jM2Color" value="White" class="chip-input">
+                    <label for="jM2Wht" class="color-chip-label" data-color="white"><span class="swatch"></span>White</label>
+                  </div>
+                  <label>Size <span class="required-mark">*</span></label>
+                  <div class="chip-group">
+                    <input type="radio" id="jM2S"  name="jM2Size" value="S"  class="chip-input"><label for="jM2S"  class="chip-label">S</label>
+                    <input type="radio" id="jM2M"  name="jM2Size" value="M"  class="chip-input"><label for="jM2M"  class="chip-label">M</label>
+                    <input type="radio" id="jM2L"  name="jM2Size" value="L"  class="chip-input"><label for="jM2L"  class="chip-label">L</label>
+                    <input type="radio" id="jM2XL" name="jM2Size" value="XL" class="chip-input"><label for="jM2XL" class="chip-label">XL</label>
+                  </div>
+                </fieldset>
+
+                <div class="disclaimer">
+                  <ul>
+                    <li>Once sizes are picked there will be <b>NO EXCHANGING</b> on the day of collection.</li>
+                    <li>All packages are <b>pre-made</b> based on the registration form.</li>
+                  </ul>
+                  <label class="check">
+                    <input type="checkbox" id="jAgree" required>
+                    <span>I have read all information that was provided and agree to the band's disclaimer.</span>
+                  </label>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-gold">Reserve J'Ouvert →</button>
+                </div>
+                <div class="msg error" id="jMsg"></div>
+              </form>
+
+              <!-- =========== BLACKOUT FORM =========== -->
+              <form id="blackoutForm" class="event-form" style="display:none">
+                <label>Gender Package <span class="required-mark">*</span></label>
+                <div class="chip-group">
+                  <input type="radio" id="bGenderM" name="bGender" value="male" class="chip-input" required>
+                  <label for="bGenderM" class="chip-label">Male</label>
+                  <input type="radio" id="bGenderF" name="bGender" value="female" class="chip-input">
+                  <label for="bGenderF" class="chip-label">Female</label>
+                </div>
+
+                <label for="bAddress">Address (General Area) <span class="required-mark">*</span></label>
+                <input class="field" id="bAddress" type="text" required placeholder="e.g. San Fernando, Marabella, Princes Town…" autocomplete="address-level2" />
+
+                <div class="field-row">
+                  <div>
+                    <label for="bContact">Main Contact Info <span class="required-mark">*</span></label>
+                    <input class="field" id="bContact" type="tel" required placeholder="Phone number" />
+                  </div>
+                  <div>
+                    <label for="bDrink">Drink Preference <span style="color: var(--muted); font-weight: 500;">(if any)</span></label>
+                    <input class="field" id="bDrink" type="text" placeholder="e.g. Rum & Coke" />
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div>
+                    <label for="bECName">Emergency Contact Name <span class="required-mark">*</span></label>
+                    <input class="field" id="bECName" type="text" required />
+                  </div>
+                  <div>
+                    <label for="bECPhone">Emergency Contact Phone <span class="required-mark">*</span></label>
+                    <input class="field" id="bECPhone" type="tel" required placeholder="1-868-XXX-XXXX" />
+                  </div>
+                </div>
+
+                <label style="margin-top: 18px;">Neon T-Shirt Color <span class="required-mark">*</span></label>
+                <div class="chip-group">
+                  <input type="radio" id="bTeePink" name="bTeeColor" value="Neon Pink" class="chip-input" required>
+                  <label for="bTeePink" class="color-chip-label" data-color="neon-pink"><span class="swatch"></span>Neon Pink</label>
+                  <input type="radio" id="bTeeOrng" name="bTeeColor" value="Neon Orange" class="chip-input">
+                  <label for="bTeeOrng" class="color-chip-label" data-color="neon-orange"><span class="swatch"></span>Neon Orange</label>
+                </div>
+
+                <label>T-Shirt Size <span class="required-mark">*</span></label>
+                <div class="chip-group">
+                  <input type="radio" id="bTS_S"  name="bTeeSize" value="S"  class="chip-input" required><label for="bTS_S"  class="chip-label">S</label>
+                  <input type="radio" id="bTS_M"  name="bTeeSize" value="M"  class="chip-input"><label for="bTS_M"  class="chip-label">M</label>
+                  <input type="radio" id="bTS_L"  name="bTeeSize" value="L"  class="chip-input"><label for="bTS_L"  class="chip-label">L</label>
+                  <input type="radio" id="bTS_XL" name="bTeeSize" value="XL" class="chip-input"><label for="bTS_XL" class="chip-label">XL</label>
+                </div>
+
+                <div class="disclaimer">
+                  <ul>
+                    <li>Once sizes are picked there will be <b>NO EXCHANGING</b> on the day of collection.</li>
+                    <li>All packages are <b>pre-made</b> based on the registration form.</li>
+                  </ul>
+                  <label class="check">
+                    <input type="checkbox" id="bAgree" required>
+                    <span>I have read all information that was provided and agree to the band's disclaimer.</span>
+                  </label>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-neon">Reserve Blackout →</button>
+                </div>
+                <div class="msg error" id="bMsg"></div>
+              </form>
+
+              <!-- ============== MY RESERVATIONS PANEL ============== -->
+              <!-- Shown above the new-reservation form once logged in.
+                   Pulls live from the Google Sheet via Apps Script. -->
+              <div id="myReservations" style="display:none; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                  <h3 style="font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: -.01em;">My Reservations</h3>
+                  <button type="button" id="refreshMyResBtn" class="btn btn-ghost" style="padding: 8px 14px; font-size: 11px;">Refresh ↻</button>
+                </div>
+                <div id="myResList"></div>
+                <div style="margin: 18px 0; padding: 14px 16px; background: rgba(0,240,255,0.06); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; font-size: 13px; color: var(--muted-strong);">
+                  Add another reservation below — separate registration for each event.
+                </div>
+              </div>
+
+              <!-- Reservation receipt -->
+              <div class="reservation-receipt" id="receipt">
+                <div style="font-family: var(--font-accent); font-style: italic; color: var(--muted); letter-spacing: .2em; text-transform: uppercase; font-size: 11px;">Your Reservation ID</div>
+                <div class="receipt-id" id="rcpId">—</div>
+                <div class="receipt-row"><span>Event</span><span id="rcpEvent">—</span></div>
+                <div class="receipt-row"><span>Masquerader</span><span id="rcpName">—</span></div>
+                <div class="receipt-row"><span>Package</span><span id="rcpPkg">—</span></div>
+                <div class="receipt-row"><span>Total Due</span><span id="rcpTotal" style="color: var(--gold); font-weight: 800;">—</span></div>
+                <div class="receipt-row"><span>Assigned Rep</span><span id="rcpRep">—</span></div>
+                <div class="receipt-status">⏳ Pending Payment · Your Rep Will Reach Out</div>
+                <div style="margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap;">
+                  <button type="button" class="btn btn-ghost" id="copyIdBtn" style="padding: 10px 16px; font-size: 11px;">Copy ID</button>
+                  <button type="button" class="btn btn-ghost" id="newResBtn" style="padding: 10px 16px; font-size: 11px;">New Reservation</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SCHEDULE ============== -->
+<section class="section" id="schedule">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Carnival Monday · 08 February 2027</div>
+      <h2 class="section-title">The <span class="neon">full run of show.</span></h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="t-item">
+        <div class="t-time">03:30 AM</div>
+        <div class="t-title">J'Ouvert Assembly · San Fernando</div>
+        <div class="t-desc">Meet at designated assembly point. Paint &amp; powder stations live. Music trucks warming up. Collect wristband + kit.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">04:00 AM</div>
+        <div class="t-title">Lux J'Ouvert Hits the Road</div>
+        <div class="t-desc">Music truck roll-out. Paint and powder flying. Inclusive bar open from moment one.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">10:00 AM</div>
+        <div class="t-title">J'Ouvert Chips Home · Rest Window</div>
+        <div class="t-desc">Head home. Shower. Sleep. Recover. Blackout call-time comes quick.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-time">07:00 PM</div>
+        <div class="t-title">Lux Blackout · LED Night Mas</div>
+        <div class="t-desc">Neon tee on. LED everything lit. The brightest night on the road.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Questions</div>
+      <h2 class="section-title">Answers in <span class="accent">real talk.</span></h2>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item">
+        <button class="faq-q">Are LUX J'Ouvert and Blackout the same event? <span class="ico">+</span></button>
+        <div class="faq-a">No — they're <b>two separate events</b> on the same day. LUX J'Ouvert is the pre-dawn paint &amp; powder experience ($650 TTD). Blackout is the LED Night Mas after dark ($500 TTD). You can register for one or both — separate registration forms for each.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How do I pay? <span class="ico">+</span></button>
+        <div class="faq-a">Payment is collected in person at the Band Camp — no card details are entered online. Reserve on the site to lock your spot and Reservation ID, then bring it to the Band Camp to settle payment. Once it's confirmed, you get a proof-of-purchase email.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How do I know my spot is held? <span class="ico">+</span></button>
+        <div class="faq-a">The minute you submit the reservation form, you get a Reservation ID. That ID holds your size, package, and spot for 7 days while you arrange payment with your rep. Once your rep confirms payment, you get a proof-of-purchase email — that's your official receipt.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I pay in installments? <span class="ico">+</span></button>
+        <div class="faq-a">Yes — speak to your band rep. We support a 3-payment plan: deposit to hold, mid-payment, and final before launch. Your Reservation ID stays the same, status just updates as each installment comes in.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Why no exchanging on collection day? <span class="ico">+</span></button>
+        <div class="faq-a">All packages are <b>pre-made</b> based on what you select on the registration form — colors, sizes, monokini styles. Once production is done, exchanges aren't possible. Take your time with sizing before submitting.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Where do I meet the rep to pay? <span class="ico">+</span></button>
+        <div class="faq-a">Your assigned rep will reach out within 24 hours of your reservation with collection point options — usually a mix of band-launch events, scheduled meet-ups, and by appointment in San Fernando, POS, or Chaguanas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What's the refund policy? <span class="ico">+</span></button>
+        <div class="faq-a">Full refund up to 30 days before Carnival Monday. 50% refund between 30 and 14 days. Within 14 days no refund, but your package is transferable — bring a friend in your place and we'll update the name.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is J'Ouvert safe? <span class="ico">+</span></button>
+        <div class="faq-a">We have private security and roving medics with us from assembly to chip-home. Waterproof phone case in the J'Ouvert kit so nothing gets destroyed. Route is pre-cleared with TTPS. Your emergency contact goes in the system the moment you reserve.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo" style="font-size: 28px;">
+        <span class="lux">LUX</span>
+        <span class="jouv">J'OUVERT × BLACKOUT</span>
+      </div>
+      <p>Two experiences. One standard. All Lux. Trinidad Carnival 2027 — premium J'Ouvert at sunrise and LED Night Mas after dark.</p>
+    </div>
+    <div>
+      <h5>Experience</h5>
+      <ul>
+        <li><a href="#experience">Two Worlds</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Reserve</h5>
+      <ul>
+        <li><a href="#reserve">Create Account</a></li>
+        <li><a href="#reserve">Reserve Spot</a></li>
+        <li><a href="#faq">Payment Info</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="https://www.instagram.com/luxjouvert/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a></li>
+        <li><a href="mailto:support@luxjouvert.com">support@luxjouvert.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2027 LUX J'Ouvert · All rights reserved.</div>
+    <div>Designed for Trinidad. Built for the world.</div>
+  </div>
+</footer>
+
+<!-- ============== ALEX CHAT WIDGET ============== -->
+<button class="alex-fab" id="alexFab" aria-label="Chat with Alex">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <span class="badge">AI</span>
+</button>
+
+<div class="alex-panel" id="alexPanel" role="dialog" aria-label="Chat with Alex">
+  <div class="alex-header">
+    <div class="alex-avatar">A</div>
+    <div>
+      <div class="alex-name">Alex · Lux Assistant</div>
+      <div class="alex-status">Online · Claude-powered</div>
+    </div>
+    <button class="alex-close" id="alexClose" aria-label="Close chat">×</button>
+  </div>
+  <div class="alex-messages" id="alexMessages">
+    <div class="alex-msg bot">Yow — I'm Alex. Ask me anything about LUX J'Ouvert ($650), Blackout ($400), pricing, registration, or anything else. Wah you wan know?</div>
+  </div>
+  <div class="alex-suggestions" id="alexSuggestions">
+    <button class="alex-suggestion" data-q="What's the difference between J'Ouvert and Blackout?">J'Ouvert vs Blackout?</button>
+    <button class="alex-suggestion" data-q="How do I pay?">How do I pay?</button>
+    <button class="alex-suggestion" data-q="What sizes are available?">Sizing?</button>
+  </div>
+  <form class="alex-input-row" id="alexForm">
+    <textarea class="alex-input" id="alexInput" placeholder="Ask Alex…" rows="1"></textarea>
+    <button type="submit" class="alex-send" aria-label="Send">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </form>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+   ============================================================ -->
+<script>
+(() => {
+  'use strict';
+
+  // ---------- Preloader ----------
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 600);
+  });
+
+  // ---------- Nav ----------
+  const navToggle = document.getElementById('navToggle');
+  const navLinks  = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ---------- Scroll reveal ----------
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---------- FAQ ----------
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+  });
+
+  // ============================================================
+  // BACKEND CONFIG
+  // After deploying the Apps Script (apps-script-backend.js), paste the
+  // Web app URL between the quotes below. It looks like:
+  //   https://script.google.com/macros/s/AKfyc<long-string>/exec
+  // ============================================================
+  window.LUX_API_URL = window.LUX_API_URL || 'https://script.google.com/macros/s/AKfycbzUVgwlgFKq4DGgRVVuBiuJA1y5V7ViZAByJXfVAq6CKgvDYKdlMK3a9xtTjLzD8jOQ2g/exec';
+
+  // ---------- Rep referral capture ----------
+  // If the visitor arrives via a rep's link (?rep=CODE), remember it for this
+  // browser session so it rides along when they create a reservation — even
+  // after sign-up/login navigation strips the URL param.
+  (function () {
+    try {
+      const c = new URLSearchParams(location.search).get('rep');
+      if (c) sessionStorage.setItem('lux_ref', c.trim().toUpperCase().slice(0, 24));
+    } catch (e) {}
+  })();
+  function refRep() {
+    try { return sessionStorage.getItem('lux_ref') || ''; } catch (e) { return ''; }
+  }
+
+  async function api(action, params = {}) {
+    if (!window.LUX_API_URL || window.LUX_API_URL.startsWith('PASTE_')) {
+      throw new Error('Backend not configured yet — set window.LUX_API_URL');
+    }
+    const res = await fetch(window.LUX_API_URL, {
+      method: 'POST',
+      // text/plain avoids a CORS preflight for Apps Script
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action, ...params })
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  // Local session — only stores email + sessionToken returned by the backend.
+  // Real password & data live in the Google Sheet.
+  const LS = { session: 'lux_session' };
+  const getSession = () => JSON.parse(localStorage.getItem(LS.session) || 'null');
+  const setSession = (s) => localStorage.setItem(LS.session, JSON.stringify(s));
+  const clearSession = () => localStorage.removeItem(LS.session);
+
+  // Auth tabs
+  document.querySelectorAll('#authPanel .form-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#authPanel .form-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      document.querySelectorAll('#authPanel .form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById(target + 'Form').classList.add('active');
+    });
+  });
+
+  const showMsg = (el, text, type = 'error') => {
+    el.textContent = text;
+    el.className = 'msg ' + type + ' show';
+    if (type === 'success') setTimeout(() => el.classList.remove('show'), 4000);
+  };
+
+  // Signup → API
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('signupMsg');
+    const btn = e.submitter; if (btn) btn.disabled = true;
+    try {
+      const { sessionToken, user } = await api('signup', {
+        firstName: document.getElementById('suFirst').value.trim(),
+        lastName:  document.getElementById('suLast').value.trim(),
+        email:     document.getElementById('suEmail').value.trim().toLowerCase(),
+        phone:     document.getElementById('suPhone').value.trim(),
+        password:  document.getElementById('suPass').value
+      });
+      setSession({ email: user.email, name: user.name, phone: user.phone, sessionToken, loginAt: new Date().toISOString() });
+      showMsg(msg, 'Welcome to Lux.', 'success');
+      setTimeout(renderAuthState, 400);
+    } catch (err) {
+      showMsg(msg, err.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+
+  // Login → API
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('loginMsg');
+    const btn = e.submitter; if (btn) btn.disabled = true;
+    try {
+      const { sessionToken, user } = await api('login', {
+        email:    document.getElementById('loginEmail').value.trim().toLowerCase(),
+        password: document.getElementById('loginPass').value
+      });
+      setSession({ email: user.email, name: user.name, phone: user.phone, sessionToken, loginAt: new Date().toISOString() });
+      showMsg(msg, 'Logged in.', 'success');
+      setTimeout(renderAuthState, 300);
+    } catch (err) {
+      showMsg(msg, err.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+
+  // ============================================================
+  // MY RESERVATIONS — fetch from sheet and render
+  // ============================================================
+  const PKG_LABEL = (r) => {
+    if (r.event === 'jouvert' && r.gender === 'female' && r.style1 && r.style2) {
+      return `Female · Tee ${r.tee.color}/${r.tee.size} · S1 ${r.style1.color}/${r.style1.size} · S2 ${r.style2.color}/${r.style2.size}`;
+    }
+    return `${r.gender === 'male' ? 'Male' : 'Female'} · ${r.tee.color} ${r.tee.size}`;
+  };
+
+  function renderMyReservations(reservations) {
+    const container = document.getElementById('myResList');
+    if (!reservations || reservations.length === 0) {
+      container.innerHTML = '<div class="res-empty">No reservations yet. Pick an event below to get started.</div>';
+      return;
+    }
+    container.innerHTML = reservations.map(r => `
+      <div class="res-card status-${r.status}">
+        <div class="res-card-top">
+          <div>
+            <div class="res-card-id">${r.id}</div>
+            <div class="res-card-event">${r.eventName}</div>
+          </div>
+          <span class="res-status-pill ${r.status}">${
+            r.status === 'PENDING_PAYMENT' ? 'Pending Payment' :
+            r.status === 'PAID' ? 'Paid ✓' : 'Cancelled'
+          }</span>
+        </div>
+        <div class="res-card-meta">
+          <div><div class="k">Package</div>${PKG_LABEL(r)}</div>
+          <div><div class="k">Total</div>$${(r.total || 0).toLocaleString()} TTD</div>
+          <div><div class="k">Area</div>${r.address || '—'}</div>
+          <div><div class="k">Rep</div>${r.rep?.name || '—'} · ${r.rep?.phone || ''}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function loadMyReservations() {
+    const session = getSession();
+    if (!session) return;
+    const list = document.getElementById('myResList');
+    list.innerHTML = '<div class="res-empty">Loading…</div>';
+    try {
+      const { reservations } = await api('getMyReservations', {
+        userEmail: session.email, sessionToken: session.sessionToken
+      });
+      renderMyReservations(reservations);
+    } catch (err) {
+      // Token expired or backend unreachable — bounce them back to login
+      if (/session/i.test(err.message)) {
+        clearSession();
+        renderAuthState();
+        return;
+      }
+      list.innerHTML = `<div class="res-empty">Couldn't load reservations: ${err.message}</div>`;
+    }
+  }
+
+  document.getElementById('refreshMyResBtn').addEventListener('click', loadMyReservations);
+
+  // ============================================================
+  // Auth state renderer
+  // ============================================================
+  function renderAuthState() {
+    const session = getSession();
+    const authPanel = document.getElementById('authPanel');
+    const reservePanel = document.getElementById('reservePanel');
+    const strip = document.getElementById('accountStrip');
+    const myRes = document.getElementById('myReservations');
+    if (session) {
+      authPanel.style.display = 'none';
+      reservePanel.style.display = 'block';
+      myRes.style.display = 'block';
+      strip.style.display = 'flex';
+      strip.innerHTML = `
+        <span>Logged in as <span class="who">${session.name}</span> · ${session.email}</span>
+        <button id="logoutBtn">Log out</button>
+      `;
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        clearSession();
+        document.getElementById('receipt').classList.remove('show');
+        renderAuthState();
+      });
+      const ph = session.phone || '';
+      document.getElementById('jContact').value = ph;
+      document.getElementById('bContact').value = ph;
+      loadMyReservations();
+    } else {
+      authPanel.style.display = 'block';
+      reservePanel.style.display = 'none';
+      myRes.style.display = 'none';
+      strip.style.display = 'none';
+    }
+  }
+  renderAuthState();
+
+  // ============================================================
+  // EVENT TABS
+  // ============================================================
+  function switchEvent(ev) {
+    document.querySelectorAll('[data-event]').forEach(t => t.classList.toggle('active', t.dataset.event === ev));
+    document.getElementById('jouvertForm').style.display  = (ev === 'jouvert')  ? 'block' : 'none';
+    document.getElementById('blackoutForm').style.display = (ev === 'blackout') ? 'block' : 'none';
+    document.getElementById('jouvertForm').classList.toggle('active', ev === 'jouvert');
+    document.getElementById('blackoutForm').classList.toggle('active', ev === 'blackout');
+    document.getElementById('receipt').classList.remove('show');
+  }
+  document.querySelectorAll('[data-event]').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchEvent(tab.dataset.event);
+    });
+  });
+  document.querySelectorAll('[data-preselect-event]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (getSession()) switchEvent(btn.dataset.preselectEvent);
+    });
+  });
+
+  // ============================================================
+  // J'OUVERT — conditional male/female package fields
+  // ============================================================
+  const jMalePkg = document.getElementById('jMalePkg');
+  const jFemalePkg = document.getElementById('jFemalePkg');
+  document.querySelectorAll('input[name="jGender"]').forEach(r => {
+    r.addEventListener('change', () => {
+      jMalePkg.classList.toggle('show', r.value === 'male' && r.checked);
+      jFemalePkg.classList.toggle('show', r.value === 'female' && r.checked);
+    });
+  });
+
+  // ============================================================
+  // RESERVATION — pricing, IDs, rep assignment all handled server-side now
+  // (see apps-script-backend.js). Front-end only collects + posts.
+  // ============================================================
+  const radioVal = (name) => {
+    const r = document.querySelector(`input[name="${name}"]:checked`);
+    return r ? r.value : '';
+  };
+
+  const buildPackageSummary = (event, formData) => {
+    if (event === 'jouvert') {
+      if (formData.gender === 'male') {
+        return `Male · ${formData.tee.color} T-Shirt (${formData.tee.size})`;
+      }
+      return `Female · T-Shirt ${formData.tee.color} (${formData.tee.size}) · Style I ${formData.style1.color} (${formData.style1.size}) · Style II ${formData.style2.color} (${formData.style2.size})`;
+    }
+    return `${formData.gender === 'male' ? 'Male' : 'Female'} · ${formData.tee.color} (${formData.tee.size})`;
+  };
+
+  function collectJouvert() {
+    const gender = radioVal('jGender');
+    if (!gender) throw new Error('Pick a gender package.');
+    const address = document.getElementById('jAddress').value.trim();
+    const contact = document.getElementById('jContact').value.trim();
+    const drink   = document.getElementById('jDrink').value.trim();
+    const ecName  = document.getElementById('jECName').value.trim();
+    const ecPhone = document.getElementById('jECPhone').value.trim();
+    if (!address || !contact || !drink || !ecName || !ecPhone) throw new Error('Fill in all required fields.');
+
+    const data = { event: 'jouvert', gender, address, contact, drink, emergencyContact: { name: ecName, phone: ecPhone } };
+
+    if (gender === 'male') {
+      const teeColor = radioVal('jMTeeColor');
+      const teeSize  = radioVal('jMTeeSize');
+      if (!teeColor || !teeSize) throw new Error('Select T-shirt color and size.');
+      data.tee = { color: teeColor, size: teeSize };
+    } else {
+      const teeColor = radioVal('jFTeeColor');
+      const teeSize  = radioVal('jFTeeSize');
+      const s1Color  = radioVal('jM1Color');
+      const s1Size   = radioVal('jM1Size');
+      const s2Color  = radioVal('jM2Color');
+      const s2Size   = radioVal('jM2Size');
+      if (!teeColor || !teeSize || !s1Color || !s1Size || !s2Color || !s2Size)
+        throw new Error('Select all colors and sizes (T-shirt + Style I + Style II).');
+      data.tee    = { color: teeColor, size: teeSize };
+      data.style1 = { color: s1Color, size: s1Size };
+      data.style2 = { color: s2Color, size: s2Size };
+    }
+
+    if (!document.getElementById('jAgree').checked) throw new Error('Please agree to the band\'s disclaimer.');
+    return data;
+  }
+
+  function collectBlackout() {
+    const gender = radioVal('bGender');
+    if (!gender) throw new Error('Pick a gender package.');
+    const address = document.getElementById('bAddress').value.trim();
+    const contact = document.getElementById('bContact').value.trim();
+    const drink   = document.getElementById('bDrink').value.trim();
+    const ecName  = document.getElementById('bECName').value.trim();
+    const ecPhone = document.getElementById('bECPhone').value.trim();
+    if (!address || !contact || !ecName || !ecPhone) throw new Error('Fill in all required fields.');
+
+    const teeColor = radioVal('bTeeColor');
+    const teeSize  = radioVal('bTeeSize');
+    if (!teeColor || !teeSize) throw new Error('Select neon T-shirt color and size.');
+
+    if (!document.getElementById('bAgree').checked) throw new Error('Please agree to the band\'s disclaimer.');
+
+    return {
+      event: 'blackout', gender, address, contact, drink: drink || null,
+      emergencyContact: { name: ecName, phone: ecPhone },
+      tee: { color: teeColor, size: teeSize }
+    };
+  }
+
+  async function submitReservation(event, collectorFn, msgEl, btn) {
+    const session = getSession();
+    if (!session) return;
+    msgEl.classList.remove('show');
+
+    let formData;
+    try { formData = collectorFn(); }
+    catch (err) { return showMsg(msgEl, err.message); }
+
+    if (btn) btn.disabled = true;
+    try {
+      const { reservation } = await api('createReservation', {
+        userEmail: session.email,
+        sessionToken: session.sessionToken,
+        event,
+        repCode: refRep(),
+        ...formData
+      });
+
+      // Render receipt from server response
+      document.getElementById('rcpId').textContent    = reservation.id;
+      document.getElementById('rcpEvent').textContent = reservation.eventName;
+      document.getElementById('rcpName').textContent  = session.name;
+      document.getElementById('rcpPkg').textContent   = buildPackageSummary(event, formData);
+      document.getElementById('rcpTotal').textContent = `$${reservation.total.toLocaleString()} TTD`;
+      document.getElementById('rcpRep').textContent   = `${reservation.rep.name} (${reservation.rep.zone}) · ${reservation.rep.phone}`;
+      document.getElementById('receipt').classList.add('show');
+      document.getElementById('receipt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Refresh the My Reservations list so the new one appears
+      loadMyReservations();
+    } catch (err) {
+      // Session expired — bounce to login
+      if (/session/i.test(err.message)) {
+        clearSession();
+        renderAuthState();
+        return;
+      }
+      showMsg(msgEl, err.message);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  document.getElementById('jouvertForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitReservation('jouvert', collectJouvert, document.getElementById('jMsg'), e.submitter);
+  });
+  document.getElementById('blackoutForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitReservation('blackout', collectBlackout, document.getElementById('bMsg'), e.submitter);
+  });
+
+  document.getElementById('copyIdBtn').addEventListener('click', (e) => {
+    const id = document.getElementById('rcpId').textContent;
+    navigator.clipboard.writeText(id).then(() => {
+      e.target.textContent = 'Copied ✓';
+      setTimeout(() => e.target.textContent = 'Copy ID', 2000);
+    });
+  });
+  document.getElementById('newResBtn').addEventListener('click', () => {
+    document.getElementById('jouvertForm').reset();
+    document.getElementById('blackoutForm').reset();
+    document.getElementById('jMalePkg').classList.remove('show');
+    document.getElementById('jFemalePkg').classList.remove('show');
+    document.getElementById('receipt').classList.remove('show');
+    document.getElementById('reservePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ============================================================
+  // ALEX CHAT WIDGET
+  // ============================================================
+  const alexFab = document.getElementById('alexFab');
+  const alexPanel = document.getElementById('alexPanel');
+  const alexClose = document.getElementById('alexClose');
+  const alexMessages = document.getElementById('alexMessages');
+  const alexForm = document.getElementById('alexForm');
+  const alexInput = document.getElementById('alexInput');
+
+  // Set this to your n8n chat webhook to enable live Claude responses
+  window.ALEX_WEBHOOK_URL = window.ALEX_WEBHOOK_URL || '';
+
+  const alexKB = [
+    { match: /\b(difference|j'?ouvert vs|vs|both|two events|separate)\b/i,
+      reply: "They're two separate events on the same day. LUX J'Ouvert is the pre-dawn paint &amp; powder experience — $650 TTD, music trucks rolling 4AM through San Fernando. Lux Blackout is the LED Night Mas — $500 TTD, neon tees and LED everything starting 7PM. You can register for one or both — different forms for each." },
+    { match: /\b(blackout|led|night|neon)\b/i,
+      reply: "Lux Blackout is the LED Monday Night Mas — $500 TTD. Inside the bag: neon T-shirt (Pink or Orange), drawstring bag, branded cup, glow sticks, LED foam sticks, fiber optic wands, LED glasses, LED bunny ears, LED necklace, unlimited drinks. Call-time 7PM. 💡" },
+    { match: /\b(j'?ouvert|morning|paint|powder|sunrise|dawn)\b/i,
+      reply: "LUX J'Ouvert is the pre-dawn paint &amp; powder experience — $650 TTD. Kit: T-shirt or Monokini (depending on package), pull-string bag, entry wristband, after-sun care, glow sticks, waterproof phone case, face towel, beads, unlimited premium drinks. Assembly 3:30AM in San Fernando, road out 4AM." },
+    { match: /\b(price|cost|how much|650|500|fee)\b/i,
+      reply: "LUX J'Ouvert — $650 TTD. Lux Blackout — $500 TTD. Each is a separate registration. Payment is collected in person by your assigned band rep." },
+    { match: /\b(pay|payment|cash|method)\b/i,
+      reply: "Payment is collected in person by your band rep — nothing to enter online. Reserve here → get a Reservation ID → your assigned rep reaches out within 24 hours → meet them at a collection point and settle payment → rep confirms → proof-of-purchase email lands. Installment plans available — just ask your rep." },
+    { match: /\b(refund|cancel|exchange)\b/i,
+      reply: "Refunds: full up to 30 days before Carnival Monday, 50% between 30 and 14 days, none within 14 days (but transferable). Sizes: NO EXCHANGING on collection day — packages are pre-made, so pick carefully." },
+    { match: /\b(rep|representative|agent|contact|collect)\b/i,
+      reply: "Once you reserve, you're auto-assigned a band rep — Kerry Ramcharan covers San Fernando &amp; South (868-318-7031), and the Lux Team covers POS &amp; East (868-304-4476). Your rep reaches out within 24 hours with collection point options." },
+    { match: /\b(size|sizing|fit|small|medium|large|xl|monokini)\b/i,
+      reply: "Sizes run S/M/L/XL on both T-shirts and monokinis. Female J'Ouvert package includes a T-shirt PLUS Style I and Style II monokinis — all sized independently. Pick carefully — no exchanges on collection day." },
+    { match: /\b(color|colour|black|white|pink|orange)\b/i,
+      reply: "J'Ouvert T-shirts &amp; monokinis: Black or White. Blackout neon T-shirts: Neon Pink or Neon Orange. Same options for male and female packages." },
+    { match: /\b(date|when|monday|carnival)\b/i,
+      reply: "Carnival Monday 2027 is February 8. J'Ouvert: assembly 3:30AM in San Fernando, road 4AM, chip home around 10AM. Blackout: call-time 7PM. One day, two experiences." },
+    { match: /\b(safe|security|medic)\b/i,
+      reply: "Private security and roving medics from assembly to chip-home. Waterproof phone case in the J'Ouvert kit. Route pre-cleared with TTPS. Your emergency contact is in the system the moment you reserve." },
+    { match: /\b(reserve|register|sign up|book)\b/i,
+      reply: "Scroll to the Reserve section — create your account, pick J'Ouvert or Blackout (or both), fill the form, submit. You'll get a Reservation ID instantly. Your rep handles payment in person." },
+    { match: /\b(drink|preference|alcohol|bar)\b/i,
+      reply: "Drink preference is required for J'Ouvert (we stock based on it) and optional for Blackout. Both events have unlimited drinks — premium for J'Ouvert, full bar for Blackout." },
+    { match: /\b(what is j'?ouvert|first time|never (been|done)|new to)\b/i,
+      reply: "First time? Welcome — you go love it. J'Ouvert is the pre-dawn start of Carnival Monday — paint, powder, music trucks, the road before the sun come up. Lux runs a premium version: organized, secure, inclusive drinks. Just show up in clothes you don't mind getting paint on, and we handle the rest." },
+    { match: /\b(bring|wear|what should i|pack)\b/i,
+      reply: "For J'Ouvert: wear your Lux apparel and clothes/shoes you don't mind getting paint and powder on. Closed-toe footwear is smart for the road. We give you the waterproof phone case, towel and after-sun care in the kit. For Blackout: your neon Lux tee and comfortable shoes — we provide all the LED gear." },
+    { match: /\b(group|friends|together|crew|multiple people)\b/i,
+      reply: "Everyone in your crew creates their own account and reserves separately — that way each person picks their own size and apparel. You'll likely get assigned the same rep if you're all in the same area. Big group? Email the team and they'll help coordinate." },
+    { match: /\b(pickup|collect|collection|when do i get|costume ready)\b/i,
+      reply: "Costumes and kits are pre-made from your registration, then collected before Carnival. Your rep gives you collection point and date once payment is confirmed — and we email pickup details closer to launch. Remember: NO exchanging on collection day, so pick your sizes carefully." },
+    { match: /\b(monokini|one piece|swimsuit|what.*female)\b/i,
+      reply: "A monokini is a one-piece styled swimsuit-cut costume piece. The female J'Ouvert package includes a T-shirt PLUS two monokini styles (Style I and Style II) — each in Black or White, sizes S–XL. The male package is the T-shirt." },
+    { match: /\b(music|dj|truck|artist|band on the road|soca)\b/i,
+      reply: "Music trucks roll with both events — full sound on the road. DJ and artiste lineup is still being locked — follow @luxjouvert on Instagram for the announcement." },
+    { match: /\b(rain|weather|wet)\b/i,
+      reply: "J'Ouvert goes rain or shine — paint, powder and a lil rain is all part of the vibe. That's why the waterproof phone case is in your kit. The road runs as planned regardless." },
+    { match: /\b(forgot|reset|can'?t log ?in|password|locked out)\b/i,
+      reply: "If you can't log in, double-check the email you signed up with. Password reset isn't self-service yet — email support@luxjouvert.com from the address on your account and the team will sort it out fast." },
+    { match: /\b(lost|find my|reservation id|confirmation|receipt|proof)\b/i,
+      reply: "Your Reservation ID is in your confirmation email, and you can always see it by logging into luxjouvert.com — your reservations show under 'My Reservations' with live status. Lost the email? Email support@luxjouvert.com and we'll resend it." },
+    { match: /\b(age|18|old|minor|kid|child)\b/i,
+      reply: "Both events serve alcohol, so they're 18+. Bring valid ID. If you have a specific situation, email support@luxjouvert.com and the team will advise." },
+    { match: /\b(installment|deposit|plan|pay later|part payment)\b/i,
+      reply: "Yes — payment plans are available. Reserve online to lock your spot and Reservation ID, then arrange a deposit + installments with your rep. Your spot holds 7 days for the first payment. Status updates as each installment comes in." },
+    { match: /\b(hi|hello|hey|yow|good (morning|night|day)|wah)\b/i,
+      reply: "Yow — welcome to Lux. Two experiences on Carnival Monday 2027: J'Ouvert ($650) at sunrise, Blackout ($500) after dark. What you want to know about?" }
+  ];
+
+  // When nothing in the KB matches, hand off to the support inbox.
+  function alexFallback(text) {
+    for (const entry of alexKB) {
+      if (entry.match.test(text)) return entry.reply;
+    }
+    const mailto = "mailto:support@luxjouvert.com?subject=" +
+      encodeURIComponent("Question about LUX J'Ouvert 2027") +
+      "&body=" + encodeURIComponent(text);
+    return "Yow, that one I can't answer straight off — but the Lux team go sort you out one time. " +
+      "Reach them at <a href=\"" + mailto + "\" style=\"color:var(--gold);font-weight:600;text-decoration:underline;\">support@luxjouvert.com</a> " +
+      "(tap that and your question's already typed in for you). " +
+      "Or ask me about packages, pricing, payment, sizes, the schedule, or what to bring — I have all that on hand.";
+  }
+
+  function addMsg(text, who = 'bot') {
+    const el = document.createElement('div');
+    el.className = 'alex-msg ' + who;
+    el.innerHTML = text;
+    alexMessages.appendChild(el);
+    alexMessages.scrollTop = alexMessages.scrollHeight;
+    return el;
+  }
+
+  async function askAlex(userText) {
+    addMsg(userText.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'})[c]), 'user');
+    const typingEl = addMsg('Alex is typing…', 'typing');
+
+    let reply;
+    if (window.ALEX_WEBHOOK_URL) {
+      try {
+        const res = await fetch(window.ALEX_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chatInput: userText,
+            sessionId: (getSession()?.email || 'anonymous') + '_lux'
+          })
+        });
+        const data = await res.json();
+        reply = data.output || data.text || data.response || alexFallback(userText);
+      } catch (err) {
+        console.warn('Alex webhook failed, using fallback:', err);
+        reply = alexFallback(userText);
+      }
+    } else {
+      await new Promise(r => setTimeout(r, 600 + Math.random() * 500));
+      reply = alexFallback(userText);
+    }
+
+    typingEl.remove();
+    addMsg(reply, 'bot');
+  }
+
+  alexFab.addEventListener('click', () => alexPanel.classList.toggle('open'));
+  alexClose.addEventListener('click', () => alexPanel.classList.remove('open'));
+
+  alexForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = alexInput.value.trim();
+    if (!text) return;
+    alexInput.value = '';
+    askAlex(text);
+  });
+
+  alexInput.addEventListener('input', () => {
+    alexInput.style.height = 'auto';
+    alexInput.style.height = Math.min(alexInput.scrollHeight, 120) + 'px';
+  });
+
+  document.querySelectorAll('.alex-suggestion').forEach(s => {
+    s.addEventListener('click', () => askAlex(s.dataset.q));
+  });
+
+})();
+// Rotating gallery carousel
+(function () {
+  var root = document.getElementById('luxCarousel');
+  if (!root) return;
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.carousel-slide'));
+  var dotsWrap = root.querySelector('.carousel-dots');
+  var prevBtn = root.querySelector('.carousel-arrow.prev');
+  var nextBtn = root.querySelector('.carousel-arrow.next');
+  var index = 0, timer = null, DELAY = 4500;
+
+  slides.forEach(function (_, i) {
+    var d = document.createElement('button');
+    d.type = 'button';
+    d.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+    if (i === 0) d.classList.add('is-active');
+    d.addEventListener('click', function () { goTo(i); restart(); });
+    dotsWrap.appendChild(d);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.children);
+
+  function goTo(i) {
+    slides[index].classList.remove('is-active');
+    dots[index].classList.remove('is-active');
+    index = (i + slides.length) % slides.length;
+    slides[index].classList.add('is-active');
+    dots[index].classList.add('is-active');
+  }
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+  function start() { timer = setInterval(next, DELAY); }
+  function restart() { clearInterval(timer); start(); }
+
+  nextBtn.addEventListener('click', function () { next(); restart(); });
+  prevBtn.addEventListener('click', function () { prev(); restart(); });
+  root.addEventListener('mouseenter', function () { clearInterval(timer); });
+  root.addEventListener('mouseleave', start);
+
+  start();
+})();
+</script>
+
+</body>
+</html>
