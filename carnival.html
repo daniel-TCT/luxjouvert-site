@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#030014" />
+<title>My Carnival — LUX Carnival Concierge</title>
+<meta name="description" content="Your Carnival journey, all in one place. Plan, Book, Explore, Experience — LUX Carnival Concierge 2027." />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Inter:wght@400;500;600;700&family=Syne:ital,wght@1,600;1,800&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   LUX CARNIVAL CONCIERGE — My Carnival
+   Matching the main site's cosmic gold/purple theme
+   ============================================================ */
+
+:root {
+  --ink: #030014;
+  --cosmic: #0B0216;
+  --royal-shadow: #1A0B2E;
+  --slate: #12091F;
+
+  --gold: #FFC857;
+  --gold-bright: #FFD87A;
+  --purple: #7B2CBF;
+  --purple-deep: #4B1A80;
+  --magenta: #E11D74;
+
+  --cyan: #00F0FF;
+  --lime: #C7FF3C;
+  --fuchsia: #FF3CAC;
+
+  --white: #FFFFFF;
+  --muted: rgba(255,255,255,0.45);
+  --muted-strong: rgba(255,255,255,0.7);
+  --border: rgba(255,255,255,0.08);
+  --border-gold: rgba(255,200,87,0.15);
+
+  --font-display: 'Unbounded', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-accent: 'Syne', sans-serif;
+
+  --radius: 18px;
+  --radius-lg: 28px;
+  --maxw: 1280px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { border: none; background: none; cursor: pointer; font-family: inherit; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ---- Starfield bg ---- */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(1.2px 1.2px at 15% 25%, rgba(255,200,87,.35), transparent),
+    radial-gradient(1px 1px at 70% 15%, rgba(0,240,255,.3), transparent),
+    radial-gradient(1.5px 1.5px at 45% 65%, rgba(255,200,87,.2), transparent),
+    radial-gradient(1px 1px at 85% 80%, rgba(123,44,191,.25), transparent),
+    radial-gradient(1px 1px at 30% 90%, rgba(0,240,255,.2), transparent),
+    radial-gradient(ellipse at 50% 0%, rgba(123,44,191,.15) 0%, transparent 60%),
+    var(--ink);
+}
+
+/* ---- Nav ---- */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(3,0,20,0.85);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+}
+.logo {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: 22px; letter-spacing: -.01em;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.logo .lux {
+  background: linear-gradient(135deg, var(--gold), var(--magenta), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.logo .jouv { color: var(--white); opacity: .85; font-weight: 600; font-size: 12px; letter-spacing: .25em; }
+.logo .concierge { color: var(--muted); font-weight: 400; font-size: 10px; letter-spacing: .15em; display: block; }
+
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: var(--muted-strong);
+  position: relative; padding: 6px 0;
+  transition: color .2s;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0;
+  width: 0; height: 1px; background: var(--gold); transition: width .3s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { width: 100%; }
+
+.nav-toggle { display: none; font-size: 22px; color: var(--white); }
+
+@media (max-width: 820px) {
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; padding: 20px; background: rgba(3,0,20,0.95);
+    border-bottom: 1px solid var(--border); backdrop-filter: blur(20px);
+  }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: inline-block; }
+}
+
+/* ---- Hero ---- */
+.hero-banner {
+  position: relative;
+  padding: 80px 24px 60px;
+  background:
+    linear-gradient(180deg, rgba(3,0,20,0) 0%, rgba(3,0,20,.85) 100%),
+    linear-gradient(135deg, rgba(123,44,191,.18) 0%, rgba(255,200,87,.08) 100%);
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 30%, rgba(225,29,116,.12) 0%, transparent 60%);
+}
+.hero-content {
+  max-width: var(--maxw); margin: 0 auto; position: relative; z-index: 2;
+}
+.hero-welcome {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(28px, 5vw, 42px); line-height: 1.2;
+  margin-bottom: 8px;
+}
+.hero-welcome span { color: var(--gold); }
+.hero-subtitle {
+  font-size: 17px; color: var(--muted-strong); margin-bottom: 6px;
+}
+.hero-tagline {
+  font-size: 14px; color: var(--muted); letter-spacing: .05em;
+}
+.hero-script {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: clamp(22px, 4vw, 34px);
+  background: linear-gradient(135deg, var(--gold), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 16px;
+}
+
+/* ---- Partner cards grid ---- */
+.partners {
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 48px 24px 32px;
+}
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .partners-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .partners-grid { grid-template-columns: 1fr; } }
+
+.partner-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  background: rgba(11,2,22,0.7);
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s;
+  display: flex; flex-direction: column;
+}
+.partner-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(255,200,87,.12);
+}
+.partner-img {
+  width: 100%; height: 160px; object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+.partner-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; }
+.partner-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  margin-top: -38px; position: relative; z-index: 2;
+  font-size: 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+}
+.partner-icon.travel { background: linear-gradient(135deg, var(--purple), var(--purple-deep)); }
+.partner-icon.accom  { background: linear-gradient(135deg, var(--cyan), #0099aa); }
+.partner-icon.rental { background: linear-gradient(135deg, var(--magenta), #aa1155); }
+.partner-icon.event  { background: linear-gradient(135deg, var(--gold), #cc9930); }
+.partner-icon.ticket { background: linear-gradient(135deg, var(--lime), #88bb22); }
+.partner-icon.lux    { background: linear-gradient(135deg, var(--cyan), var(--purple)); }
+
+.partner-name {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; margin: 10px 0 6px;
+}
+.partner-desc {
+  font-size: 13px; color: var(--muted-strong); line-height: 1.5;
+  flex: 1;
+}
+.partner-arrow {
+  align-self: flex-end; margin-top: 12px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,200,87,.1); border: 1px solid var(--border-gold);
+  display: grid; place-items: center;
+  color: var(--gold); font-size: 14px;
+  transition: background .2s, transform .2s;
+}
+.partner-card:hover .partner-arrow {
+  background: var(--gold); color: var(--ink);
+  transform: translateX(3px);
+}
+
+/* ---- Bottom sections (itinerary + AI assistant) ---- */
+.bottom-section {
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+@media (max-width: 820px) {
+  .bottom-section { grid-template-columns: 1fr; }
+}
+
+/* Itinerary */
+.itinerary-card {
+  background: rgba(11,2,22,0.7);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+.itin-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.itin-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 17px;
+  display: flex; align-items: center; gap: 10px;
+}
+.itin-title svg { color: var(--gold); }
+.itin-link {
+  font-size: 12px; color: var(--cyan);
+  display: flex; align-items: center; gap: 4px;
+  transition: color .2s;
+}
+.itin-link:hover { color: var(--gold); }
+
+.itin-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.itin-item:last-child { border-bottom: none; }
+
+.itin-date {
+  flex-shrink: 0; text-align: center;
+  width: 52px;
+}
+.itin-month {
+  font-size: 10px; font-weight: 700; letter-spacing: .15em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.itin-day {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 22px; line-height: 1.1; color: var(--white);
+}
+.itin-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: rgba(255,200,87,.1);
+  display: grid; place-items: center;
+  font-size: 13px; flex-shrink: 0; margin-top: 2px;
+}
+.itin-details { flex: 1; }
+.itin-name {
+  font-weight: 600; font-size: 14px; margin-bottom: 2px;
+}
+.itin-meta {
+  font-size: 12px; color: var(--muted);
+}
+.itin-status {
+  flex-shrink: 0; align-self: center;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  padding: 4px 12px; border-radius: 999px;
+}
+.itin-status.confirmed {
+  background: rgba(0,240,255,.1); border: 1px solid rgba(0,240,255,.3);
+  color: var(--cyan);
+}
+.itin-status.pending {
+  background: rgba(255,200,87,.1); border: 1px solid rgba(255,200,87,.3);
+  color: var(--gold);
+}
+
+/* ---- Alex AI inline panel ---- */
+.alex-inline {
+  background: rgba(11,2,22,0.7);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  max-height: 520px;
+}
+.alex-inline-header {
+  padding: 18px 22px;
+  background: linear-gradient(135deg, rgba(255,200,87,0.08), rgba(225,29,116,0.06));
+  border-bottom: 1px solid var(--border-gold);
+  display: flex; align-items: center; gap: 12px;
+}
+.alex-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  display: grid; place-items: center;
+  color: var(--ink); font-family: var(--font-display); font-weight: 900;
+  flex-shrink: 0;
+}
+.alex-name { font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+.alex-status { font-size: 11px; color: var(--lime); display: flex; align-items: center; gap: 6px; }
+.alex-status::before { content: ""; width: 6px; height: 6px; background: var(--lime); border-radius: 50%; box-shadow: 0 0 8px var(--lime); }
+
+.alex-messages {
+  flex: 1; overflow-y: auto; padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+}
+.alex-messages::-webkit-scrollbar { width: 6px; }
+.alex-messages::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+.alex-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }
+.alex-msg.bot { background: rgba(255,200,87,0.08); border: 1px solid rgba(255,200,87,0.15); align-self: flex-start; border-bottom-left-radius: 4px; }
+.alex-msg.user { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); color: var(--ink); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
+.alex-msg.typing { background: rgba(255,255,255,0.04); align-self: flex-start; color: var(--muted); font-style: italic; }
+
+.alex-suggestions { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 12px; }
+.alex-suggestion {
+  padding: 8px 12px; background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border); border-radius: 999px;
+  font-size: 12px; color: var(--muted-strong);
+  transition: all .2s;
+}
+.alex-suggestion:hover { background: rgba(255,200,87,0.1); border-color: var(--gold); color: var(--white); }
+
+.alex-input-row { padding: 14px 16px; border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; }
+.alex-input {
+  flex: 1; min-height: 40px; max-height: 80px; resize: none;
+  padding: 10px 12px; border-radius: 12px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--white); font-family: var(--font-body); font-size: 14px;
+}
+.alex-input:focus { outline: none; border-color: var(--gold); }
+.alex-send {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--magenta));
+  color: var(--ink); display: grid; place-items: center;
+  transition: transform .2s; flex-shrink: 0;
+}
+.alex-send:hover { transform: scale(1.08); }
+.alex-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* ---- Footer ---- */
+footer {
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(3,0,20,0) 0%, rgba(11,2,22,.6) 100%);
+  padding: 32px 24px;
+}
+.footer-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 32px;
+}
+.footer-logo {
+  font-family: var(--font-display); font-weight: 900; font-size: 20px;
+  background: linear-gradient(135deg, var(--gold), var(--magenta), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.footer-badge {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted-strong);
+}
+.footer-badge svg { width: 18px; height: 18px; color: var(--gold); }
+
+/* ---- Reveal animation ---- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav>
+  <div class="nav-inner">
+    <a href="Lux.html" class="logo" aria-label="LUX Carnival Concierge Home">
+      <span class="lux">LUX</span>
+      <span class="jouv">CARNIVAL CONCIERGE</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="Lux.html">Home</a>
+      <a href="carnival.html" class="active">My Carnival</a>
+      <a href="Lux.html#experience">Event Info</a>
+      <a href="Lux.html#packages">Tickets</a>
+      <a href="Lux.html#reserve">Reserve</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </div>
+</nav>
+
+<!-- ============== HERO BANNER ============== -->
+<section class="hero-banner">
+  <div class="hero-content">
+    <div class="hero-welcome">Welcome to <span>LUX Carnival</span></div>
+    <div class="hero-subtitle">Your Carnival journey, all in one place.</div>
+    <div class="hero-tagline">Plan. Book. Explore. Experience.</div>
+    <div class="hero-script">Let's make it happen!</div>
+  </div>
+</section>
+
+<!-- ============== PARTNER CARDS ============== -->
+<section class="partners">
+  <div class="partners-grid">
+
+    <!-- Travel / Flights -->
+    <a class="partner-card reveal" href="https://collectivetech.xyz/travelwlinda/" target="_blank" rel="noopener">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&h=320&fit=crop" alt="Airplane flying over tropical waters" />
+      <div class="partner-body">
+        <div class="partner-icon travel">✈</div>
+        <div class="partner-name">Travel</div>
+        <div class="partner-desc">Book flights, manage your itinerary and get travel updates.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Accommodation -->
+    <a class="partner-card reveal" href="https://tradewindshotel.com/" target="_blank" rel="noopener">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=320&fit=crop" alt="Tropical hotel with pool" />
+      <div class="partner-body">
+        <div class="partner-icon accom">🏨</div>
+        <div class="partner-name">Accommodation</div>
+        <div class="partner-desc">Explore partner hotels and secure your stay.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Rentals & Transfers -->
+    <a class="partner-card reveal" href="https://supernovacarrentalstrinidad.com/" target="_blank" rel="noopener">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1449965408869-ebd3fee7710d?w=600&h=320&fit=crop" alt="Car on tropical road" />
+      <div class="partner-body">
+        <div class="partner-icon rental">🚗</div>
+        <div class="partner-name">Rentals &amp; Transfers</div>
+        <div class="partner-desc">Book your car, airport transfers and local transport.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Event Information -->
+    <a class="partner-card reveal" href="Lux.html#experience">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=320&fit=crop" alt="Carnival celebration" />
+      <div class="partner-body">
+        <div class="partner-icon event">📅</div>
+        <div class="partner-name">Event Information</div>
+        <div class="partner-desc">Discover what's on, locations, schedules and more.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Tickets -->
+    <a class="partner-card reveal" href="Lux.html#packages">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=320&fit=crop" alt="Concert wristbands" />
+      <div class="partner-body">
+        <div class="partner-icon ticket">🎫</div>
+        <div class="partner-name">Tickets</div>
+        <div class="partner-desc">View, manage and add your event tickets — all in one place.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- Lux J'Ouvert -->
+    <a class="partner-card reveal" href="Lux.html#top">
+      <img class="partner-img" src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&h=320&fit=crop" alt="Carnival dawn celebration" />
+      <div class="partner-body">
+        <div class="partner-icon lux">🔥</div>
+        <div class="partner-name">Lux J'Ouvert</div>
+        <div class="partner-desc">Your ultimate J'Ouvert experience. Info, map, live updates and more.</div>
+        <div class="partner-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ============== BOTTOM: ITINERARY + ALEX ============== -->
+<section class="bottom-section">
+
+  <!-- Itinerary at a Glance -->
+  <div class="itinerary-card reveal">
+    <div class="itin-header">
+      <div class="itin-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Your Carnival at a Glance
+      </div>
+      <a href="Lux.html#schedule" class="itin-link">View Full Itinerary →</a>
+    </div>
+
+    <div class="itin-item">
+      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">5</div></div>
+      <div class="itin-icon">✈</div>
+      <div class="itin-details">
+        <div class="itin-name">Flight to Trinidad</div>
+        <div class="itin-meta">Caribbean Airlines · 4:35 PM</div>
+      </div>
+      <span class="itin-status confirmed">Confirmed</span>
+    </div>
+
+    <div class="itin-item">
+      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">6</div></div>
+      <div class="itin-icon">🏨</div>
+      <div class="itin-details">
+        <div class="itin-name">Hotel Check‑in</div>
+        <div class="itin-meta">Tradewinds Hotel, San Fernando</div>
+      </div>
+      <span class="itin-status confirmed">Confirmed</span>
+    </div>
+
+    <div class="itin-item">
+      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">7</div></div>
+      <div class="itin-icon">🎶</div>
+      <div class="itin-details">
+        <div class="itin-name">Fete</div>
+        <div class="itin-meta">Serenity Fete · 7:00 PM</div>
+      </div>
+      <span class="itin-status confirmed">Confirmed</span>
+    </div>
+
+    <div class="itin-item">
+      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">8</div></div>
+      <div class="itin-icon">🔥</div>
+      <div class="itin-details">
+        <div class="itin-name">Lux J'Ouvert</div>
+        <div class="itin-meta">Check‑in: 2:30 AM · Move‑off: 4:00 AM</div>
+      </div>
+      <span class="itin-status confirmed">Confirmed</span>
+    </div>
+
+    <div class="itin-item">
+      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">9</div></div>
+      <div class="itin-icon">🎭</div>
+      <div class="itin-details">
+        <div class="itin-name">Carnival Tuesday</div>
+        <div class="itin-meta">Various Events · 8:00 AM</div>
+      </div>
+      <span class="itin-status pending">Pending</span>
+    </div>
+  </div>
+
+  <!-- Alex AI Assistant (inline) -->
+  <div class="alex-inline reveal">
+    <div class="alex-inline-header">
+      <div class="alex-avatar">A</div>
+      <div>
+        <div class="alex-name">Your Lux AI Assistant</div>
+        <div class="alex-status">Always here. Always ready.</div>
+      </div>
+    </div>
+    <div class="alex-messages" id="alexMessages">
+      <div class="alex-msg bot">Hi! 👋 I'm your Lux AI assistant. I can help you with your travel plans, tickets, event info, real‑time updates and more.<br><br>What would you like to do today?</div>
+    </div>
+    <div class="alex-suggestions" id="alexSuggestions">
+      <button class="alex-suggestion" data-q="Where's my next event?">Where's my next event?</button>
+      <button class="alex-suggestion" data-q="Show me my tickets">Show me my tickets</button>
+      <button class="alex-suggestion" data-q="Find a good hotel near the route">Find a good hotel near the route</button>
+      <button class="alex-suggestion" data-q="What's happening now?">What's happening now?</button>
+      <button class="alex-suggestion" data-q="I need help">I need help</button>
+    </div>
+    <form class="alex-input-row" id="alexForm">
+      <textarea class="alex-input" id="alexInput" placeholder="Type your question or request…" rows="1"></textarea>
+      <button type="submit" class="alex-send" aria-label="Send">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </form>
+  </div>
+
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">LUX</span>
+    <div class="footer-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Safe &amp; Secure
+    </div>
+    <div class="footer-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      24/7 Support
+    </div>
+    <div class="footer-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Trusted Partners
+    </div>
+    <div class="footer-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Your Carnival. Our Priority.
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+   ============================================================ -->
+<script>
+(() => {
+  'use strict';
+
+  // ---------- Nav toggle ----------
+  const navToggle = document.getElementById('navToggle');
+  const navLinks  = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ---------- Scroll reveal ----------
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ============================================================
+  // ALEX AI — Full Knowledge Base
+  // ============================================================
+  const alexMessages = document.getElementById('alexMessages');
+  const alexForm = document.getElementById('alexForm');
+  const alexInput = document.getElementById('alexInput');
+
+  window.ALEX_WEBHOOK_URL = window.ALEX_WEBHOOK_URL || '';
+
+  const alexKB = [
+    // ── LUX Events ──
+    { match: /\b(difference|j'?ouvert vs|vs|both|two events|separate)\b/i,
+      reply: "They're two separate events on the same day. LUX J'Ouvert is the pre-dawn paint & powder experience — $650 TTD, music trucks rolling 4 AM through San Fernando. Lux Blackout is the LED Night Mas — $500 TTD, neon tees and LED everything starting 7 PM. You can register for one or both." },
+    { match: /\b(blackout|led|night|neon)\b/i,
+      reply: "Lux Blackout is the LED Monday Night Mas — $500 TTD. Inside the bag: neon T-shirt (Pink or Orange), drawstring bag, branded cup, glow sticks, LED foam sticks, fiber optic wands, LED glasses, LED bunny ears, LED necklace, unlimited drinks. Call-time 7 PM. 💡" },
+    { match: /\b(j'?ouvert|morning|paint|powder|sunrise|dawn)\b/i,
+      reply: "LUX J'Ouvert is the pre-dawn paint & powder experience — $650 TTD. Kit: T-shirt or Monokini, pull-string bag, entry wristband, after-sun care, glow sticks, waterproof phone case, face towel, beads, unlimited premium drinks. Assembly 3:30 AM in San Fernando, road out 4 AM." },
+    { match: /\b(price|cost|how much|650|500|fee)\b/i,
+      reply: "LUX J'Ouvert — $650 TTD. Lux Blackout — $500 TTD. Each is a separate registration. Payment is collected in person by your assigned band rep." },
+    { match: /\b(pay|payment|cash|method)\b/i,
+      reply: "Payment is collected in person by your band rep — nothing to enter online. Reserve → get a Reservation ID → your assigned rep reaches out within 24 hours → meet them at a collection point → settle payment → proof-of-purchase email. Installment plans available — just ask your rep." },
+    { match: /\b(refund|cancel|exchange)\b/i,
+      reply: "Refunds: full up to 30 days before Carnival Monday, 50% between 30 and 14 days, none within 14 days (but transferable). Sizes: NO EXCHANGING on collection day — packages are pre-made, so pick carefully." },
+    { match: /\b(rep|representative|agent|contact|collect)\b/i,
+      reply: "Once you reserve, you're auto-assigned a band rep — Kerry Ramcharan covers San Fernando & South (868-318-7031), and the Lux Team covers POS & East (868-304-4476). Your rep reaches out within 24 hours with collection point options." },
+    { match: /\b(size|sizing|fit|small|medium|large|xl|monokini)\b/i,
+      reply: "Sizes run S/M/L/XL on both T-shirts and monokinis. Female J'Ouvert package includes a T-shirt PLUS Style I and Style II monokinis — all sized independently. Pick carefully — no exchanges on collection day." },
+    { match: /\b(color|colour|black|white|pink|orange)\b/i,
+      reply: "J'Ouvert T-shirts & monokinis: Black or White. Blackout neon T-shirts: Neon Pink or Neon Orange. Same options for male and female packages." },
+    { match: /\b(date|when|monday|carnival)\b/i,
+      reply: "Carnival Monday 2027 is February 8. J'Ouvert: assembly 3:30 AM in San Fernando, road 4 AM, chip home around 10 AM. Blackout: call-time 7 PM. One day, two experiences." },
+    { match: /\b(safe|security|medic)\b/i,
+      reply: "Private security and roving medics from assembly to chip-home. Waterproof phone case in the J'Ouvert kit. Route pre-cleared with TTPS. Your emergency contact is in the system the moment you reserve." },
+    { match: /\b(reserve|register|sign up|book)\b/i,
+      reply: "Head to our <a href='Lux.html#reserve' style='color:var(--gold);text-decoration:underline;'>Reserve section</a> — create your account, pick J'Ouvert or Blackout (or both), fill the form, submit. You'll get a Reservation ID instantly." },
+    // ── Travel & Partners ──
+    { match: /\b(flight|fly|airline|airport|travel)\b/i,
+      reply: "For flights, check out our partner <a href='https://collectivetech.xyz/travelwlinda/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Travel with Linda</a> — they'll sort your flights to Trinidad. Piarco International Airport (POS) is the main gateway. Caribbean Airlines and JetBlue have direct routes from several US and Caribbean cities." },
+    { match: /\b(hotel|stay|accommodation|room|lodge|tradewinds)\b/i,
+      reply: "Our accommodation partner is <a href='https://tradewindshotel.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Tradewinds Hotel</a> in San Fernando — right near the J'Ouvert route. Book early, Carnival week fills up fast!" },
+    { match: /\b(car|rental|rent|transport|transfer|taxi|supernova)\b/i,
+      reply: "For car rentals and airport transfers, we partner with <a href='https://supernovacarrentalstrinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Supernova Car Rentals</a>. They handle pickups at Piarco and drop-offs island-wide. Book ahead for Carnival week." },
+    { match: /\b(food|eat|restaurant|lime|519|drinks?|bar|nightlife)\b/i,
+      reply: "For food and social vibes, check out our partner <a href='https://519trinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>519 Trinidad</a> at C3 Centre — great food, drinks, and a social hub. Perfect spot for liming before and after events." },
+    { match: /\b(ticket|my ticket|wristband)\b/i,
+      reply: "Your event tickets and wristbands are managed through your reservation. Check your status on the <a href='Lux.html#reserve' style='color:var(--gold);text-decoration:underline;'>main site</a> — your reservations show under 'My Reservations' with live status updates." },
+    { match: /\b(next event|what's next|upcoming|schedule|itinerary)\b/i,
+      reply: "Check the itinerary on the left for your upcoming events! Your next confirmed event is shown at the top. For the full Carnival schedule, visit our <a href='Lux.html#schedule' style='color:var(--gold);text-decoration:underline;'>Schedule section</a>." },
+    // ── General ──
+    { match: /\b(drink|preference|alcohol)\b/i,
+      reply: "Drink preference is required for J'Ouvert (we stock based on it) and optional for Blackout. Both events have unlimited drinks — premium for J'Ouvert, full bar for Blackout." },
+    { match: /\b(what is j'?ouvert|first time|never (been|done)|new to)\b/i,
+      reply: "First time? Welcome — you go love it! J'Ouvert is the pre-dawn start of Carnival Monday — paint, powder, music trucks, the road before the sun come up. Lux runs a premium version: organized, secure, inclusive drinks. Show up in clothes you don't mind getting paint on, and we handle the rest." },
+    { match: /\b(bring|wear|what should i|pack)\b/i,
+      reply: "For J'Ouvert: wear your Lux apparel and clothes/shoes you don't mind getting paint on. Closed-toe footwear for the road. We give you waterproof phone case, towel and after-sun care. For Blackout: your neon Lux tee and comfortable shoes — we provide all the LED gear." },
+    { match: /\b(group|friends|together|crew)\b/i,
+      reply: "Everyone in your crew creates their own account and reserves separately — each person picks their own size and apparel. You'll likely get the same rep if you're all in the same area. Big group? Email the team and they'll coordinate." },
+    { match: /\b(music|dj|truck|artist|soca)\b/i,
+      reply: "Music trucks roll with both events — full sound on the road. DJ and artiste lineup is still being locked — follow @luxjouvert on Instagram for the announcement." },
+    { match: /\b(rain|weather|wet)\b/i,
+      reply: "J'Ouvert goes rain or shine — paint, powder and a lil rain is all part of the vibe. That's why the waterproof phone case is in your kit. The road runs as planned regardless." },
+    { match: /\b(age|18|old|minor)\b/i,
+      reply: "Both events serve alcohol, so they're 18+. Bring valid ID." },
+    { match: /\b(installment|deposit|plan|pay later)\b/i,
+      reply: "Yes — payment plans are available. Reserve online to lock your spot, then arrange a deposit + installments with your rep. Your spot holds 7 days for the first payment." },
+    { match: /\b(help|support|issue|problem)\b/i,
+      reply: "I'm here to help! You can ask me about travel, accommodation, car rentals, events, tickets, packages, sizing, payment — anything Carnival. For urgent issues, email <a href='mailto:support@luxjouvert.com' style='color:var(--gold);text-decoration:underline;'>support@luxjouvert.com</a> or call 868-318-7031." },
+    { match: /\b(hi|hello|hey|yow|good (morning|night|day)|wah)\b/i,
+      reply: "Yow — welcome to Lux Carnival Concierge! 🎊 I can help with travel, accommodation, car rentals, event info, tickets, and everything you need for Carnival 2027. What you want to know?" }
+  ];
+
+  function alexFallback(text) {
+    for (const entry of alexKB) {
+      if (entry.match.test(text)) return entry.reply;
+    }
+    const mailto = "mailto:support@luxjouvert.com?subject=" +
+      encodeURIComponent("Question about LUX Carnival 2027") +
+      "&body=" + encodeURIComponent(text);
+    return "That one I can't answer straight off — but the Lux team go sort you out. " +
+      "Reach them at <a href=\"" + mailto + "\" style=\"color:var(--gold);font-weight:600;text-decoration:underline;\">support@luxjouvert.com</a> " +
+      "(tap that and your question's already typed in). " +
+      "Or ask me about travel, hotels, car rentals, events, packages, pricing, payment, sizing, or what to bring.";
+  }
+
+  function addMsg(text, who = 'bot') {
+    const el = document.createElement('div');
+    el.className = 'alex-msg ' + who;
+    el.innerHTML = text;
+    alexMessages.appendChild(el);
+    alexMessages.scrollTop = alexMessages.scrollHeight;
+    return el;
+  }
+
+  async function askAlex(userText) {
+    addMsg(userText.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'})[c]), 'user');
+    const typingEl = addMsg('Alex is typing…', 'typing');
+
+    let reply;
+    if (window.ALEX_WEBHOOK_URL) {
+      try {
+        const res = await fetch(window.ALEX_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chatInput: userText, sessionId: 'carnival_concierge' })
+        });
+        const data = await res.json();
+        reply = data.output || data.text || data.response || alexFallback(userText);
+      } catch (err) {
+        console.warn('Alex webhook failed, using fallback:', err);
+        reply = alexFallback(userText);
+      }
+    } else {
+      await new Promise(r => setTimeout(r, 600 + Math.random() * 500));
+      reply = alexFallback(userText);
+    }
+
+    typingEl.remove();
+    addMsg(reply, 'bot');
+  }
+
+  alexForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = alexInput.value.trim();
+    if (!text) return;
+    alexInput.value = '';
+    askAlex(text);
+  });
+
+  alexInput.addEventListener('input', () => {
+    alexInput.style.height = 'auto';
+    alexInput.style.height = Math.min(alexInput.scrollHeight, 80) + 'px';
+  });
+
+  document.querySelectorAll('.alex-suggestion').forEach(s => {
+    s.addEventListener('click', () => {
+      askAlex(s.dataset.q);
+      document.getElementById('alexSuggestions').style.display = 'none';
+    });
+  });
+
+})();
+</script>
+
+</body>
+</html>
