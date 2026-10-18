@@ -1931,8 +1931,8 @@ label {
         password:  document.getElementById('suPass').value
       });
       setSession({ email: user.email, name: user.name, phone: user.phone, sessionToken, loginAt: new Date().toISOString() });
-      showMsg(msg, 'Welcome to Lux.', 'success');
-      setTimeout(renderAuthState, 400);
+      showMsg(msg, 'Welcome to Lux — redirecting to your Carnival dashboard…', 'success');
+      setTimeout(() => { window.location.href = 'carnival.html'; }, 800);
     } catch (err) {
       showMsg(msg, err.message);
     } finally {

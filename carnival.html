@@ -99,7 +99,6 @@ nav {
   -webkit-text-fill-color: transparent;
 }
 .logo .jouv { color: var(--white); opacity: .85; font-weight: 600; font-size: 12px; letter-spacing: .25em; }
-.logo .concierge { color: var(--muted); font-weight: 400; font-size: 10px; letter-spacing: .15em; display: block; }
 
 .nav-links { display: flex; gap: 28px; align-items: center; }
 .nav-links a {
@@ -116,6 +115,19 @@ nav {
 .nav-links a.active { color: var(--gold); }
 .nav-links a.active::after { width: 100%; }
 
+/* Account strip in nav */
+.nav-account {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; color: var(--muted-strong);
+}
+.nav-account .who { color: var(--gold); font-weight: 600; }
+.nav-account button {
+  font-size: 11px; color: var(--muted); padding: 4px 10px;
+  border: 1px solid var(--border); border-radius: 999px;
+  transition: all .2s;
+}
+.nav-account button:hover { border-color: var(--gold); color: var(--gold); }
+
 .nav-toggle { display: none; font-size: 22px; color: var(--white); }
 
 @media (max-width: 820px) {
@@ -126,12 +138,109 @@ nav {
   }
   .nav-links.open { display: flex; }
   .nav-toggle { display: inline-block; }
+  .nav-account { font-size: 11px; gap: 8px; }
 }
+
+/* ============================================================
+   AUTH GATE — full-screen overlay when not logged in
+   ============================================================ */
+.auth-gate {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.auth-gate.hidden { display: none; }
+
+.auth-box {
+  width: 100%; max-width: 440px;
+  background: rgba(11,2,22,0.9);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.6);
+  position: relative;
+  overflow: hidden;
+}
+.auth-box::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--magenta), var(--cyan));
+}
+.auth-logo {
+  text-align: center; margin-bottom: 28px;
+}
+.auth-logo .big {
+  font-family: var(--font-display); font-weight: 900; font-size: 32px;
+  background: linear-gradient(135deg, var(--gold), var(--magenta), var(--cyan));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.auth-logo .sub {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: 13px; color: var(--muted); letter-spacing: .15em;
+  margin-top: 4px;
+}
+
+.auth-tabs { display: flex; gap: 8px; margin-bottom: 24px; padding: 4px; background: rgba(255,255,255,0.04); border-radius: 999px; }
+.auth-tab {
+  flex: 1; padding: 10px 16px; border-radius: 999px;
+  font-family: var(--font-display); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+  transition: all .25s; text-align: center;
+}
+.auth-tab.active { background: var(--gold); color: var(--ink); }
+
+.auth-form { display: none; }
+.auth-form.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.auth-form label {
+  display: block; font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 6px; margin-top: 14px; font-weight: 600;
+}
+.auth-form label:first-child { margin-top: 0; }
+.field {
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--white); font-size: 15px; font-family: var(--font-body);
+  transition: border-color .2s, background .2s;
+}
+.field:focus { outline: none; border-color: var(--gold); background: rgba(255,200,87,0.04); }
+.field::placeholder { color: rgba(255,255,255,0.35); }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+.btn-submit {
+  width: 100%; margin-top: 22px; padding: 14px;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,200,87,.35); }
+.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.msg { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-top: 14px; display: none; }
+.msg.show { display: block; }
+.msg.error { background: rgba(225,29,116,0.12); border: 1px solid rgba(225,29,116,0.4); color: #FF8DB5; }
+.msg.success { background: rgba(199,255,60,0.1); border: 1px solid rgba(199,255,60,0.35); color: var(--lime); }
+
+.auth-hint {
+  font-size: 12px; color: var(--muted); margin-top: 18px; text-align: center;
+}
+.auth-hint a { color: var(--gold); text-decoration: underline; }
 
 /* ---- Hero ---- */
 .hero-banner {
   position: relative;
-  padding: 80px 24px 60px;
+  padding: 60px 24px 48px;
   background:
     linear-gradient(180deg, rgba(3,0,20,0) 0%, rgba(3,0,20,.85) 100%),
     linear-gradient(135deg, rgba(123,44,191,.18) 0%, rgba(255,200,87,.08) 100%);
@@ -147,29 +256,29 @@ nav {
 }
 .hero-welcome {
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(28px, 5vw, 42px); line-height: 1.2;
-  margin-bottom: 8px;
+  font-size: clamp(24px, 5vw, 38px); line-height: 1.2;
+  margin-bottom: 6px;
 }
-.hero-welcome span { color: var(--gold); }
+.hero-welcome .name { color: var(--gold); }
 .hero-subtitle {
-  font-size: 17px; color: var(--muted-strong); margin-bottom: 6px;
+  font-size: 16px; color: var(--muted-strong); margin-bottom: 4px;
 }
 .hero-tagline {
-  font-size: 14px; color: var(--muted); letter-spacing: .05em;
+  font-size: 13px; color: var(--muted); letter-spacing: .05em;
 }
 .hero-script {
   font-family: var(--font-accent); font-style: italic;
-  font-size: clamp(22px, 4vw, 34px);
+  font-size: clamp(20px, 3.5vw, 30px);
   background: linear-gradient(135deg, var(--gold), var(--cyan));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 /* ---- Partner cards grid ---- */
 .partners {
   max-width: var(--maxw); margin: 0 auto;
-  padding: 48px 24px 32px;
+  padding: 40px 24px 28px;
 }
 .partners-grid {
   display: grid;
@@ -251,14 +360,15 @@ nav {
 }
 .itin-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .itin-title {
   font-family: var(--font-display); font-weight: 700;
-  font-size: 17px;
+  font-size: 16px;
   display: flex; align-items: center; gap: 10px;
 }
 .itin-title svg { color: var(--gold); }
+.itin-actions { display: flex; gap: 10px; align-items: center; }
 .itin-link {
   font-size: 12px; color: var(--cyan);
   display: flex; align-items: center; gap: 4px;
@@ -267,15 +377,15 @@ nav {
 .itin-link:hover { color: var(--gold); }
 
 .itin-item {
-  display: flex; align-items: flex-start; gap: 16px;
-  padding: 14px 0;
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
 }
 .itin-item:last-child { border-bottom: none; }
 
 .itin-date {
   flex-shrink: 0; text-align: center;
-  width: 52px;
+  width: 48px;
 }
 .itin-month {
   font-size: 10px; font-weight: 700; letter-spacing: .15em;
@@ -283,7 +393,7 @@ nav {
 }
 .itin-day {
   font-family: var(--font-display); font-weight: 800;
-  font-size: 22px; line-height: 1.1; color: var(--white);
+  font-size: 20px; line-height: 1.1; color: var(--white);
 }
 .itin-icon {
   width: 28px; height: 28px; border-radius: 8px;
@@ -291,7 +401,7 @@ nav {
   display: grid; place-items: center;
   font-size: 13px; flex-shrink: 0; margin-top: 2px;
 }
-.itin-details { flex: 1; }
+.itin-details { flex: 1; min-width: 0; }
 .itin-name {
   font-weight: 600; font-size: 14px; margin-bottom: 2px;
 }
@@ -300,8 +410,8 @@ nav {
 }
 .itin-status {
   flex-shrink: 0; align-self: center;
-  font-size: 11px; font-weight: 700; letter-spacing: .06em;
-  padding: 4px 12px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  padding: 3px 10px; border-radius: 999px;
 }
 .itin-status.confirmed {
   background: rgba(0,240,255,.1); border: 1px solid rgba(0,240,255,.3);
@@ -311,6 +421,70 @@ nav {
   background: rgba(255,200,87,.1); border: 1px solid rgba(255,200,87,.3);
   color: var(--gold);
 }
+
+/* Itinerary edit button */
+.itin-edit-btn {
+  font-size: 11px; color: var(--gold); padding: 5px 12px;
+  border: 1px solid var(--border-gold); border-radius: 999px;
+  transition: all .2s; font-weight: 600;
+}
+.itin-edit-btn:hover { background: rgba(255,200,87,.1); }
+
+/* Add-item modal */
+.itin-modal-overlay {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(0,0,0,.7);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.itin-modal-overlay.hidden { display: none; }
+.itin-modal {
+  width: 100%; max-width: 440px;
+  background: rgba(11,2,22,.95);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  backdrop-filter: blur(20px);
+}
+.itin-modal h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  margin-bottom: 20px; color: var(--gold);
+}
+.itin-modal .field-row { margin-bottom: 4px; }
+.itin-modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.itin-modal-actions button {
+  padding: 10px 20px; border-radius: 999px;
+  font-family: var(--font-display); font-size: 12px; letter-spacing: .08em;
+  font-weight: 600; text-transform: uppercase;
+}
+.itin-modal-actions .cancel { color: var(--muted); border: 1px solid var(--border); }
+.itin-modal-actions .cancel:hover { border-color: var(--gold); color: var(--gold); }
+.itin-modal-actions .save {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+}
+.itin-modal-actions .save:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,200,87,.3); }
+
+/* Delete button on itinerary items */
+.itin-delete {
+  flex-shrink: 0; align-self: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: none; place-items: center;
+  font-size: 12px; color: var(--muted);
+  transition: all .2s;
+}
+.itin-delete:hover { color: var(--magenta); background: rgba(225,29,116,.1); }
+.itinerary-card.editing .itin-delete { display: grid; }
+.itinerary-card.editing .itin-status { display: none; }
+
+/* Itinerary empty state */
+.itin-empty {
+  text-align: center; padding: 32px 16px;
+  color: var(--muted);
+}
+.itin-empty svg { width: 48px; height: 48px; color: rgba(255,200,87,.25); margin: 0 auto 16px; }
+.itin-empty p { font-size: 14px; margin-bottom: 4px; }
+.itin-empty .hint { font-size: 12px; }
 
 /* ---- Alex AI inline panel ---- */
 .alex-inline {
@@ -403,11 +577,71 @@ footer {
 /* ---- Reveal animation ---- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* App content hidden behind auth gate */
+#appContent { display: none; }
+#appContent.show { display: block; }
 </style>
 </head>
 <body>
 
-<!-- ============== NAV ============== -->
+<!-- ============================================================
+     AUTH GATE — login/signup overlay
+   ============================================================ -->
+<div class="auth-gate" id="authGate">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="big">LUX</div>
+      <div class="sub">Carnival Concierge</div>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+
+    <!-- Login form -->
+    <form class="auth-form active" id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input class="field" id="loginEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+      <label for="loginPass">Password</label>
+      <input class="field" id="loginPass" type="password" required placeholder="••••••••" autocomplete="current-password" minlength="6" />
+      <button type="submit" class="btn-submit">Log In</button>
+      <div class="msg" id="loginMsg"></div>
+    </form>
+
+    <!-- Signup form -->
+    <form class="auth-form" id="signupForm">
+      <div class="field-row">
+        <div>
+          <label for="suFirst">First Name</label>
+          <input class="field" id="suFirst" type="text" required placeholder="First" autocomplete="given-name" />
+        </div>
+        <div>
+          <label for="suLast">Last Name</label>
+          <input class="field" id="suLast" type="text" required placeholder="Last" autocomplete="family-name" />
+        </div>
+      </div>
+      <label for="suEmail">Email</label>
+      <input class="field" id="suEmail" type="email" required placeholder="you@example.com" autocomplete="email" />
+      <label for="suPhone">Phone</label>
+      <input class="field" id="suPhone" type="tel" required placeholder="+1 868 000 0000" autocomplete="tel" />
+      <label for="suPass">Password</label>
+      <input class="field" id="suPass" type="password" required placeholder="Min. 6 characters" autocomplete="new-password" minlength="6" />
+      <button type="submit" class="btn-submit">Create Account</button>
+      <div class="msg" id="signupMsg"></div>
+    </form>
+
+    <div class="auth-hint">Already registered on <a href="Lux.html">luxjouvert.xyz</a>? Use the same login.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     APP CONTENT — shown after login
+   ============================================================ -->
+<div id="appContent">
+
+<!-- Nav -->
 <nav>
   <div class="nav-inner">
     <a href="Lux.html" class="logo" aria-label="LUX Carnival Concierge Home">
@@ -421,25 +655,25 @@ footer {
       <a href="Lux.html#packages">Tickets</a>
       <a href="Lux.html#reserve">Reserve</a>
     </div>
+    <div class="nav-account" id="navAccount"></div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
   </div>
 </nav>
 
-<!-- ============== HERO BANNER ============== -->
+<!-- Hero -->
 <section class="hero-banner">
   <div class="hero-content">
-    <div class="hero-welcome">Welcome to <span>LUX Carnival</span></div>
+    <div class="hero-welcome" id="heroWelcome">Welcome back, <span class="name">Masquerader</span>!</div>
     <div class="hero-subtitle">Your Carnival journey, all in one place.</div>
     <div class="hero-tagline">Plan. Book. Explore. Experience.</div>
     <div class="hero-script">Let's make it happen!</div>
   </div>
 </section>
 
-<!-- ============== PARTNER CARDS ============== -->
+<!-- Partner Cards -->
 <section class="partners">
   <div class="partners-grid">
 
-    <!-- Travel / Flights -->
     <a class="partner-card reveal" href="https://collectivetech.xyz/travelwlinda/" target="_blank" rel="noopener">
       <img class="partner-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&h=320&fit=crop" alt="Airplane flying over tropical waters" />
       <div class="partner-body">
@@ -450,7 +684,6 @@ footer {
       </div>
     </a>
 
-    <!-- Accommodation -->
     <a class="partner-card reveal" href="https://tradewindshotel.com/" target="_blank" rel="noopener">
       <img class="partner-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=320&fit=crop" alt="Tropical hotel with pool" />
       <div class="partner-body">
@@ -461,7 +694,6 @@ footer {
       </div>
     </a>
 
-    <!-- Rentals & Transfers -->
     <a class="partner-card reveal" href="https://supernovacarrentalstrinidad.com/" target="_blank" rel="noopener">
       <img class="partner-img" src="https://images.unsplash.com/photo-1449965408869-ebd3fee7710d?w=600&h=320&fit=crop" alt="Car on tropical road" />
       <div class="partner-body">
@@ -472,7 +704,6 @@ footer {
       </div>
     </a>
 
-    <!-- Event Information -->
     <a class="partner-card reveal" href="Lux.html#experience">
       <img class="partner-img" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=320&fit=crop" alt="Carnival celebration" />
       <div class="partner-body">
@@ -483,7 +714,6 @@ footer {
       </div>
     </a>
 
-    <!-- Tickets -->
     <a class="partner-card reveal" href="Lux.html#packages">
       <img class="partner-img" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=320&fit=crop" alt="Concert wristbands" />
       <div class="partner-body">
@@ -494,7 +724,6 @@ footer {
       </div>
     </a>
 
-    <!-- Lux J'Ouvert -->
     <a class="partner-card reveal" href="Lux.html#top">
       <img class="partner-img" src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&h=320&fit=crop" alt="Carnival dawn celebration" />
       <div class="partner-body">
@@ -508,68 +737,22 @@ footer {
   </div>
 </section>
 
-<!-- ============== BOTTOM: ITINERARY + ALEX ============== -->
+<!-- Bottom: Itinerary + Alex -->
 <section class="bottom-section">
 
-  <!-- Itinerary at a Glance -->
-  <div class="itinerary-card reveal">
+  <!-- Itinerary at a Glance — dynamic, per-user -->
+  <div class="itinerary-card reveal" id="itineraryCard">
     <div class="itin-header">
       <div class="itin-title">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Your Carnival at a Glance
       </div>
-      <a href="Lux.html#schedule" class="itin-link">View Full Itinerary →</a>
-    </div>
-
-    <div class="itin-item">
-      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">5</div></div>
-      <div class="itin-icon">✈</div>
-      <div class="itin-details">
-        <div class="itin-name">Flight to Trinidad</div>
-        <div class="itin-meta">Caribbean Airlines · 4:35 PM</div>
+      <div class="itin-actions">
+        <button class="itin-edit-btn" id="itinEditBtn">+ Add</button>
+        <button class="itin-edit-btn" id="itinToggleEdit">Edit</button>
       </div>
-      <span class="itin-status confirmed">Confirmed</span>
     </div>
-
-    <div class="itin-item">
-      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">6</div></div>
-      <div class="itin-icon">🏨</div>
-      <div class="itin-details">
-        <div class="itin-name">Hotel Check‑in</div>
-        <div class="itin-meta">Tradewinds Hotel, San Fernando</div>
-      </div>
-      <span class="itin-status confirmed">Confirmed</span>
-    </div>
-
-    <div class="itin-item">
-      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">7</div></div>
-      <div class="itin-icon">🎶</div>
-      <div class="itin-details">
-        <div class="itin-name">Fete</div>
-        <div class="itin-meta">Serenity Fete · 7:00 PM</div>
-      </div>
-      <span class="itin-status confirmed">Confirmed</span>
-    </div>
-
-    <div class="itin-item">
-      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">8</div></div>
-      <div class="itin-icon">🔥</div>
-      <div class="itin-details">
-        <div class="itin-name">Lux J'Ouvert</div>
-        <div class="itin-meta">Check‑in: 2:30 AM · Move‑off: 4:00 AM</div>
-      </div>
-      <span class="itin-status confirmed">Confirmed</span>
-    </div>
-
-    <div class="itin-item">
-      <div class="itin-date"><div class="itin-month">FEB</div><div class="itin-day">9</div></div>
-      <div class="itin-icon">🎭</div>
-      <div class="itin-details">
-        <div class="itin-name">Carnival Tuesday</div>
-        <div class="itin-meta">Various Events · 8:00 AM</div>
-      </div>
-      <span class="itin-status pending">Pending</span>
-    </div>
+    <div id="itinList"><!-- rendered by JS --></div>
   </div>
 
   <!-- Alex AI Assistant (inline) -->
@@ -601,7 +784,7 @@ footer {
 
 </section>
 
-<!-- ============== FOOTER ============== -->
+<!-- Footer -->
 <footer>
   <div class="footer-inner">
     <span class="footer-logo">LUX</span>
@@ -624,6 +807,52 @@ footer {
   </div>
 </footer>
 
+</div><!-- /appContent -->
+
+<!-- Add itinerary item modal -->
+<div class="itin-modal-overlay hidden" id="itinModal">
+  <div class="itin-modal">
+    <h3>Add to Your Itinerary</h3>
+    <div class="field-row">
+      <div>
+        <label for="itinMonth">Month</label>
+        <select class="field" id="itinMonth">
+          <option value="JAN">Jan</option><option value="FEB" selected>Feb</option>
+          <option value="MAR">Mar</option><option value="APR">Apr</option>
+        </select>
+      </div>
+      <div>
+        <label for="itinDay">Day</label>
+        <input class="field" id="itinDay" type="number" min="1" max="31" value="5" required />
+      </div>
+    </div>
+    <label for="itinName">What</label>
+    <input class="field" id="itinName" type="text" placeholder="e.g. Flight to Trinidad" required />
+    <label for="itinMeta">Details</label>
+    <input class="field" id="itinMeta" type="text" placeholder="e.g. Caribbean Airlines · 4:35 PM" />
+    <label for="itinIcon">Category</label>
+    <select class="field" id="itinIcon">
+      <option value="✈">✈ Flight</option>
+      <option value="🏨">🏨 Hotel</option>
+      <option value="🚗">🚗 Transport</option>
+      <option value="🎶">🎶 Fete / Party</option>
+      <option value="🔥">🔥 J'Ouvert</option>
+      <option value="🎭">🎭 Carnival / Mas</option>
+      <option value="🍽">🍽 Food / Dining</option>
+      <option value="📍">📍 Other</option>
+    </select>
+    <label for="itinStat">Status</label>
+    <select class="field" id="itinStat">
+      <option value="confirmed">Confirmed</option>
+      <option value="pending">Pending</option>
+    </select>
+    <div class="itin-modal-actions">
+      <button type="button" class="cancel" id="itinCancelBtn">Cancel</button>
+      <button type="button" class="save" id="itinSaveBtn">Add Item</button>
+    </div>
+  </div>
+</div>
+
 <!-- ============================================================
      JAVASCRIPT
    ============================================================ -->
@@ -631,17 +860,277 @@ footer {
 (() => {
   'use strict';
 
-  // ---------- Nav toggle ----------
-  const navToggle = document.getElementById('navToggle');
-  const navLinks  = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  // ============================================================
+  // BACKEND CONFIG — same as main site
+  // ============================================================
+  window.LUX_API_URL = window.LUX_API_URL || 'https://script.google.com/macros/s/AKfycbzUVgwlgFKq4DGgRVVuBiuJA1y5V7ViZAByJXfVAq6CKgvDYKdlMK3a9xtTjLzD8jOQ2g/exec';
+  window.ALEX_WEBHOOK_URL = window.ALEX_WEBHOOK_URL || '';
 
-  // ---------- Scroll reveal ----------
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  async function api(action, params) {
+    if (!window.LUX_API_URL || window.LUX_API_URL.startsWith('PASTE_')) {
+      throw new Error('Backend not configured');
+    }
+    const res = await fetch(window.LUX_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action, ...params })
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  // ============================================================
+  // SESSION — shared localStorage key with main site
+  // ============================================================
+  const LS_KEY = 'lux_session';
+  const getSession = () => { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch(e) { return null; } };
+  const setSession = (s) => { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch(e) {} };
+  const clearSession = () => { try { localStorage.removeItem(LS_KEY); } catch(e) {} };
+
+  // ============================================================
+  // AUTH GATE
+  // ============================================================
+  const authGate = document.getElementById('authGate');
+  const appContent = document.getElementById('appContent');
+
+  function showMsg(el, text, type) {
+    el.textContent = text;
+    el.className = 'msg ' + type + ' show';
+    if (type === 'success') setTimeout(() => el.classList.remove('show'), 4000);
+  }
+
+  // Tab switching
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      document.getElementById(target + 'Form').classList.add('active');
+    });
+  });
+
+  // Login
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('loginMsg');
+    const btn = e.submitter; if (btn) btn.disabled = true;
+    try {
+      const { sessionToken, user } = await api('login', {
+        email:    document.getElementById('loginEmail').value.trim().toLowerCase(),
+        password: document.getElementById('loginPass').value
+      });
+      setSession({ email: user.email, name: user.name, phone: user.phone, sessionToken, loginAt: new Date().toISOString() });
+      showMsg(msg, 'Welcome back.', 'success');
+      setTimeout(enterApp, 400);
+    } catch (err) {
+      showMsg(msg, err.message, 'error');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+
+  // Signup
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('signupMsg');
+    const btn = e.submitter; if (btn) btn.disabled = true;
+    try {
+      const { sessionToken, user } = await api('signup', {
+        firstName: document.getElementById('suFirst').value.trim(),
+        lastName:  document.getElementById('suLast').value.trim(),
+        email:     document.getElementById('suEmail').value.trim().toLowerCase(),
+        phone:     document.getElementById('suPhone').value.trim(),
+        password:  document.getElementById('suPass').value
+      });
+      setSession({ email: user.email, name: user.name, phone: user.phone, sessionToken, loginAt: new Date().toISOString() });
+      showMsg(msg, 'Account created — welcome to Lux.', 'success');
+      setTimeout(enterApp, 400);
+    } catch (err) {
+      showMsg(msg, err.message, 'error');
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
+
+  // ============================================================
+  // ENTER APP — after auth
+  // ============================================================
+  function enterApp() {
+    const session = getSession();
+    if (!session) {
+      authGate.classList.remove('hidden');
+      appContent.classList.remove('show');
+      return;
+    }
+    authGate.classList.add('hidden');
+    appContent.classList.add('show');
+
+    // Personalize hero
+    const firstName = (session.name || '').split(' ')[0] || 'Masquerader';
+    document.getElementById('heroWelcome').innerHTML =
+      'Welcome back, <span class="name">' + firstName + '</span>!';
+
+    // Nav account strip
+    document.getElementById('navAccount').innerHTML =
+      '<span><span class="who">' + firstName + '</span></span>' +
+      '<button id="logoutBtn">Log out</button>';
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      clearSession();
+      location.reload();
+    });
+
+    // Load itinerary
+    loadItinerary();
+
+    // Re-init scroll reveal for newly visible elements
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+
+  // ============================================================
+  // ITINERARY — per-user, saved to localStorage
+  // Keyed by user email so each account has their own
+  // ============================================================
+  const ITIN_PREFIX = 'lux_itin_';
+  const ICONS = { '✈':'✈','🏨':'🏨','🚗':'🚗','🎶':'🎶','🔥':'🔥','🎭':'🎭','🍽':'🍽','📍':'📍' };
+
+  function itinKey() {
+    const s = getSession();
+    return s ? ITIN_PREFIX + s.email : null;
+  }
+
+  function getItinerary() {
+    const key = itinKey();
+    if (!key) return [];
+    try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveItinerary(items) {
+    const key = itinKey();
+    if (!key) return;
+    try { localStorage.setItem(key, JSON.stringify(items)); } catch(e) {}
+  }
+
+  // Default itinerary for new users
+  function defaultItinerary() {
+    return [
+      { id: 'd1', month: 'FEB', day: 5,  icon: '✈', name: 'Flight to Trinidad', meta: 'Caribbean Airlines · 4:35 PM', status: 'pending' },
+      { id: 'd2', month: 'FEB', day: 6,  icon: '🏨', name: 'Hotel Check‑in', meta: 'Tradewinds Hotel, San Fernando', status: 'pending' },
+      { id: 'd3', month: 'FEB', day: 7,  icon: '🎶', name: 'Fete', meta: 'Serenity Fete · 7:00 PM', status: 'pending' },
+      { id: 'd4', month: 'FEB', day: 8,  icon: '🔥', name: 'Lux J\'Ouvert', meta: 'Check‑in: 2:30 AM · Move‑off: 4:00 AM', status: 'confirmed' },
+      { id: 'd5', month: 'FEB', day: 9,  icon: '🎭', name: 'Carnival Tuesday', meta: 'Various Events · 8:00 AM', status: 'pending' }
+    ];
+  }
+
+  function loadItinerary() {
+    let items = getItinerary();
+    if (items.length === 0) {
+      items = defaultItinerary();
+      saveItinerary(items);
+    }
+    renderItinerary(items);
+  }
+
+  function renderItinerary(items) {
+    const container = document.getElementById('itinList');
+    if (items.length === 0) {
+      container.innerHTML =
+        '<div class="itin-empty">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+        '<p>No events yet</p>' +
+        '<p class="hint">Tap "+ Add" to start building your Carnival itinerary</p>' +
+        '</div>';
+      return;
+    }
+    // Sort by month then day
+    const monthOrder = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    items.sort((a,b) => {
+      const mA = monthOrder.indexOf(a.month), mB = monthOrder.indexOf(b.month);
+      return mA !== mB ? mA - mB : a.day - b.day;
+    });
+    container.innerHTML = items.map(item =>
+      '<div class="itin-item" data-id="' + item.id + '">' +
+        '<div class="itin-date"><div class="itin-month">' + item.month + '</div><div class="itin-day">' + item.day + '</div></div>' +
+        '<div class="itin-icon">' + item.icon + '</div>' +
+        '<div class="itin-details"><div class="itin-name">' + item.name + '</div><div class="itin-meta">' + (item.meta || '') + '</div></div>' +
+        '<span class="itin-status ' + item.status + '">' + (item.status === 'confirmed' ? 'Confirmed' : 'Pending') + '</span>' +
+        '<button class="itin-delete" title="Remove">✕</button>' +
+      '</div>'
+    ).join('');
+
+    // Wire delete buttons
+    container.querySelectorAll('.itin-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.closest('.itin-item').dataset.id;
+        let its = getItinerary().filter(i => i.id !== id);
+        saveItinerary(its);
+        renderItinerary(its);
+      });
+    });
+
+    // Wire status toggle (click status pill to toggle confirmed/pending)
+    container.querySelectorAll('.itin-status').forEach(pill => {
+      pill.style.cursor = 'pointer';
+      pill.addEventListener('click', () => {
+        const id = pill.closest('.itin-item').dataset.id;
+        let its = getItinerary();
+        const item = its.find(i => i.id === id);
+        if (item) {
+          item.status = item.status === 'confirmed' ? 'pending' : 'confirmed';
+          saveItinerary(its);
+          renderItinerary(its);
+        }
+      });
+    });
+  }
+
+  // Edit mode toggle
+  document.getElementById('itinToggleEdit').addEventListener('click', function() {
+    const card = document.getElementById('itineraryCard');
+    card.classList.toggle('editing');
+    this.textContent = card.classList.contains('editing') ? 'Done' : 'Edit';
+  });
+
+  // Add item modal
+  const modal = document.getElementById('itinModal');
+  document.getElementById('itinEditBtn').addEventListener('click', () => modal.classList.remove('hidden'));
+  document.getElementById('itinCancelBtn').addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+  document.getElementById('itinSaveBtn').addEventListener('click', () => {
+    const name = document.getElementById('itinName').value.trim();
+    if (!name) return;
+    const items = getItinerary();
+    items.push({
+      id: 'u' + Date.now(),
+      month: document.getElementById('itinMonth').value,
+      day:   parseInt(document.getElementById('itinDay').value) || 1,
+      icon:  document.getElementById('itinIcon').value,
+      name:  name,
+      meta:  document.getElementById('itinMeta').value.trim(),
+      status: document.getElementById('itinStat').value
+    });
+    saveItinerary(items);
+    renderItinerary(items);
+    modal.classList.add('hidden');
+    // Reset form
+    document.getElementById('itinName').value = '';
+    document.getElementById('itinMeta').value = '';
+  });
+
+  // ============================================================
+  // NAV TOGGLE
+  // ============================================================
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+  );
 
   // ============================================================
   // ALEX AI — Full Knowledge Base
@@ -650,10 +1139,7 @@ footer {
   const alexForm = document.getElementById('alexForm');
   const alexInput = document.getElementById('alexInput');
 
-  window.ALEX_WEBHOOK_URL = window.ALEX_WEBHOOK_URL || '';
-
   const alexKB = [
-    // ── LUX Events ──
     { match: /\b(difference|j'?ouvert vs|vs|both|two events|separate)\b/i,
       reply: "They're two separate events on the same day. LUX J'Ouvert is the pre-dawn paint & powder experience — $650 TTD, music trucks rolling 4 AM through San Fernando. Lux Blackout is the LED Night Mas — $500 TTD, neon tees and LED everything starting 7 PM. You can register for one or both." },
     { match: /\b(blackout|led|night|neon)\b/i,
@@ -678,38 +1164,36 @@ footer {
       reply: "Private security and roving medics from assembly to chip-home. Waterproof phone case in the J'Ouvert kit. Route pre-cleared with TTPS. Your emergency contact is in the system the moment you reserve." },
     { match: /\b(reserve|register|sign up|book)\b/i,
       reply: "Head to our <a href='Lux.html#reserve' style='color:var(--gold);text-decoration:underline;'>Reserve section</a> — create your account, pick J'Ouvert or Blackout (or both), fill the form, submit. You'll get a Reservation ID instantly." },
-    // ── Travel & Partners ──
     { match: /\b(flight|fly|airline|airport|travel)\b/i,
-      reply: "For flights, check out our partner <a href='https://collectivetech.xyz/travelwlinda/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Travel with Linda</a> — they'll sort your flights to Trinidad. Piarco International Airport (POS) is the main gateway. Caribbean Airlines and JetBlue have direct routes from several US and Caribbean cities." },
+      reply: "For flights, check out our partner <a href='https://collectivetech.xyz/travelwlinda/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Travel with Linda</a> — they'll sort your flights to Trinidad. Piarco International Airport (POS) is the main gateway." },
     { match: /\b(hotel|stay|accommodation|room|lodge|tradewinds)\b/i,
       reply: "Our accommodation partner is <a href='https://tradewindshotel.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Tradewinds Hotel</a> in San Fernando — right near the J'Ouvert route. Book early, Carnival week fills up fast!" },
     { match: /\b(car|rental|rent|transport|transfer|taxi|supernova)\b/i,
-      reply: "For car rentals and airport transfers, we partner with <a href='https://supernovacarrentalstrinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Supernova Car Rentals</a>. They handle pickups at Piarco and drop-offs island-wide. Book ahead for Carnival week." },
+      reply: "For car rentals and airport transfers, we partner with <a href='https://supernovacarrentalstrinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>Supernova Car Rentals</a>. They handle pickups at Piarco and drop-offs island-wide." },
     { match: /\b(food|eat|restaurant|lime|519|drinks?|bar|nightlife)\b/i,
-      reply: "For food and social vibes, check out our partner <a href='https://519trinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>519 Trinidad</a> at C3 Centre — great food, drinks, and a social hub. Perfect spot for liming before and after events." },
+      reply: "For food and social vibes, check out our partner <a href='https://519trinidad.com/' target='_blank' style='color:var(--gold);text-decoration:underline;'>519 Trinidad</a> at C3 Centre — great food, drinks, and a social hub." },
     { match: /\b(ticket|my ticket|wristband)\b/i,
-      reply: "Your event tickets and wristbands are managed through your reservation. Check your status on the <a href='Lux.html#reserve' style='color:var(--gold);text-decoration:underline;'>main site</a> — your reservations show under 'My Reservations' with live status updates." },
+      reply: "Your event tickets and wristbands are managed through your reservation. Check your status on the <a href='Lux.html#reserve' style='color:var(--gold);text-decoration:underline;'>main site</a>." },
     { match: /\b(next event|what's next|upcoming|schedule|itinerary)\b/i,
-      reply: "Check the itinerary on the left for your upcoming events! Your next confirmed event is shown at the top. For the full Carnival schedule, visit our <a href='Lux.html#schedule' style='color:var(--gold);text-decoration:underline;'>Schedule section</a>." },
-    // ── General ──
+      reply: "Check the itinerary panel for your upcoming events! You can add, edit, and track everything right there. For the full Carnival schedule, visit our <a href='Lux.html#schedule' style='color:var(--gold);text-decoration:underline;'>Schedule section</a>." },
     { match: /\b(drink|preference|alcohol)\b/i,
-      reply: "Drink preference is required for J'Ouvert (we stock based on it) and optional for Blackout. Both events have unlimited drinks — premium for J'Ouvert, full bar for Blackout." },
+      reply: "Drink preference is required for J'Ouvert (we stock based on it) and optional for Blackout. Both events have unlimited drinks." },
     { match: /\b(what is j'?ouvert|first time|never (been|done)|new to)\b/i,
-      reply: "First time? Welcome — you go love it! J'Ouvert is the pre-dawn start of Carnival Monday — paint, powder, music trucks, the road before the sun come up. Lux runs a premium version: organized, secure, inclusive drinks. Show up in clothes you don't mind getting paint on, and we handle the rest." },
+      reply: "First time? Welcome — you go love it! J'Ouvert is the pre-dawn start of Carnival Monday — paint, powder, music trucks, the road before the sun come up. Lux runs a premium version: organized, secure, inclusive drinks." },
     { match: /\b(bring|wear|what should i|pack)\b/i,
-      reply: "For J'Ouvert: wear your Lux apparel and clothes/shoes you don't mind getting paint on. Closed-toe footwear for the road. We give you waterproof phone case, towel and after-sun care. For Blackout: your neon Lux tee and comfortable shoes — we provide all the LED gear." },
+      reply: "For J'Ouvert: wear your Lux apparel and clothes/shoes you don't mind getting paint on. Closed-toe footwear for the road. For Blackout: your neon Lux tee and comfortable shoes — we provide all the LED gear." },
     { match: /\b(group|friends|together|crew)\b/i,
-      reply: "Everyone in your crew creates their own account and reserves separately — each person picks their own size and apparel. You'll likely get the same rep if you're all in the same area. Big group? Email the team and they'll coordinate." },
+      reply: "Everyone in your crew creates their own account and reserves separately — each person picks their own size and apparel. Big group? Email the team and they'll coordinate." },
     { match: /\b(music|dj|truck|artist|soca)\b/i,
       reply: "Music trucks roll with both events — full sound on the road. DJ and artiste lineup is still being locked — follow @luxjouvert on Instagram for the announcement." },
     { match: /\b(rain|weather|wet)\b/i,
-      reply: "J'Ouvert goes rain or shine — paint, powder and a lil rain is all part of the vibe. That's why the waterproof phone case is in your kit. The road runs as planned regardless." },
+      reply: "J'Ouvert goes rain or shine — paint, powder and a lil rain is all part of the vibe." },
     { match: /\b(age|18|old|minor)\b/i,
       reply: "Both events serve alcohol, so they're 18+. Bring valid ID." },
     { match: /\b(installment|deposit|plan|pay later)\b/i,
-      reply: "Yes — payment plans are available. Reserve online to lock your spot, then arrange a deposit + installments with your rep. Your spot holds 7 days for the first payment." },
+      reply: "Yes — payment plans are available. Reserve online to lock your spot, then arrange installments with your rep." },
     { match: /\b(help|support|issue|problem)\b/i,
-      reply: "I'm here to help! You can ask me about travel, accommodation, car rentals, events, tickets, packages, sizing, payment — anything Carnival. For urgent issues, email <a href='mailto:support@luxjouvert.com' style='color:var(--gold);text-decoration:underline;'>support@luxjouvert.com</a> or call 868-318-7031." },
+      reply: "I'm here to help! Ask me about travel, accommodation, car rentals, events, tickets, packages, sizing, payment — anything Carnival. For urgent issues, email <a href='mailto:support@luxjouvert.com' style='color:var(--gold);text-decoration:underline;'>support@luxjouvert.com</a> or call 868-318-7031." },
     { match: /\b(hi|hello|hey|yow|good (morning|night|day)|wah)\b/i,
       reply: "Yow — welcome to Lux Carnival Concierge! 🎊 I can help with travel, accommodation, car rentals, event info, tickets, and everything you need for Carnival 2027. What you want to know?" }
   ];
@@ -722,14 +1206,13 @@ footer {
       encodeURIComponent("Question about LUX Carnival 2027") +
       "&body=" + encodeURIComponent(text);
     return "That one I can't answer straight off — but the Lux team go sort you out. " +
-      "Reach them at <a href=\"" + mailto + "\" style=\"color:var(--gold);font-weight:600;text-decoration:underline;\">support@luxjouvert.com</a> " +
-      "(tap that and your question's already typed in). " +
+      "Reach them at <a href=\"" + mailto + "\" style=\"color:var(--gold);font-weight:600;text-decoration:underline;\">support@luxjouvert.com</a>. " +
       "Or ask me about travel, hotels, car rentals, events, packages, pricing, payment, sizing, or what to bring.";
   }
 
-  function addMsg(text, who = 'bot') {
+  function addMsg(text, who) {
     const el = document.createElement('div');
-    el.className = 'alex-msg ' + who;
+    el.className = 'alex-msg ' + (who || 'bot');
     el.innerHTML = text;
     alexMessages.appendChild(el);
     alexMessages.scrollTop = alexMessages.scrollHeight;
@@ -746,12 +1229,11 @@ footer {
         const res = await fetch(window.ALEX_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chatInput: userText, sessionId: 'carnival_concierge' })
+          body: JSON.stringify({ chatInput: userText, sessionId: (getSession()?.email || 'anon') + '_carnival' })
         });
         const data = await res.json();
         reply = data.output || data.text || data.response || alexFallback(userText);
       } catch (err) {
-        console.warn('Alex webhook failed, using fallback:', err);
         reply = alexFallback(userText);
       }
     } else {
@@ -782,6 +1264,17 @@ footer {
       document.getElementById('alexSuggestions').style.display = 'none';
     });
   });
+
+  // ============================================================
+  // INIT — check if already logged in
+  // ============================================================
+  if (getSession()) {
+    enterApp();
+  }
+  // If ?tab=signup in URL, switch to signup tab (for redirect from main site)
+  if (new URLSearchParams(location.search).get('tab') === 'signup') {
+    document.querySelector('.auth-tab[data-tab="signup"]').click();
+  }
 
 })();
 </script>
