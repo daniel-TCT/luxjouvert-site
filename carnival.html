@@ -302,9 +302,12 @@ nav {
   box-shadow: 0 16px 48px rgba(255,200,87,.12);
 }
 .partner-img {
-  width: 100%; height: 160px; object-fit: cover;
+  width: 100%; height: 160px; object-fit: contain;
   border-bottom: 1px solid var(--border);
+  background: var(--ink);
+  padding: 16px;
 }
+.partner-img.cover { object-fit: cover; padding: 0; }
 .partner-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; }
 .partner-icon {
   width: 40px; height: 40px; border-radius: 50%;
@@ -675,7 +678,7 @@ footer {
   <div class="partners-grid">
 
     <a class="partner-card reveal" href="https://collectivetech.xyz/travelwlinda/" target="_blank" rel="noopener">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&h=320&fit=crop" alt="Airplane flying over tropical waters" />
+      <img class="partner-img" src="logo-travelwlinda.png" alt="Travel Made EZ — Cruise & Airline" />
       <div class="partner-body">
         <div class="partner-icon travel">✈</div>
         <div class="partner-name">Travel</div>
@@ -685,7 +688,7 @@ footer {
     </a>
 
     <a class="partner-card reveal" href="https://tradewindshotel.com/" target="_blank" rel="noopener">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=320&fit=crop" alt="Tropical hotel with pool" />
+      <img class="partner-img" src="logo-tradewinds.webp" alt="Tradewinds Hotel Trinidad" style="background:#fff" />
       <div class="partner-body">
         <div class="partner-icon accom">🏨</div>
         <div class="partner-name">Accommodation</div>
@@ -695,7 +698,7 @@ footer {
     </a>
 
     <a class="partner-card reveal" href="https://supernovacarrentalstrinidad.com/" target="_blank" rel="noopener">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1449965408869-ebd3fee7710d?w=600&h=320&fit=crop" alt="Car on tropical road" />
+      <img class="partner-img" src="logo-supernova.png" alt="Supernova Car Rentals Trinidad" />
       <div class="partner-body">
         <div class="partner-icon rental">🚗</div>
         <div class="partner-name">Rentals &amp; Transfers</div>
@@ -704,28 +707,28 @@ footer {
       </div>
     </a>
 
-    <a class="partner-card reveal" href="Lux.html#experience">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&h=320&fit=crop" alt="Carnival celebration" />
+    <a class="partner-card reveal" href="https://519trinidad.com/" target="_blank" rel="noopener">
+      <img class="partner-img" src="logo-519.png" alt="519 Trinidad" style="background:#fff" />
       <div class="partner-body">
-        <div class="partner-icon event">📅</div>
-        <div class="partner-name">Event Information</div>
-        <div class="partner-desc">Discover what's on, locations, schedules and more.</div>
+        <div class="partner-icon event" style="background:linear-gradient(135deg,#2d8c2d,#c8a415)">🍽</div>
+        <div class="partner-name">Food &amp; Nightlife</div>
+        <div class="partner-desc">Great food, drinks and social vibes at 519 Trinidad.</div>
         <div class="partner-arrow">→</div>
       </div>
     </a>
 
-    <a class="partner-card reveal" href="Lux.html#packages">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=320&fit=crop" alt="Concert wristbands" />
+    <a class="partner-card reveal" href="packages.html">
+      <img class="partner-img cover" src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=600&h=320&fit=crop" alt="Concert wristbands" />
       <div class="partner-body">
         <div class="partner-icon ticket">🎫</div>
-        <div class="partner-name">Tickets</div>
-        <div class="partner-desc">View, manage and add your event tickets — all in one place.</div>
+        <div class="partner-name">Tickets &amp; Packages</div>
+        <div class="partner-desc">Explore our packages in detail — costumes, inclusions and more.</div>
         <div class="partner-arrow">→</div>
       </div>
     </a>
 
     <a class="partner-card reveal" href="Lux.html#top">
-      <img class="partner-img" src="https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=600&h=320&fit=crop" alt="Carnival dawn celebration" />
+      <img class="partner-img" src="logo-lux.png" alt="Lux J'Ouvert" />
       <div class="partner-body">
         <div class="partner-icon lux">🔥</div>
         <div class="partner-name">Lux J'Ouvert</div>
@@ -864,7 +867,25 @@ footer {
   // BACKEND CONFIG — same as main site
   // ============================================================
   window.LUX_API_URL = window.LUX_API_URL || 'https://script.google.com/macros/s/AKfycbzUVgwlgFKq4DGgRVVuBiuJA1y5V7ViZAByJXfVAq6CKgvDYKdlMK3a9xtTjLzD8jOQ2g/exec';
+  // ── Alex Live-Data Config ──
+  // Point this at your Collective backend's Alex endpoint for live AI responses.
+  // Leave empty to use the built-in knowledge base as fallback.
+  // Example: 'https://your-backend.up.railway.app/api/agents/alex/chat'
   window.ALEX_WEBHOOK_URL = window.ALEX_WEBHOOK_URL || '';
+
+  // System prompt sent with every live request — gives Alex full Lux context
+  const ALEX_SYSTEM_CONTEXT = `You are Alex, the AI assistant for LUX Carnival Concierge 2027. You help masqueraders plan their Trinidad Carnival experience. You know about:
+- LUX J'Ouvert ($650 TTD, pre-dawn paint & powder, assembly 3:30AM San Fernando, road 4AM Feb 8 2027)
+- Lux Blackout ($500 TTD, LED Monday Night Mas, 7PM)
+- Travel partner: Travel Made EZ / Travel with Linda (flights to Trinidad via Piarco)
+- Accommodation: Tradewinds Hotel, San Fernando
+- Car Rentals: Supernova Car Rentals Trinidad (airport pickups island-wide)
+- Food & Nightlife: 519 Trinidad at C3 Centre
+- Lux Memories: free photo dump for registered attendees via facial recognition
+- Payment: collected in person by assigned band rep (Kerry Ramcharan for South 868-318-7031, Lux Team for POS & East 868-304-4476)
+- Packages include T-shirts, monokinis (female), LED gear (Blackout), unlimited drinks, security, medics
+- Sizes: S/M/L/XL, no exchanges on collection day
+Keep it friendly, use local flavor (Trini expressions welcome). Be concise but thorough.`;
 
   async function api(action, params) {
     if (!window.LUX_API_URL || window.LUX_API_URL.startsWith('PASTE_')) {
@@ -1229,11 +1250,21 @@ footer {
         const res = await fetch(window.ALEX_WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chatInput: userText, sessionId: (getSession()?.email || 'anon') + '_carnival' })
+          body: JSON.stringify({
+            chatInput: userText,
+            sessionId: (getSession()?.email || 'anon') + '_lux_carnival',
+            systemPrompt: ALEX_SYSTEM_CONTEXT,
+            context: {
+              page: 'carnival-concierge',
+              user: getSession()?.name || 'Guest',
+              email: getSession()?.email || ''
+            }
+          })
         });
         const data = await res.json();
-        reply = data.output || data.text || data.response || alexFallback(userText);
+        reply = data.output || data.text || data.response || data.message || alexFallback(userText);
       } catch (err) {
+        console.warn('Alex live backend unreachable, using local KB:', err);
         reply = alexFallback(userText);
       }
     } else {
