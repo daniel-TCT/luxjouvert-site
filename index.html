@@ -10,14 +10,14 @@
 <meta name="author" content="LUX J'Ouvert" />
 
 <!-- Canonical -->
-<link rel="canonical" href="https://luxjouvert.xyz/" />
+<link rel="canonical" href="https://luxjouvert.com/" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://luxjouvert.xyz/" />
+<meta property="og:url" content="https://luxjouvert.com/" />
 <meta property="og:title" content="LUX J'Ouvert × Blackout — Trinidad Carnival 2027" />
 <meta property="og:description" content="Two experiences. One standard. All Lux." />
-<meta property="og:image" content="https://luxjouvert.xyz/og-image.jpg" />
+<meta property="og:image" content="https://luxjouvert.com/og-image.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <!-- Fonts -->
@@ -243,6 +243,68 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; col
 }
 
 .hero-inner { max-width: 1100px; text-align: center; position: relative; }
+
+/* ------------ Partner strip (top of hero) ------------ */
+.partners-top { max-width: 1040px; margin: 0 auto 36px; }
+.partners-top .pt-label {
+  font-family: var(--font-accent); font-style: italic;
+  font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.partners-top .pt-label::before, .partners-top .pt-label::after {
+  content: ""; width: 32px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.pt-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pt-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px 10px 10px; text-align: left;
+  border-radius: 16px;
+  background: rgba(11,2,22,0.6);
+  border: 1px solid var(--border-gold);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s, box-shadow .25s;
+}
+.pt-card:hover, .pt-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255,200,87,0.55);
+  box-shadow: 0 12px 32px rgba(255,200,87,0.14);
+}
+.pt-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.pt-card:active { transform: scale(0.98); }
+.pt-logo {
+  width: 68px; height: 52px; flex-shrink: 0;
+  border-radius: 10px; overflow: hidden;
+  display: grid; place-items: center;
+}
+.pt-logo.plate { background: #fff; padding: 5px 6px; }  /* logos drawn for light backgrounds */
+.pt-logo.dark  { background: #000; }                     /* Supernova's artwork sits on black */
+.pt-logo img { width: 100%; height: 100%; object-fit: contain; }
+.pt-text { min-width: 0; display: block; }
+.pt-name {
+  display: block; font-family: var(--font-display); font-weight: 700; font-size: 13px; line-height: 1.2;
+  text-wrap: balance;
+}
+.pt-cat {
+  display: block; font-family: var(--font-accent); font-style: italic;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted); margin-top: 3px;
+}
+.pt-go {
+  margin-left: auto; flex-shrink: 0; color: var(--gold); font-size: 14px;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+}
+.pt-card:hover .pt-go { transform: translate(2px,-2px); }
+@media (max-width: 900px) { .pt-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  /* Phones: one compact row of logos; names stay available to screen readers via aria-label */
+  .partners-top { margin-bottom: 24px; }
+  .pt-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .pt-card { flex-direction: column; padding: 6px; gap: 0; border-radius: 12px; }
+  .pt-logo { width: 100%; height: 48px; border-radius: 8px; }
+  .pt-text, .pt-go { display: none; }
+}
 
 /* Phoenix image at top of hero.
    Drop in `phoenix.png` (the band's logo with phoenix) next to index.html.
@@ -1131,8 +1193,7 @@ label {
       <a href="#schedule">Schedule</a>
       <a href="#faq">FAQ</a>
       <a href="carnival.html" style="color:var(--gold)">My Carnival</a>
-      <a href="https://luxjouvert.xyz/admin.html" class="nav-admin">Admin</a>
-      <a href="https://luxjouvert.xyz/packages.html" class="nav-admin">Lux Bundles</a>
+      <a href="https://luxjouvert.com/admin.html" class="nav-admin">Admin</a>
     </div>
     <a href="#reserve" class="nav-cta">Reserve</a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
@@ -1151,6 +1212,33 @@ label {
   </svg>
 
   <div class="hero-inner reveal">
+    <!-- ============== PARTNERS ============== -->
+    <div class="partners-top" id="partners">
+      <div class="pt-label">Official Carnival Partners</div>
+      <div class="pt-row">
+        <a class="pt-card" href="https://collectivetech.xyz/travelwlinda/" target="_blank" rel="noopener" aria-label="Travel Made EZ — flights and cruises (opens in a new tab)">
+          <span class="pt-logo"><img src="logo-travelwlinda.png" alt="Travel Made EZ" width="200" height="200" /></span>
+          <span class="pt-text"><span class="pt-name">Travel Made EZ</span><span class="pt-cat">Flights &amp; Cruise</span></span>
+          <span class="pt-go" aria-hidden="true">↗</span>
+        </a>
+        <a class="pt-card" href="https://tradewindshotel.com/" target="_blank" rel="noopener" aria-label="Tradewinds Hotel — accommodation (opens in a new tab)">
+          <span class="pt-logo plate"><img src="logo-tradewinds.webp" alt="Tradewinds Hotel Trinidad" width="474" height="221" /></span>
+          <span class="pt-text"><span class="pt-name">Tradewinds Hotel</span><span class="pt-cat">Accommodation</span></span>
+          <span class="pt-go" aria-hidden="true">↗</span>
+        </a>
+        <a class="pt-card" href="https://supernovacarrentalstrinidad.com/" target="_blank" rel="noopener" aria-label="Supernova Car Rentals — rentals and transfers (opens in a new tab)">
+          <span class="pt-logo dark"><img src="logo-supernova.png" alt="Supernova Car Rentals Trinidad" width="300" height="242" /></span>
+          <span class="pt-text"><span class="pt-name">Supernova Rentals</span><span class="pt-cat">Cars &amp; Transfers</span></span>
+          <span class="pt-go" aria-hidden="true">↗</span>
+        </a>
+        <a class="pt-card" href="https://519trinidad.com/" target="_blank" rel="noopener" aria-label="519 Trinidad — food and drinks (opens in a new tab)">
+          <span class="pt-logo plate"><img src="logo-519.png" alt="519 Trinidad" width="276" height="181" /></span>
+          <span class="pt-text"><span class="pt-name">519 Trinidad</span><span class="pt-cat">Food &amp; Drinks</span></span>
+          <span class="pt-go" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
     <!-- ============================================================
          PHOENIX IMAGE — drop `phoenix.png` into your repo root
          (the LUX Jouvert phoenix logo from your sample images).
@@ -1167,24 +1255,33 @@ label {
       <div class="countdown-unit"><div class="countdown-val" id="cd-secs">--</div><div class="countdown-label">Seconds</div></div>
     </div>
 
-
+    <h1>
+      <span class="l1"></span>
+      <span class="l2">LUX J'Ouvert</span>
+      <span class="amp">×</span>
+      <span class="l3">BLACKOUT</span>
+    </h1>
 
     <!-- ============== GALLERY (rotating) ============== -->
     <div class="section" id="gallery" style="padding: 20px 0 40px;">
       <div class="reveal">
         <div class="section-label">Gallery</div>
-        <h2 class="section-title"> <span class="accent"</span></h2>
-        <p class="section-lede" style="margin-left:auto;margin-right:auto;"></p>
+        <h2 class="section-title">This year's <span class="accent">glow-up.</span></h2>
+        <p class="section-lede" style="margin-left:auto;margin-right:auto;">The crew, the costumes, the LED night. This is the standard — and 2027 goes bigger.</p>
       </div>
       <div class="carousel reveal" id="luxCarousel">
         <div class="carousel-track">
-          <div class="carousel-slide"><img src="images/gallery-05.jpeg" alt="Masquerader in white two-piece, back view at the venue" loading="lazy" /></div>
-          <div class="carousel-slide"><img src="images/gallery-06.jpeg" alt="Reveller in a white LUX J'Ouvert tee with branded cup" loading="lazy" /></div>
-          <div class="carousel-slide"><img src="images/gallery-07.jpeg" alt="Couple in LUX J'Ouvert gear at the event" loading="lazy" /></div>
-          <div class="carousel-slide"><img src="images/gallery-08.jpeg" alt="Back view of masquerader in black costume with lace tights" loading="lazy" /></div>
+          <div class="carousel-slide is-active"><img src="images/gallery-01.jpg" alt="LUX J'Ouvert masquerader in a white costume at the festival" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-02.jpg" alt="LUX J'Ouvert masquerader in a white cut-out costume" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-03.jpg" alt="LUX J'Ouvert masquerader posing in a black costume" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-04.jpg" alt="Back view of masquerader in white costume and fishnets" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-05.jpg" alt="Masquerader in white two-piece, back view at the venue" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-06.jpg" alt="Reveller in a white LUX J'Ouvert tee with branded cup" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-07.jpg" alt="Couple in LUX J'Ouvert gear at the event" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-08.jpg" alt="Back view of masquerader in black costume with lace tights" loading="lazy" /></div>
           <div class="carousel-slide"><img src="images/gallery-09.jpg" alt="Band rep holding the LUX J'Ouvert phoenix flag" loading="lazy" /></div>
           <div class="carousel-slide"><img src="images/gallery-10.jpg" alt="Reveller in a black LUX J'Ouvert tee and ruffle skirt" loading="lazy" /></div>
-          <div class="carousel-slide"><img src="images/gallery-11.jpeg" alt="Masquerader in a white monokini with gold chains and fishnets" loading="lazy" /></div>
+          <div class="carousel-slide"><img src="images/gallery-11.jpg" alt="Masquerader in a white monokini with gold chains and fishnets" loading="lazy" /></div>
           <div class="carousel-slide"><img src="images/gallery-12.jpg" alt="Reveller in a pink Blackout tee with LED glasses" loading="lazy" /></div>
           <div class="carousel-slide"><img src="images/gallery-13.jpg" alt="Crew in neon Blackout tees with glow accessories" loading="lazy" /></div>
           <div class="carousel-slide"><img src="images/gallery-14.jpg" alt="Reveller in a neon green Blackout crop top with LED glasses" loading="lazy" /></div>
@@ -1776,7 +1873,7 @@ label {
       <ul>
         <li><a href="https://www.instagram.com/luxjouvert/" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://tiktok.com/" target="_blank" rel="noopener">TikTok</a></li>
-        <li><a href="mailto:support@luxjouvert.xyz">support@luxjouvert.xyz</a></li>
+        <li><a href="mailto:support@luxjouvert.com">support@luxjouvert.com</a></li>
       </ul>
     </div>
   </div>
